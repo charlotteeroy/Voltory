@@ -1,0 +1,76 @@
+/* ============================================================
+   VOLTORY — COULEURS
+   Ancres extraites du logo HD au pixel près.
+   Bleu pétrole = expertise / sérieux patrimonial.
+   Or solaire   = énergie, signe chaque temps fort.
+   Blanc        = respiration.
+   ============================================================ */
+:root {
+  /* ---- Ancres de marque ---- */
+  --petrole-600: #005F6F;   /* SIGNATURE — fond du logo */
+  --or-500:      #FDBE03;   /* SOLEIL — point du "i", numéros */
+  --blanc:       #FFFFFF;
+
+  /* ---- Bleu pétrole — nuancier primaire ---- */
+  --petrole-50:  #EDF4F5;
+  --petrole-100: #D9E7E9;
+  --petrole-200: #A8C9CE;
+  --petrole-300: #75A9B1;
+  --petrole-400: #3D8592;
+  --petrole-500: #1F7280;
+  --petrole-700: #02515F;
+  --petrole-800: #054550;
+  --petrole-900: #073A43;
+
+  /* ---- Or solaire — nuancier accent ---- */
+  --or-100: #FFF2CD;
+  --or-200: #FEE59A;
+  --or-300: #FED868;
+  --or-400: #FDCA30;
+  --or-600: #D6A509;
+  --or-700: #AB890F;
+
+  /* ---- Neutres (teintés pétrole) ---- */
+  --encre:       #0B2126;
+  --ardoise:     #3A4A4E;
+  --acier:       #6A7A7D;
+  --brume:       #AEBEC0;
+  --nuage:       #DBE4E5;
+  --coquille:    #F1F5F5;
+  --blanc-casse: #FBFCFC;
+
+  /* ---- Sémantique ---- */
+  --eco:      #2F9E6B;   --eco-bg:    #E4F4EC;
+  --data:     #1FA6C4;   --data-bg:   #E2F4F8;
+  --alerte:   #D9533B;   --alerte-bg: #FBE7E2;
+
+  /* ============================================================
+     ALIAS SÉMANTIQUES — à utiliser dans les composants
+     ============================================================ */
+  /* Texte */
+  --text-strong:   var(--encre);
+  --text-body:     var(--ardoise);
+  --text-muted:    var(--acier);
+  --text-on-dark:  var(--blanc);
+  --text-on-dark-soft: var(--petrole-100);
+  --text-accent:   var(--or-700);
+
+  /* Surfaces */
+  --surface-page:  var(--coquille);
+  --surface-card:  var(--blanc);
+  --surface-sunken: var(--blanc-casse);
+  --surface-brand: var(--petrole-600);
+  --surface-brand-deep: var(--petrole-900);
+
+  /* Bordures */
+  --border-subtle: var(--nuage);
+  --border-strong: var(--brume);
+  --border-on-dark: rgba(255,255,255,.16);
+
+  /* Actions */
+  --action-primary:        var(--petrole-600);
+  --action-primary-hover:  var(--petrole-700);
+  --action-accent:         var(--or-500);
+  --action-accent-hover:   var(--or-400);
+  --focus-ring:            var(--or-500);
+}

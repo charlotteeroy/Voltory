@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/voltory-design-system-1ee063a9-dad9-4f18-ad0b-f12fc118a1c8/styles.css">
+<script src="_ds/voltory-design-system-1ee063a9-dad9-4f18-ad0b-f12fc118a1c8/_ds_bundle.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font-body);background:var(--surface-card);color:var(--text-strong);-webkit-font-smoothing:antialiased;line-height:var(--lh-body)}
+::selection{background:var(--or-200);color:var(--petrole-900)}
+input[type=range]{accent-color:var(--petrole-600);height:4px}
+::placeholder{color:var(--brume)}
+@keyframes vFadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes vRise{from{transform:translateY(16px)}to{transform:none}}
+@keyframes vPop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@keyframes vRing{0%{transform:translate(-50%,-50%) scale(.9);opacity:.5}70%{opacity:0}100%{transform:translate(-50%,-50%) scale(1.4);opacity:0}}
+@keyframes vScrollUp{0%{transform:translateY(0)}100%{transform:translateY(-50%)}}
+@keyframes vScrollDown{0%{transform:translateY(-50%)}100%{transform:translateY(0)}}
+@keyframes hScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+:root{--font-body:'Poppins','Inter',ui-sans-serif,sans-serif}
+.leaflet-container{font-family:'Poppins',sans-serif}
+</style>
+</helmet>
+
+<div style="font-family:var(--font-body);background:var(--surface-card)">
+
+  <!-- ============ NAV ============ -->
+  <nav style="position:sticky;top:0;z-index:60;background:var(--petrole-600);box-shadow:var(--e2)">
+    <div style="width:100%;padding:0 clamp(20px,3vw,56px);height:74px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:24px">
+      <div onClick="{{ navHome }}" style="display:flex;align-items:center;cursor:pointer">
+        <img src="assets/voltory-logo-white.png" alt="Voltory" style="height:32px;display:block" />
+      </div>
+      <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="2">
+            <button onClick="{{ n.onClick }}" style="{{ n.style }}" style-hover="color:var(--or-400);opacity:1">{{ n.label }}</button>
+          </sc-for>
+        </div>
+        <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.Button" hint-size="auto,40px" variant="accent" size="sm" onClick="{{ navContact }}">Demander une étude</x-import>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ PAGE: ACCUEIL ============ -->
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <div data-screen-label="Accueil" style="animation:vRise .45s var(--ease-out) both">
+
+    <!-- Hero -->
+    <section style="position:relative;overflow:hidden;background:var(--petrole-800);color:var(--text-on-dark);min-height:clamp(560px,88vh,860px);display:flex;align-items:flex-end">
+      <sc-for list="{{ heroSlides }}" as="s" hint-placeholder-count="1">
+        <div style="{{ s.style }}"></div>
+      </sc-for>
+      <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(90deg, rgba(4,30,34,.9) 0%, rgba(4,30,34,.74) 42%, rgba(4,30,34,.35) 72%, rgba(4,30,34,.12) 100%), linear-gradient(0deg, rgba(4,30,34,.75), transparent 62%);pointer-events:none"></div>
+      <div style="max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px) 72px;position:relative;z-index:2;width:100%">
+        <div style="max-width:44rem">
+          <h1 style="font-family:var(--font-display);font-weight:700;font-size:clamp(2.5rem,4.8vw,3.9rem);line-height:1.05;letter-spacing:-.03em;margin:0;text-shadow:0 2px 24px rgba(4,30,34,.4)">L'énergie de <span style="color:var(--or-500)">votre maison</span>,<br />maîtrisée</h1>
+          <p style="font-size:clamp(.95rem,1.3vw,1.05rem);line-height:1.6;color:var(--text-on-dark-soft);margin:18px 0 0;max-width:48ch">Électricité, photovoltaïque, recharge électrique. Conseil, installation, suivi. Une entreprise familiale, un travail durable.</p>
+          <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:28px">
+            <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.Button" hint-size="auto,48px" variant="accent" onClick="{{ navRealisations }}">Découvrir nos prestations →</x-import>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:44px">
+          <sc-for list="{{ heroDots }}" as="d" hint-placeholder-count="8">
+            <button onClick="{{ d.onClick }}" style="{{ d.style }}" aria-label="{{ d.label }}"></button>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- Simulateur solaire -->
+    <section style="position:relative;overflow:hidden;background:var(--surface-brand);color:var(--text-on-dark);padding:96px 0 150px">
+      <div style="position:absolute;width:520px;height:520px;border-radius:50%;bottom:-220px;left:-120px;background:radial-gradient(circle,var(--or-500) 0%,rgba(253,190,3,0) 68%);opacity:.18;pointer-events:none"></div>
+      <div style="max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px);position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:48px;align-items:center">
+        <div style="flex:1 1 360px">
+          <span style="font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--or-400)">Une preuve, pas une promesse</span>
+          <hr style="width:48px;height:2px;background:var(--or-500);border:none;margin:16px 0 20px" />
+          <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(1.9rem,3.4vw,2.7rem);letter-spacing:-.02em;line-height:1.06;margin:0;color:var(--text-on-dark)">Estimez vos économies<br />en quelques secondes</h2>
+          <p style="font-size:1.05rem;line-height:1.6;color:var(--text-on-dark-soft);margin:18px 0 0;max-width:40ch">Réglez votre facture actuelle — on vous montre la puissance conseillée et les économies réalistes. Étude précise gratuite, sans engagement.</p>
+        </div>
+        <div style="flex:1 1 360px;background:var(--surface-card);color:var(--text-strong);border-radius:var(--r-lg);padding:32px;box-shadow:var(--e3)">
+          <div style="font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--text-strong)">Simulateur d'économies solaires</div>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;margin:24px 0 8px">
+            <label style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--text-body)">Votre facture d'électricité</label>
+            <span style="font-family:var(--font-display);font-weight:700;font-size:22px;color:var(--petrole-700)">{{ bill }} € <span style="font-size:13px;font-weight:600;color:var(--text-muted)">/ mois</span></span>
+          </div>
+          <input type="range" min="40" max="400" step="10" value="{{ bill }}" onInput="{{ setBill }}" style="width:100%;cursor:pointer" />
+          <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--text-muted);font-family:var(--font-display);margin-top:4px"><span>40 €</span><span>400 €</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px">
+            <div style="background:var(--petrole-600);border-radius:var(--r-md);padding:18px">
+              <div style="font-family:var(--font-display);font-weight:700;font-size:30px;color:var(--or-500);line-height:1;letter-spacing:-.02em">{{ simSavings }} €</div>
+              <div style="font-size:12.5px;color:var(--text-on-dark-soft);margin-top:7px">économisés / an</div>
+            </div>
+            <div style="background:var(--surface-page);border:1px solid var(--border-subtle);border-radius:var(--r-md);padding:18px">
+              <div style="font-family:var(--font-display);font-weight:700;font-size:30px;color:var(--petrole-700);line-height:1;letter-spacing:-.02em">{{ simKwc }} <span style="font-size:15px">kWc</span></div>
+              <div style="font-size:12.5px;color:var(--text-muted);margin-top:7px">puissance conseillée</div>
+            </div>
+            <div style="background:var(--surface-page);border:1px solid var(--border-subtle);border-radius:var(--r-md);padding:18px">
+              <div style="font-family:var(--font-display);font-weight:700;font-size:30px;color:var(--petrole-700);line-height:1;letter-spacing:-.02em">{{ simProduction }}</div>
+              <div style="font-size:12.5px;color:var(--text-muted);margin-top:7px">kWh produits / an</div>
+            </div>
+            <div style="background:var(--surface-page);border:1px solid var(--border-subtle);border-radius:var(--r-md);padding:18px">
+              <div style="font-family:var(--font-display);font-weight:700;font-size:30px;color:var(--petrole-700);line-height:1;letter-spacing:-.02em">{{ simSavings20 }} €</div>
+              <div style="font-size:12.5px;color:var(--text-muted);margin-top:7px">économisés sur 20 ans</div>
+            </div>
+          </div>
+          <div style="margin-top:22px">
+            <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.Button" hint-size="100%,52px" variant="primary" full="{{ true }}" onClick="{{ navContact }}">Affiner avec une étude gratuite</x-import>
+          </div>
+          <p style="font-size:11.5px;color:var(--text-muted);margin:12px 0 0;text-align:center">Estimation indicative pour le secteur choletais. Chiffrage précis après visite.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Savoir-faire / services -->
+    <section style="background:var(--surface-page);padding:104px 0 96px">
+      <div style="max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px)">
+        <div style="margin-bottom:56px">
+          <span style="font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--text-accent)">Notre savoir-faire</span>
+          <hr style="width:48px;height:2px;background:var(--or-500);border:none;margin:16px 0 20px" />
+          <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(2rem,3.6vw,2.8rem);letter-spacing:-.02em;line-height:1.06;margin:0">Trois métiers,<br />une même exigence</h2>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:128px">
+          <sc-for list="{{ metiers }}" as="m" hint-placeholder-count="3">
+            <div style="{{ m.rowStyle }}">
+              <div style="flex:1.15 1 420px;position:relative;min-height:380px;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--e2);background:var(--petrole-800)">
+                <sc-for list="{{ m.slides }}" as="sl" hint-placeholder-count="1">
+                  <div style="{{ sl.style }}"></div>
+                </sc-for>
+                <div style="position:absolute;inset:0;z-index:2;background:linear-gradient(0deg, rgba(4,30,34,.35), transparent 45%);pointer-events:none"></div>
+                <div style="position:absolute;bottom:16px;left:16px;z-index:3;display:flex;gap:6px">
+                  <sc-for list="{{ m.dots }}" as="d" hint-placeholder-count="3">
+                    <span style="{{ d.style }}"></span>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="flex:1 1 380px">
+                <h3 style="font-family:var(--font-display);font-weight:800;font-size:clamp(2.1rem,4vw,3.1rem);letter-spacing:-.03em;line-height:1.02;margin:0;color:var(--text-strong)">{{ m.eyebrow }}</h3>
+                <div style="font-family:var(--font-display);font-weight:600;font-size:clamp(1.05rem,1.6vw,1.25rem);letter-spacing:-.01em;color:var(--text-accent);margin:10px 0 0">{{ m.title }}</div>
+                <p style="font-size:1rem;line-height:1.6;color:var(--text-body);margin:18px 0 0;max-width:48ch">{{ m.text }}</p>
+                <ul style="list-style:none;margin:22px 0 0;padding:0;display:flex;flex-direction:column;gap:11px">
+                  <sc-for list="{{ m.points }}" as="pt" hint-placeholder-count="4">
+                    <li style="display:flex;gap:12px;align-items:flex-start;font-size:15px;color:var(--text-strong)"><span style="flex-shrink:0;width:22px;height:22px;border-radius:var(--r-pill);background:var(--or-500);color:var(--petrole-900);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">✓</span>{{ pt }}</li>
+                  </sc-for>
+                </ul>
+                <div style="margin-top:26px">
+                  <button onClick="{{ m.onSeeMore }}" style="font-family:var(--font-display);font-weight:600;font-size:15px;color:var(--petrole-700);background:none;border:none;cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:8px" style-hover="gap:12px">Voir les réalisations →</button>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats animées -->
+    <section ref="{{ statsRef }}" style="background:var(--surface-brand-deep);color:var(--text-on-dark);padding:104px 0">
+      <div style="max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px);display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:clamp(32px,4vw,56px)">
+        <sc-for list="{{ animStats }}" as="st" hint-placeholder-count="4">
+          <div style="text-align:center">
+            <div style="font-family:'Poppins',var(--font-display);font-weight:600;font-size:clamp(3.4rem,7vw,5.4rem);color:var(--or-500);line-height:1;letter-spacing:-.01em;min-height:1em">{{ st.rollEl }}</div>
+            <div style="display:flex;justify-content:center;margin:22px 0 18px">{{ st.underline }}</div>
+            <div style="font-family:var(--font-body);font-size:15px;line-height:1.4;color:var(--text-on-dark-soft);max-width:24ch;margin:0 auto">{{ st.label }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+
+
+    <!-- Avis Google -->
+    <section style="background:var(--surface-page);padding:96px 0;overflow:hidden">
+      <div style="max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px)">
+        <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end;justify-content:space-between;margin-bottom:44px">
+          <div>
+            <span style="font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--text-accent)">Avis clients</span>
+            <hr style="width:48px;height:2px;background:var(--or-500);border:none;margin:16px 0 20px" />
+            <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(1.9rem,3.4vw,2.6rem);letter-spacing:-.02em;line-height:1.1;margin:0">Ils nous font confiance</h2>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--r-md);padding:16px 22px;box-shadow:var(--e1)">
+            <span style="font-family:var(--font-display);font-weight:700;font-size:26px;color:var(--text-strong)">G</span>
+            <div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <span style="font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text-strong)">5,0</span>
+                <span style="color:var(--or-500);font-size:16px;letter-spacing:2px">★★★★★</span>
+              </div>
+              <div style="font-size:12.5px;color:var(--text-muted)">Avis Google — vérifiés</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)">
+        <div style="display:flex;gap:24px;width:max-content;animation:hScroll 45s linear infinite;padding:4px clamp(24px,5vw,72px)" style-hover="animation-play-state:paused">
+          <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="6">
+            <div style="width:360px;flex-shrink:0;background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--r-md);padding:26px;box-shadow:var(--e1);display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <span style="color:var(--or-500);font-size:15px;letter-spacing:2px">★★★★★</span>
+                <span style="font-family:var(--font-display);font-weight:700;font-size:16px;color:var(--text-muted)">G</span>
+              </div>
+              <p style="font-size:14.5px;line-height:1.6;color:var(--text-body);margin:0;flex:1">« {{ r.text }} »</p>
+              <div style="display:flex;align-items:center;gap:12px">
+                <span style="width:36px;height:36px;border-radius:var(--r-pill);background:var(--petrole-600);color:var(--blanc);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:14px">{{ r.initial }}</span>
+                <div>
+                  <div style="font-family:var(--font-display);font-weight:600;font-size:13.5px;color:var(--text-strong)">{{ r.name }}</div>
+                  <div style="font-size:12px;color:var(--text-muted)">{{ r.meta }}</div>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- Carte zone interactive -->
+    <section style="background:var(--surface-page);padding:96px 0">
+      <div style="max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px)">
+        <div style="max-width:52ch;margin-bottom:40px">
+          <span style="font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--text-accent)">Notre zone d'intervention</span>
+          <hr style="width:48px;height:2px;background:var(--or-500);border:none;margin:16px 0 20px" />
+          <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(1.9rem,3.4vw,2.6rem);letter-spacing:-.02em;line-height:1.06;margin:0">De Cholet au cœur<br />du Maine-et-Loire &amp; de la Vendée</h2>
+          <p style="font-size:1.05rem;line-height:1.6;color:var(--text-body);margin:14px 0 0">Cliquez sur une ville pour voir notre activité sur place.</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:stretch">
+          <div ref="{{ mapRef }}" style="flex:2 1 420px;position:relative;min-height:480px;border-radius:var(--r-lg);overflow:hidden;background:var(--petrole-800);box-shadow:var(--e2);z-index:1"></div>
+          <div style="flex:1 1 300px;background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--r-lg);padding:30px;box-shadow:var(--e1);display:flex;flex-direction:column">
+            <div style="font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--text-accent)">{{ activeDept }}</div>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:28px;color:var(--text-strong);letter-spacing:-.02em;margin-top:6px">{{ activeName }}</div>
+            <div style="display:flex;align-items:baseline;gap:12px;margin-top:18px">
+              <span style="font-family:var(--font-display);font-weight:600;font-size:clamp(2.6rem,5vw,3.6rem);color:var(--or-500);line-height:.9;letter-spacing:-.02em">{{ activeProjects }}</span>
+              <span style="font-family:var(--font-display);font-weight:600;font-size:15px;color:var(--text-body);line-height:1.25">projets réalisés</span>
+            </div>
+            <p style="font-size:13.5px;color:var(--text-muted);line-height:1.55;margin:16px 0 0">{{ activeBlurb }}</p>
+            <hr style="width:100%;height:1px;background:var(--border-subtle);border:none;margin:22px 0" />
+            <div style="font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px">Nos secteurs d'intervention</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ cities }}" as="c" hint-placeholder-count="8">
+                <button onClick="{{ c.onClick }}" style="{{ c.chipStyle }}">{{ c.name }}</button>
+              </sc-for>
+            </div>
+            <div style="margin-top:auto;padding-top:24px">
+              <button onClick="{{ navContact }}" style="width:100%;font-family:var(--font-display);font-weight:600;font-size:15px;padding:13px 20px;border-radius:var(--r-pill);background:var(--petrole-600);color:var(--blanc);border:none;cursor:pointer;transition:background var(--dur-fast)" style-hover="background:var(--petrole-700)">Vérifier mon secteur →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA final -->
+
+    <section style="position:relative;overflow:hidden;background:var(--petrole-600);color:var(--text-on-dark);padding:88px 0">
+      <div style="position:absolute;width:480px;height:480px;border-radius:50%;top:-180px;right:8%;background:radial-gradient(circle,var(--or-500) 0%,rgba(253,190,3,0) 68%);opacity:.18;pointer-events:none"></div>
+      <div style="max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px);position:relative;z-index:1;text-align:center">
+        <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.025em;line-height:1.04;margin:0;color:var(--text-on-dark)">Parlons de votre projet</h2>
+        <p style="font-size:1.125rem;color:var(--text-on-dark-soft);margin:16px auto 32px;max-width:42ch">Une étude chiffrée, sans engagement. Un seul interlocuteur, dès le départ.</p>
+        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+          <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.Button" hint-size="auto,56px" variant="accent" size="lg" onClick="{{ navContact }}">Demander mon étude gratuite</x-import>
+        </div>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ============ PAGE: RÉALISATIONS ============ -->
+  <sc-if value="{{ isRealisations }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="Réalisations" style="animation:vRise .45s var(--ease-out) both">
+    <section style="position:relative;overflow:hidden;background:var(--surface-brand-deep);color:var(--text-on-dark);padding:72px 0 64px">
+      <div style="position:absolute;width:480px;height:480px;border-radius:50%;top:-200px;right:-100px;background:radial-gradient(circle,var(--or-500) 0%,rgba(253,190,3,0) 68%);opacity:.16;pointer-events:none"></div>
+      <div style="max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px);position:relative;z-index:1">
+        <span style="font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--or-400)">Nos prestations</span>
+        <hr style="width:48px;height:2px;background:var(--or-500);border:none;margin:16px 0 20px" />
+        <h1 style="font-family:var(--font-display);font-weight:700;font-size:clamp(2.2rem,4.4vw,3.2rem);letter-spacing:-.03em;line-height:1.04;margin:0;color:var(--text-on-dark)">Des prestations menées<br />avec la même main</h1>
+        <p style="font-size:1.125rem;line-height:1.6;color:var(--text-on-dark-soft);margin:18px 0 0;max-width:60ch">Du tableau électrique au château restauré : une sélection de projets, leurs chiffres et leurs résultats. Filtrez par métier.</p>
+      </div>
+    </section>
+
+    <!-- Récap prestations -->
+    <section style="background:var(--surface-card);padding:80px 0">
+      <div style="max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px)">
+        <div style="margin-bottom:40px">
+          <span style="font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--text-accent)">Nos prestations</span>
+          <hr style="width:48px;height:2px;background:var(--or-500);border:none;margin:16px 0 20px" />
+          <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(1.9rem,3.4vw,2.6rem);letter-spacing:-.02em;line-height:1.06;margin:0">Trois métiers,<br />une même exigence</h2>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px">
+          <sc-for list="{{ services }}" as="s" hint-placeholder-count="3">
+            <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.Card" hint-size="100%,210px" icon="{{ s.icon }}" eyebrow="{{ s.eyebrow }}" title="{{ s.title }}">{{ s.text }}</x-import>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section style="background:var(--surface-page);padding:80px 0 96px">
+      <div style="max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px)">
+        <div style="margin-bottom:36px">
+          <span style="font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--text-accent)">Nos réalisations</span>
+          <hr style="width:48px;height:2px;background:var(--or-500);border:none;margin:16px 0 20px" />
+          <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(1.9rem,3.4vw,2.6rem);letter-spacing:-.02em;line-height:1.06;margin:0">Une sélection de chantiers</h2>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:32px">
+          <div style="display:flex;flex-wrap:wrap;gap:10px">
+            <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
+              <button onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }}</button>
+            </sc-for>
+          </div>
+          <span style="font-family:var(--font-display);font-size:14px;font-weight:600;color:var(--text-muted)">{{ countText }}</span>
+        </div>
+        <div key="{{ gridKey }}" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px">
+          <sc-for list="{{ visibleProjects }}" as="p" hint-placeholder-count="8">
+            <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--e1);animation:vRise .45s var(--ease-out) both;transition:transform var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out)" style-hover="transform:translateY(-5px);box-shadow:var(--e2)">
+              <div style="{{ p.imgStyle }}">
+                <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(11,33,38,.05) 40%, rgba(11,33,38,.35))"></div>
+                <span style="position:absolute;top:14px;left:14px;display:inline-flex;align-items:center;gap:6px;font-family:var(--font-display);font-size:11.5px;font-weight:600;color:var(--petrole-900);background:var(--or-500);padding:6px 12px;border-radius:var(--r-pill)">{{ p.catLabel }}</span>
+                <span style="position:absolute;top:14px;right:14px;font-family:var(--font-display);font-size:12px;font-weight:600;color:var(--text-on-dark);background:rgba(7,58,67,.5);backdrop-filter:blur(4px);padding:6px 11px;border-radius:var(--r-pill)">{{ p.year }}</span>
+              </div>
+              <div style="padding:22px">
+                <h3 style="font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--text-strong);letter-spacing:-.01em;margin:0;line-height:1.25">{{ p.title }}</h3>
+                <div style="font-size:13px;color:var(--text-muted);margin-top:7px">{{ p.place }}</div>
+                <p style="font-size:14px;line-height:1.55;color:var(--text-body);margin:12px 0 0">{{ p.blurb }}</p>
+                <div style="display:flex;gap:12px;margin-top:18px;padding-top:18px;border-top:1px solid var(--border-subtle)">
+                  <sc-for list="{{ p.stats }}" as="st" hint-placeholder-count="3">
+                    <div style="flex:1">
+                      <div style="font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--or-600);line-height:1;letter-spacing:-.01em">{{ st.v }}</div>
+                      <div style="font-size:11px;color:var(--text-muted);margin-top:5px;line-height:1.3">{{ st.l }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="margin-top:56px;background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--r-lg);padding:40px;text-align:center;box-shadow:var(--e1)">
+          <h3 style="font-family:var(--font-display);font-weight:700;font-size:clamp(1.5rem,2.6vw,2rem);color:var(--text-strong);letter-spacing:-.02em;margin:0">Votre projet ressemble à l'un d'eux ?</h3>
+          <p style="font-size:1.05rem;color:var(--text-body);margin:14px auto 26px;max-width:46ch">Parlons-en. Étude gratuite, conseil d'artisan — jamais de démarchage.</p>
+          <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.Button" hint-size="auto,52px" variant="accent" size="lg" onClick="{{ navContact }}">Étudier mon projet</x-import>
+        </div>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ============ PAGE: ENTREPRISE ============ -->
+  <sc-if value="{{ isEntreprise }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="Entreprise" style="animation:vRise .45s var(--ease-out) both">
+    <section style="background:var(--surface-page);padding:80px 0 0">
+      <div style="max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px);display:flex;flex-wrap:wrap;gap:48px;align-items:center">
+        <div style="flex:1 1 360px">
+          <span style="font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--text-accent)">Une histoire de père en fils</span>
+          <hr style="width:48px;height:2px;background:var(--or-500);border:none;margin:16px 0 20px" />
+          <h1 style="font-family:var(--font-display);font-weight:700;font-size:clamp(2.2rem,4.2vw,3rem);letter-spacing:-.03em;line-height:1.05;margin:0">Une entreprise familiale,<br />proche de vous</h1>
+          <p style="font-size:1.125rem;line-height:1.65;color:var(--text-body);margin:20px 0 0">Créée en 2007 par Olivier Gury, Voltory s'est bâtie sur le bouche-à-oreille et la confiance — avec une volonté simple : un travail sérieux, soigné et durable.</p>
+          <p style="font-size:15px;line-height:1.6;color:var(--text-body);margin:16px 0 0">Aujourd'hui, la transmission père-fils allie près de vingt ans d'expérience à une vision moderne : photovoltaïque, bornes de recharge et gestion intelligente de l'énergie. Nous vous accueillons dans notre nouvelle agence à Cholet.</p>
+          <div style="margin-top:28px">
+            <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.Button" hint-size="auto,48px" variant="ghost" onClick="{{ navContact }}">Rencontrer Félicien</x-import>
+          </div>
+        </div>
+        <div style="flex:1 1 360px;position:relative;min-height:400px;border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--e2)">
+          <img src="assets/histoire-pere-fils.png" alt="Olivier &amp; Félicien Gury" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg, transparent 55%, rgba(11,33,38,.45))"></div>
+          <span style="position:absolute;bottom:18px;left:18px;z-index:1;font-family:var(--font-display);font-size:12px;font-weight:600;color:var(--text-on-dark);background:rgba(7,58,67,.55);backdrop-filter:blur(6px);border:1px solid var(--border-on-dark);padding:8px 13px;border-radius:var(--r-pill)">Olivier &amp; Félicien Gury — de père en fils</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <section style="background:var(--surface-page);padding:72px 0">
+      <div style="max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px);display:flex;gap:20px;flex-wrap:wrap;justify-content:center">
+        <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.StatCard" hint-size="200px,120px" value="2007" label="année de création"></x-import>
+        <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.StatCard" hint-size="200px,120px" value="3" label="métiers complémentaires"></x-import>
+        <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.StatCard" hint-size="200px,120px" value="1" label="interlocuteur, du début à la fin"></x-import>
+        <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.StatCard" hint-size="200px,120px" value="≈50" unit="km" label="d'intervention autour de Cholet"></x-import>
+      </div>
+    </section>
+
+    <!-- Bandeau agence -->
+    <section style="padding:0">
+      <div style="position:relative;height:clamp(260px,42vw,460px);overflow:hidden">
+        <img src="assets/agence-aerien.png" alt="L'agence Voltory à Cholet, toiture photovoltaïque" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+        <div style="position:absolute;inset:0;background:linear-gradient(90deg, rgba(0,95,111,.82), rgba(0,95,111,.25) 60%, transparent)"></div>
+        <div style="position:absolute;inset:0;display:flex;align-items:center">
+          <div style="max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px);width:100%">
+            <div style="max-width:34ch;color:var(--text-on-dark)">
+              <span style="font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--or-400)">Notre agence · Cholet</span>
+              <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:-.02em;line-height:1.08;margin:14px 0 0;color:var(--text-on-dark)">Un bâtiment qui produit sa propre énergie</h2>
+              <p style="font-size:1rem;line-height:1.6;color:var(--text-on-dark-soft);margin:14px 0 0">Nos locaux sont eux-mêmes équipés en photovoltaïque — nous appliquons d'abord chez nous ce que nous installons chez vous.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Méthode -->
+    <section style="background:var(--surface-card);padding:96px 0">
+      <div style="max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px)">
+        <div style="max-width:56ch;margin-bottom:44px">
+          <span style="font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--text-accent)">Notre façon de travailler</span>
+          <hr style="width:48px;height:2px;background:var(--or-500);border:none;margin:16px 0 20px" />
+          <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(1.9rem,3.4vw,2.6rem);letter-spacing:-.02em;margin:0">Un interlocuteur unique, à chaque étape</h2>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px">
+          <sc-for list="{{ steps }}" as="st" hint-placeholder-count="4">
+            <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.StepCard" hint-size="100%,180px" number="{{ st.n }}" title="{{ st.t }}">{{ st.d }}</x-import>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Pour qui -->
+    <section style="background:var(--surface-page);padding:96px 0">
+      <div style="max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px)">
+        <div style="max-width:56ch;margin-bottom:64px">
+          <span style="font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--text-accent)">Pour qui&nbsp;?</span>
+          <hr style="width:48px;height:2px;background:var(--or-500);border:none;margin:16px 0 24px" />
+          <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(1.9rem,3.4vw,2.6rem);letter-spacing:-.02em;line-height:1.15;margin:0;text-wrap:balance">Particuliers &amp; professionnels</h2>
+          <p style="font-size:1.05rem;line-height:1.65;color:var(--text-body);margin:20px 0 0">Chaque projet est étudié sur mesure, pour des besoins actuels comme à venir.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:28px">
+          <sc-for list="{{ clients }}" as="c" hint-placeholder-count="4">
+            <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.Card" hint-size="100%,200px" icon="{{ c.icon }}" title="{{ c.title }}">{{ c.text }}</x-import>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- Engagements -->
+    <section style="background:var(--surface-card);padding:96px 0;overflow:hidden">
+      <div style="max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px);display:flex;flex-wrap:wrap;gap:56px;align-items:center">
+        <div style="flex:1 1 320px">
+          <span style="font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--text-accent)">Nos engagements</span>
+          <hr style="width:48px;height:2px;background:var(--or-500);border:none;margin:16px 0 20px" />
+          <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(1.9rem,3.4vw,2.6rem);letter-spacing:-.02em;line-height:1.1;margin:0">Une relation de confiance,<br />durable</h2>
+          <p style="font-size:1.05rem;line-height:1.65;color:var(--text-body);margin:18px 0 0;max-width:40ch">Faire entrer une entreprise chez soi est une décision importante. Voilà ce sur quoi vous pouvez compter.</p>
+        </div>
+        <div style="flex:1 1 460px;display:flex;gap:20px;height:480px;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(180deg,transparent,#000 12%,#000 88%,transparent)">
+          <div style="flex:1;display:flex;flex-direction:column;gap:20px;animation:vScrollUp 26s linear infinite" style-hover="animation-play-state:paused">
+            <sc-for list="{{ engColA }}" as="e" hint-placeholder-count="8">
+              <div style="background:var(--surface-page);border:1px solid var(--border-subtle);border-radius:var(--r-md);padding:22px;box-shadow:var(--e1);flex-shrink:0">
+                <span style="display:flex;width:30px;height:30px;border-radius:var(--r-pill);background:var(--or-500);color:var(--petrole-900);align-items:center;justify-content:center;font-size:14px;font-weight:700">✓</span>
+                <div style="font-family:var(--font-display);font-weight:600;font-size:15.5px;line-height:1.4;color:var(--text-strong);margin-top:14px">{{ e }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:20px;animation:vScrollDown 26s linear infinite" style-hover="animation-play-state:paused">
+            <sc-for list="{{ engColB }}" as="e" hint-placeholder-count="8">
+              <div style="background:var(--petrole-600);border-radius:var(--r-md);padding:22px;box-shadow:var(--e1);flex-shrink:0">
+                <span style="display:flex;width:30px;height:30px;border-radius:var(--r-pill);background:var(--or-500);color:var(--petrole-900);align-items:center;justify-content:center;font-size:14px;font-weight:700">✓</span>
+                <div style="font-family:var(--font-display);font-weight:600;font-size:15.5px;line-height:1.4;color:var(--blanc);margin-top:14px">{{ e }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="background:var(--surface-brand);color:var(--text-on-dark);padding:80px 0;text-align:center">
+      <div style="max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px)">
+        <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(1.8rem,3.4vw,2.6rem);letter-spacing:-.02em;margin:0;color:var(--text-on-dark)">Travaillons ensemble</h2>
+        <p style="font-size:1.05rem;color:var(--text-on-dark-soft);margin:16px auto 28px;max-width:42ch">De la rénovation au patrimoine d'exception, parlons de votre lieu.</p>
+        <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.Button" hint-size="auto,52px" variant="accent" size="lg" onClick="{{ navContact }}">Prendre contact</x-import>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ============ PAGE: CONTACT ============ -->
+  <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="Contact" style="animation:vRise .45s var(--ease-out) both">
+    <section style="background:var(--surface-page);padding:72px 0 96px">
+      <div style="max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px)">
+        <div style="max-width:56ch;margin-bottom:48px">
+          <span style="font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--text-accent)">Sans engagement · réponse rapide</span>
+          <hr style="width:48px;height:2px;background:var(--or-500);border:none;margin:16px 0 20px" />
+          <h1 style="font-family:var(--font-display);font-weight:700;font-size:clamp(2.2rem,4.2vw,3rem);letter-spacing:-.03em;line-height:1.04;margin:0">Parlons de votre projet</h1>
+          <p style="font-size:1.125rem;line-height:1.6;color:var(--text-body);margin:18px 0 0">Un échange clair pour comprendre votre lieu et vos besoins — puis une étude chiffrée, gratuite. Un seul interlocuteur : Félicien.</p>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+          <!-- form -->
+          <div style="flex:1.3 1 380px;background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--r-lg);padding:36px;box-shadow:var(--e2)">
+            <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+              <div style="text-align:center;padding:36px 8px;animation:vRise .35s var(--ease-out) both">
+                
+                <h3 style="font-family:var(--font-display);font-weight:700;font-size:24px;color:var(--text-strong);margin:14px 0 8px">Merci&nbsp;!</h3>
+                <p style="font-size:15px;color:var(--text-body);line-height:1.55;max-width:36ch;margin:0 auto">Félicien vous recontacte sous 48&nbsp;h pour votre étude. À très vite.</p>
+                <div style="margin-top:26px;display:flex;justify-content:center">
+                  <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.Button" hint-size="auto,48px" variant="ghost" onClick="{{ resetForm }}">Envoyer une autre demande</x-import>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+              <form onSubmit="{{ submitForm }}" style="display:flex;flex-direction:column;gap:18px">
+                <h3 style="font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--text-strong);margin:0">Demander mon étude gratuite</h3>
+                <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.Input" hint-size="100%,68px" label="Nom complet" placeholder="Jean Dupont" required="{{ true }}"></x-import>
+                <div style="display:flex;gap:16px;flex-wrap:wrap">
+                  <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.Input" hint-size="100%,68px" style="{{ halfField }}" label="Email" type="email" placeholder="jean@exemple.fr" required="{{ true }}"></x-import>
+                  <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.Input" hint-size="100%,68px" style="{{ halfField }}" label="Téléphone" type="tel" placeholder="06 12 34 56 78"></x-import>
+                </div>
+                <div>
+                  <label style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--text-strong);display:block;margin-bottom:8px">Type de projet</label>
+                  <div style="display:flex;flex-wrap:wrap;gap:8px">
+                    <sc-for list="{{ projectTypes }}" as="t" hint-placeholder-count="4">
+                      <button type="button" onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</button>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <label for="msg" style="font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--text-strong)">Votre projet</label>
+                  <textarea id="msg" rows="4" placeholder="Quelques mots sur votre lieu et vos besoins…" style="font-family:var(--font-body);font-size:15px;color:var(--text-strong);padding:12px 16px;border-radius:var(--r-sm);border:1.5px solid var(--border-strong);background:var(--surface-card);outline:none;width:100%;resize:vertical" style-focus="border-color:var(--petrole-400);box-shadow:0 0 0 3px var(--or-200)"></textarea>
+                </div>
+                <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.Button" hint-size="100%,56px" variant="accent" size="lg" full="{{ true }}" type="submit">Envoyer ma demande</x-import>
+                <p style="font-size:12.5px;color:var(--text-muted);text-align:center;margin:0">Conseil d'artisan, jamais de démarchage. Vos données restent confidentielles.</p>
+              </form>
+            </sc-if>
+          </div>
+          <!-- info -->
+          <div style="flex:1 1 280px;display:flex;flex-direction:column;gap:20px">
+            <div style="background:var(--surface-brand);color:var(--text-on-dark);border-radius:var(--r-lg);padding:30px;box-shadow:var(--e2)">
+              <div style="font-family:var(--font-display);font-weight:700;font-size:18px">Voltory — agence de Cholet</div>
+              <div style="display:flex;flex-direction:column;gap:16px;margin-top:22px">
+                <sc-for list="{{ contactRows }}" as="row" hint-placeholder-count="4">
+                  <div style="display:flex;gap:14px;align-items:flex-start">
+                    <span style="flex-shrink:0;width:36px;height:36px;border-radius:var(--r-pill);background:rgba(253,190,3,.16);display:flex;align-items:center;justify-content:center;font-size:16px">{{ row.icon }}</span>
+                    <div>
+                      <div style="font-size:11px;font-family:var(--font-display);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--or-400)">{{ row.label }}</div>
+                      <div style="font-size:15px;color:var(--text-on-dark);margin-top:3px;line-height:1.4">{{ row.value }}</div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            <div style="background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--r-lg);padding:24px;box-shadow:var(--e1);display:flex;flex-wrap:wrap;gap:8px">
+              <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.Badge" hint-size="auto,34px" variant="eco" icon="✓">RGE QualiPV</x-import>
+              <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.Badge" hint-size="auto,34px" variant="petrole">Maine-et-Loire &amp; Vendée</x-import>
+              <x-import component-from-global-scope="VoltoryDesignSystem_1ee063.Badge" hint-size="auto,34px" variant="or">Depuis 2007</x-import>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background:var(--surface-brand-deep);color:var(--text-on-dark);padding:56px 0 32px">
+    <div style="max-width:1440px;margin:0 auto;padding:0 clamp(24px,5vw,72px);display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between">
+      <div style="flex:1 1 260px;max-width:320px">
+        <img src="assets/voltory-logo-white.png" alt="Voltory" style="height:30px;display:block" />
+        <p style="font-size:14px;color:var(--text-on-dark-soft);line-height:1.6;margin:18px 0 0">Entreprise familiale d'électricité, de photovoltaïque et de bornes de recharge à Cholet. De père en fils depuis 2007 — un interlocuteur unique, du conseil au suivi.</p>
+      </div>
+      <div style="display:flex;gap:48px;flex-wrap:wrap">
+        <div>
+          <div style="font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--or-400);margin-bottom:14px">Navigation</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="4">
+              <button onClick="{{ n.onClick }}" style="background:none;border:none;color:var(--text-on-dark-soft);font-family:var(--font-body);font-size:14px;cursor:pointer;text-align:left;padding:0" style-hover="color:var(--or-300)">{{ n.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--or-400);margin-bottom:14px">Contact</div>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--text-on-dark-soft)">
+            <span>Cholet, Maine-et-Loire</span>
+            <span>02 41 00 00 00</span>
+            <span>contact@voltory.fr</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1180px;margin:36px auto 0;padding:24px 28px 0;border-top:1px solid var(--border-on-dark);font-size:12.5px;color:var(--text-on-dark-soft);display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between">
+      <span>© 2026 Voltory · Électricité · Photovoltaïque · Bornes de recharge</span>
+      <span>RGE QualiPV · SIRET 000 000 000 00000</span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    page: 'home', filter: 'all', bill: 120, hoverCity: 'Cholet',
+    submitted: false, projType: 'Solaire', heroIndex: 0, roll: false,
+    years: 19, projets: 250, kwh: 3200, auto: 60
+  };
+
+  _heroImgs = [
+    'assets/hero/01-salon.jpg', 'assets/hero/02-sdb-verte.jpg', 'assets/hero/03-chambre-chateau.jpg',
+    'assets/hero/04-terrasse.jpg', 'assets/hero/05-cuisine.jpg', 'assets/hero/06-sdb-marbre.jpg',
+    'assets/hero/07-hall.jpg', 'assets/hero/08-corniche.jpg'
+  ];
+
+  componentDidMount() { this._maybeAnimate(); this._startHero(); this._svcTimer = setInterval(() => { if (typeof document !== 'undefined' && document.hidden) return; this.setState(s => ({ svcTick: (s.svcTick || 0) + 1 })); }, 3500); }
+
+  componentWillUnmount() { clearInterval(this._heroTimer); clearInterval(this._svcTimer); clearTimeout(this._safety); if (this._io) this._io.disconnect(); }
+
+  _startHero() {
+    clearInterval(this._heroTimer);
+    this._heroTimer = setInterval(() => {
+      if (typeof document !== 'undefined' && document.hidden) return;
+      this.setState(s => ({ heroIndex: (s.heroIndex + 1) % this._heroImgs.length }));
+    }, 4500);
+  }
+
+  _goHero(i) { this.setState({ heroIndex: i }); this._startHero(); }
+
+  _selectCity(name) {
+    this.setState({ hoverCity: name });
+    const c = (this._cityData || []).find(x => x.name === name);
+    if (c && this._map) this._map.flyTo([c.lat, c.lng], 11, { duration: .8 });
+    this._syncMarkers(name);
+  }
+
+  _syncMarkers(activeName) {
+    if (!this._markers) return;
+    Object.keys(this._markers).forEach(n => {
+      const { marker, hq } = this._markers[n];
+      const active = n === activeName;
+      marker.setStyle({
+        radius: hq ? 11 : (active ? 10 : 7),
+        fillColor: active || hq ? '#FDBE03' : '#005F6F',
+        color: '#ffffff', weight: 2, fillOpacity: 1
+      });
+    });
+  }
+
+  _mapRef = (node) => {
+    if (!node) { if (this._map) { this._map.remove(); this._map = null; this._markers = null; } return; }
+    const init = () => {
+      if (!window.L) { setTimeout(init, 200); return; }
+      if (this._map) return;
+      const map = window.L.map(node, { scrollWheelZoom: false, zoomControl: true }).setView([47.02, -0.85], 9);
+      window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap', maxZoom: 18
+      }).addTo(map);
+      this._map = map;
+      this._markers = {};
+      (this._cityData || []).forEach(c => {
+        const m = window.L.circleMarker([c.lat, c.lng], { radius: c.hq ? 11 : 7, fillColor: c.hq ? '#FDBE03' : '#005F6F', color: '#ffffff', weight: 2, fillOpacity: 1 }).addTo(map);
+        m.bindTooltip(c.name + ' \u2014 ' + c.projects + ' projets', { direction: 'top', offset: [0, -8] });
+        m.on('click', () => this._selectCity(c.name));
+        this._markers[c.name] = { marker: m, hq: !!c.hq };
+      });
+      this._syncMarkers(this.state.hoverCity);
+      setTimeout(() => map.invalidateSize(), 300);
+    };
+    init();
+  };
+
+  _maybeAnimate() { this.setState({ roll: false }); }
+
+  _statsRef = (node) => {
+    if (this._io) { this._io.disconnect(); this._io = null; }
+    if (!node) return;
+    if (typeof IntersectionObserver === 'undefined') { this.setState({ roll: true }); return; }
+    this._io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting && !this.state.roll) {
+          this._io.disconnect(); this._io = null;
+          requestAnimationFrame(() => this.setState({ roll: true }));
+        }
+      });
+    }, { threshold: 0.35 });
+    this._io.observe(node);
+  };
+
+  _animate() {
+    const T = { years: 19, projets: 250, kwh: 3200, auto: 60 };
+    const hidden = () => (typeof document !== 'undefined' && document.hidden);
+    if (hidden()) { this.setState(T); return; }
+    const dur = 1300, t0 = (typeof performance !== 'undefined' ? performance.now() : Date.now());
+    const ease = (x) => 1 - Math.pow(1 - x, 3);
+    const tick = () => {
+      if (hidden()) { this.setState(T); return; } // don't crawl while throttled — snap to final
+      const now = (typeof performance !== 'undefined' ? performance.now() : Date.now());
+      const p = Math.min(1, (now - t0) / dur), e = ease(p);
+      this.setState({ years: Math.round(T.years * e), projets: Math.round(T.projets * e), kwh: Math.round(T.kwh * e), auto: Math.round(T.auto * e) });
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  nav(p) {
+    this.setState({ page: p });
+    try { (document.scrollingElement || document.documentElement).scrollTop = 0; window.scrollTo(0, 0); } catch (e) {}
+    if (p === 'home') { this._maybeAnimate(); }
+  }
+
+  fmt(n) { return Math.round(n).toLocaleString('fr-FR'); }
+
+  _buildStats() {
+    const roll = this.state.roll;
+    const spins = 2;
+    const digitCol = (d, colIdx, key) => {
+      const total = spins * 10 + d;
+      const cells = [];
+      for (let n = 0; n <= total; n++) {
+        cells.push(React.createElement('span', { key: n, style: { height: '1em', lineHeight: '1em', display: 'block' } }, String(n % 10)));
+      }
+      const inner = React.createElement('span', {
+        style: {
+          display: 'block',
+          transform: roll ? 'translateY(-' + total + 'em)' : 'translateY(0em)',
+          transition: 'transform 1.6s cubic-bezier(.16,1,.3,1)',
+          transitionDelay: (0.05 + colIdx * 0.11) + 's'
+        }
+      }, cells);
+      return React.createElement('span', { key: key, style: { display: 'inline-block', height: '1em', lineHeight: '1em', overflow: 'hidden', verticalAlign: 'top', width: '0.62em', textAlign: 'center' } }, inner);
+    };
+    const build = (prefix, numStr, suffix) => {
+      const chars = numStr.split('');
+      let colIdx = -1;
+      const parts = chars.map((ch, i) => {
+        if (/[0-9]/.test(ch)) { colIdx++; return digitCol(parseInt(ch, 10), colIdx, i); }
+        return React.createElement('span', { key: i, style: { display: 'inline-block', width: ch === ' ' ? '0.26em' : 'auto', verticalAlign: 'top' } }, ch === ' ' ? '' : ch);
+      });
+      const kids = [];
+      if (prefix) kids.push(React.createElement('span', { key: 'p', style: { verticalAlign: 'top', marginRight: '0.14em' } }, prefix.trim()));
+      kids.push.apply(kids, parts);
+      if (suffix) kids.push(React.createElement('span', { key: 's', style: { verticalAlign: 'top', marginLeft: '0.22em' } }, suffix.trim()));
+      return React.createElement('span', { style: { display: 'inline-flex', alignItems: 'flex-start', whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums' } }, kids);
+    };
+    const underline = (delay) => React.createElement('span', {
+      style: {
+        display: 'block', height: '3px', borderRadius: '2px', background: 'var(--or-500)',
+        width: roll ? '46px' : '0px', transition: 'width .7s cubic-bezier(.16,1,.3,1)', transitionDelay: delay + 's'
+      }
+    });
+    return [
+      { prefix: '', num: '19', suffix: ' ans', label: "d'expérience, depuis 2007" },
+      { prefix: '+', num: '250', suffix: '', label: 'chantiers réalisés' },
+      { prefix: '≈ ', num: '3 200', suffix: '', label: 'kWh produits / an par installation' },
+      { prefix: '', num: '60', suffix: ' %', label: "jusqu'à, d'électricité autoconsommée" }
+    ].map((s, i) => ({
+      label: s.label,
+      rollEl: build(s.prefix, s.num, s.suffix),
+      underline: underline(0.5 + i * 0.08)
+    }));
+  }
+
+  renderVals() {
+    const NS = 'VoltoryDesignSystem_1ee063';
+    const svgEl = (kids, size) => React.createElement('svg', { width: size || 22, height: size || 22, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round', style: { display: 'block' } }, kids);
+    const p = (d, k) => React.createElement('path', { d: d, key: k });
+    const c = (cx, cy, r, k) => React.createElement('circle', { cx: cx, cy: cy, r: r, key: k });
+    const I = {
+      zap: svgEl([p('M13 2 3 14h9l-1 8 10-12h-9l1-8', 'a')]),
+      sun: svgEl([c(12, 12, 4, 'a'), p('M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41', 'b')]),
+      plug: svgEl([p('M12 22v-5', 'a'), p('M9 8V2', 'b'), p('M15 8V2', 'c'), p('M18 8v5a6 6 0 0 1-12 0V8Z', 'd')]),
+      key: svgEl([p('M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4', 'a')]),
+      home: svgEl([p('M3 10.5 12 3l9 7.5', 'a'), p('M5 9.5V21h14V9.5', 'b')]),
+      trend: svgEl([p('M22 17l-8.5-8.5-5 5L2 7', 'a'), p('M16 17h6v-6', 'b')]),
+      building: svgEl([p('M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16', 'a'), p('M2 21h20', 'b'), p('M9 7h1M9 11h1M9 15h1M13 7h1M13 11h1M13 15h1', 'c')]),
+      pin: svgEl([p('M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z', 'a'), c(12, 10, 3, 'b')], 17),
+      phone: svgEl([p('M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z', 'a')], 17),
+      mail: svgEl([p('M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z', 'a'), p('m22 7-10 5L2 7', 'b')], 17),
+      clock: svgEl([c(12, 12, 10, 'a'), p('M12 6v6l4 2', 'b')], 17)
+    };
+    const page = this.state.page;
+
+    const navDefs = [
+      { key: 'realisations', label: 'Prestations' },
+      { key: 'entreprise', label: "L'entreprise" }
+    ];
+    const navLinkBase = {
+      fontFamily: 'var(--font-display)', fontSize: '15px', fontWeight: 500,
+      background: 'none', border: 'none', cursor: 'pointer', padding: '6px 4px',
+      textDecoration: 'none', transition: 'color var(--dur-fast), opacity var(--dur-fast)'
+    };
+    const navItems = navDefs.map(n => ({
+      label: n.label,
+      onClick: () => this.nav(n.key),
+      style: n.key === page
+        ? { ...navLinkBase, color: 'var(--or-500)', fontWeight: 600, opacity: 0.45, borderBottom: '2px solid var(--or-500)', paddingBottom: '4px' }
+        : { ...navLinkBase, color: 'var(--or-500)', fontWeight: 600, opacity: 1, borderBottom: '2px solid transparent', paddingBottom: '4px' }
+    }));
+
+    // ---- Réalisations ----
+    const PROJECTS = [
+      { cat: 'patrimoine', catLabel: 'Patrimoine', img: 'assets/real-hotel-hall.jpg', title: 'Hôtel particulier — hall & escalier', place: 'Maine-et-Loire', year: '2025', blurb: "Éclairage d'accentuation du hall et de la cage d'escalier, appareillage discret intégré à la pierre.", stats: [{ v: '180', l: 'points lumineux' }, { v: '100 %', l: 'sur-mesure' }, { v: '6 sem.', l: 'de pose' }] },
+      { cat: 'patrimoine', catLabel: 'Patrimoine', img: 'assets/real-lustre-ferronnerie.jpg', title: 'Lustre & ferronnerie dorée — demeure de caractère', place: 'Maine-et-Loire', year: '2024', blurb: 'Remise en lumière d\u2019un lustre d\u2019époque et ligne discrète le long de la ferronnerie restaurée.', stats: [{ v: 'IRC 95', l: 'qualité' }, { v: '2700 K', l: 'blanc chaud' }, { v: '100 %', l: 'gradable' }] },
+      { cat: 'patrimoine', catLabel: 'Patrimoine', img: 'assets/real-cuisine-marbre.jpg', title: 'Cuisine en marbre vert — appartement bourgeois', place: 'Loire-Atlantique', year: '2025', blurb: 'Éclairage sur-mesure et appareillage laiton sur un intérieur classé, sans percer les moulures.', stats: [{ v: 'Laiton', l: 'appareillage' }, { v: '0', l: 'moulure percée' }, { v: '3 sem.', l: 'de pose' }] },
+      { cat: 'solaire', catLabel: 'Solaire', img: 'assets/real-solaire-toiture.webp', title: 'Autoconsommation — toiture tuiles', place: 'Maine-et-Loire', year: '2025', blurb: 'Panneaux full black plein sud, micro-onduleurs et pilotage fin de l\u2019autoconsommation.', stats: [{ v: '3 200', l: 'kWh / an' }, { v: '−58 %', l: 'sur la facture' }, { v: '6,5 ans', l: 'de retour' }] },
+      { cat: 'solaire', catLabel: 'Solaire', img: 'assets/agence-aerien.png', title: 'Toiture tertiaire — bâtiment professionnel', place: 'Maine-et-Loire', year: '2024', blurb: 'Centrale en toiture de bâtiment d\u2019activité, dimensionnée sur la consommation de l\u2019entreprise.', stats: [{ v: '36 kWc', l: 'installés' }, { v: '≈ 40 000', l: 'kWh / an' }, { v: 'Pro', l: 'tertiaire' }] },
+      { cat: 'renovation', catLabel: 'Rénovation', img: 'assets/real-renovation-carrelage.jpg', title: 'Rénovation complète — pièce de vie', place: 'Vendée', year: '2025', blurb: 'Reprise des circuits et alimentation des nouveaux points, en coordination avec le carreleur.', stats: [{ v: 'NF C 15-100', l: 'conforme' }, { v: '12', l: 'circuits repris' }, { v: '5 jours', l: 'sur site' }] },
+      { cat: 'eclairage', catLabel: 'Éclairage', img: 'assets/real-eclairage-terrasse.png', title: 'Éclairage extérieur — terrasse & jardin', place: 'Vendée', year: '2025', blurb: 'Scénographie lumineuse d\u2019une terrasse : balisage, éclairage de massif et façade en blanc chaud.', stats: [{ v: 'IP65', l: 'extérieur' }, { v: '2700 K', l: 'blanc chaud' }, { v: 'Pilotable', l: 'par zones' }] },
+      { cat: 'borne', catLabel: 'Borne de recharge', img: 'assets/real-borne-felicien.jpg', title: 'Borne de recharge — véhicule électrique', place: 'Maine-et-Loire', year: '2024', blurb: 'Borne 7,4 kW couplée à l\u2019installation, étude de puissance et pilotage de la recharge.', stats: [{ v: '7,4 kW', l: 'de charge' }, { v: 'Solaire', l: 'couplable' }, { v: '1 jour', l: 'de pose' }] }
+    ];
+    const filter = this.state.filter;
+    const visibleProjects = (filter === 'all' ? PROJECTS : PROJECTS.filter(p => p.cat === filter)).map(pr => ({
+      ...pr,
+      imgStyle: {
+        position: 'relative', height: '184px', overflow: 'hidden',
+        background: "url('" + pr.img + "') center/cover, linear-gradient(140deg, var(--petrole-500), var(--petrole-800))"
+      }
+    }));
+
+    const filterDefs = [
+      { key: 'all', label: 'Tous les projets' }, { key: 'patrimoine', label: 'Patrimoine' },
+      { key: 'solaire', label: 'Solaire' }, { key: 'renovation', label: 'Rénovation' }, { key: 'eclairage', label: 'Éclairage' }, { key: 'borne', label: 'Bornes' }
+    ];
+    const chipBase = {
+      fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '14px', padding: '9px 18px',
+      borderRadius: 'var(--r-pill)', cursor: 'pointer', transition: 'all var(--dur-fast) var(--ease-out)'
+    };
+    const filters = filterDefs.map(f => ({
+      label: f.label,
+      onClick: () => this.setState({ filter: f.key }),
+      style: f.key === filter
+        ? { ...chipBase, background: 'var(--petrole-600)', color: 'var(--blanc)', border: '1.5px solid var(--petrole-600)' }
+        : { ...chipBase, background: 'var(--surface-card)', color: 'var(--petrole-700)', border: '1.5px solid var(--border-strong)' }
+    }));
+    const countText = visibleProjects.length + (visibleProjects.length > 1 ? ' projets' : ' projet');
+
+    // ---- Simulateur ----
+    const bill = this.state.bill, annual = bill * 12;
+    const kwc = Math.max(3, Math.min(9, Math.round(annual / 520)));
+    const production = Math.round(kwc * 1150);
+    const savings = Math.round(annual * 0.55);
+
+    // ---- Carte zone ----
+    const CITY_DATA = [
+      { name: 'Cholet', dept: 'Maine-et-Loire', projects: 120, lat: 47.058, lng: -0.878, hq: true, blurb: 'Notre agence et notre cœur d\u2019activité — interventions quotidiennes.' },
+      { name: 'Angers', dept: 'Maine-et-Loire', projects: 48, lat: 47.478, lng: -0.563, blurb: 'Patrimoine et éclairage architectural dans le centre historique.' },
+      { name: 'Saumur', dept: 'Maine-et-Loire', projects: 22, lat: 47.260, lng: -0.077, blurb: 'Mises en lumière de façades et biens de caractère.' },
+      { name: 'Nantes', dept: 'Loire-Atlantique', projects: 18, lat: 47.218, lng: -1.553, blurb: 'Rénovations électriques en appartement occupé.' },
+      { name: 'Beaupréau', dept: 'Maine-et-Loire', projects: 16, lat: 47.204, lng: -0.986, blurb: 'Rénovation et mise aux normes en milieu rural.' },
+      { name: 'Mortagne-sur-Sèvre', dept: 'Vendée', projects: 14, lat: 46.992, lng: -0.947, blurb: 'Longères et bâtis anciens remis aux normes.' },
+      { name: 'Les Herbiers', dept: 'Vendée', projects: 34, lat: 46.871, lng: -1.013, blurb: 'Solaire en autoconsommation et bornes de recharge.' },
+      { name: 'La Roche-sur-Yon', dept: 'Vendée', projects: 26, lat: 46.670, lng: -1.426, blurb: 'Installations photovoltaïques résidentielles.' }
+    ];
+    this._cityData = CITY_DATA;
+    const hover = this.state.hoverCity;
+    const cities = CITY_DATA.map(c => {
+      const active = c.name === hover;
+      return {
+        name: c.name,
+        onClick: () => this._selectCity(c.name),
+        chipStyle: {
+          fontFamily: 'var(--font-display)', fontSize: '12.5px', fontWeight: 600, padding: '7px 13px',
+          borderRadius: 'var(--r-pill)', cursor: 'pointer',
+          border: '1px solid ' + (active ? 'var(--or-500)' : 'var(--border-subtle)'),
+          background: active ? 'var(--or-500)' : 'var(--surface-card)',
+          color: active ? 'var(--petrole-900)' : 'var(--text-body)',
+          transition: 'all var(--dur-fast) var(--ease-out)'
+        }
+      };
+    });
+    const activeCity = CITY_DATA.find(c => c.name === hover) || CITY_DATA[0];
+
+    // ---- Contact ----
+    const projTypeDefs = ['Électricité', 'Photovoltaïque', 'Borne de recharge', 'Rénovation'];
+    const ptBase = { fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '13px', padding: '8px 15px', borderRadius: 'var(--r-pill)', cursor: 'pointer', transition: 'all var(--dur-fast)' };
+    const projectTypes = projTypeDefs.map(t => ({
+      label: t,
+      onClick: () => this.setState({ projType: t }),
+      style: t === this.state.projType
+        ? { ...ptBase, background: 'var(--petrole-600)', color: 'var(--blanc)', border: '1.5px solid var(--petrole-600)' }
+        : { ...ptBase, background: 'var(--surface-page)', color: 'var(--petrole-700)', border: '1.5px solid var(--border-subtle)' }
+    }));
+
+    const hIdx = this.state.heroIndex;
+    const heroSlides = this._heroImgs.map((src, i) => ({
+      style: {
+        position: 'absolute', inset: 0,
+        backgroundImage: "url('" + src + "')", backgroundSize: 'cover', backgroundPosition: 'center',
+        opacity: i === hIdx ? 1 : 0,
+        transform: i === hIdx ? 'scale(1.06)' : 'scale(1)',
+        transition: 'opacity 1.4s var(--ease-out), transform 6s linear',
+        zIndex: i === hIdx ? 1 : 0
+      }
+    }));
+    const heroDots = this._heroImgs.map((src, i) => ({
+      label: 'Photo ' + (i + 1),
+      onClick: () => this._goHero(i),
+      style: {
+        width: i === hIdx ? '26px' : '10px', height: '10px', padding: 0, borderRadius: 'var(--r-pill)',
+        border: 'none', cursor: 'pointer', transition: 'all var(--dur-base) var(--ease-out)',
+        background: i === hIdx ? 'var(--or-500)' : 'rgba(255,255,255,.45)'
+      }
+    }));
+
+    return {
+      heroSlides, heroDots,
+      metiers: [
+        {
+          eyebrow: 'Électricité générale', title: 'Rénovation & mise aux normes',
+          text: "Du tableau électrique à l'appareillage de prestige : des installations sûres, soignées et conformes, en neuf comme en rénovation.",
+          points: ['Audit de l\u2019installation avant achat', 'Rénovation complète & mise aux normes', 'Éclairage d\u2019ambiance et extérieur', 'Domotique & réseaux RJ45'],
+          imgs: ['assets/hero/01-salon.jpg', 'assets/real-hotel-hall.jpg', 'assets/real-lustre-ferronnerie.jpg', 'assets/hero/04-terrasse.jpg']
+        },
+        {
+          eyebrow: 'Photovoltaïque', title: 'Solaire en autoconsommation',
+          text: 'Un solaire dimensionné sur votre consommation réelle, jamais vendu à la hâte — de l\u2019étude de rentabilité au suivi de production.',
+          points: ['Étude de rentabilité sur mesure', 'Installation en surimposition soignée', 'Démarches administratives gérées', 'Suivi de production à distance'],
+          imgs: ['assets/real-solaire-toiture.webp', 'assets/agence-aerien.png']
+        },
+        {
+          eyebrow: 'Bornes de recharge', title: 'Recharge de véhicule électrique',
+          text: 'Prises renforcées et bornes adaptées à votre installation, avec étude de puissance et pilotage intelligent de la recharge.',
+          points: ['Prises renforcées dès 349 € TTC', 'Bornes de 7 à 11 kW', 'Étude de puissance disponible', 'Couplage avec le solaire'],
+          imgs: ['assets/real-borne-felicien.jpg', 'assets/agence-aerien.png']
+        }
+      ].map((m, mi) => {
+        const tick = this.state.svcTick || 0;
+        const idx = tick % m.imgs.length;
+        return {
+          ...m,
+          rowStyle: { display: 'flex', flexWrap: 'wrap', gap: '44px', alignItems: 'center', flexDirection: mi % 2 === 1 ? 'row-reverse' : 'row' },
+          onSeeMore: () => this.nav('realisations'),
+          slides: m.imgs.map((src, i) => ({
+            style: {
+              position: 'absolute', inset: 0,
+              backgroundImage: "url('" + src + "')", backgroundSize: 'cover', backgroundPosition: 'center',
+              opacity: i === idx ? 1 : 0, zIndex: i === idx ? 1 : 0,
+              transition: 'opacity 1.2s var(--ease-out)'
+            }
+          })),
+          dots: m.imgs.map((src, i) => ({
+            style: {
+              width: i === idx ? '20px' : '8px', height: '8px', borderRadius: 'var(--r-pill)',
+              background: i === idx ? 'var(--or-500)' : 'rgba(255,255,255,.55)',
+              transition: 'all var(--dur-base) var(--ease-out)', display: 'inline-block'
+            }
+          }))
+        };
+      }),
+      navItems, navHome: () => this.nav('home'), navRealisations: () => this.nav('realisations'),
+      navContact: () => this.nav('contact'),
+      isHome: page === 'home', isRealisations: page === 'realisations',
+      isEntreprise: page === 'entreprise', isContact: page === 'contact',
+
+      refs: ['LVMH', 'Louis Vuitton', 'Château de Thubeuf', 'Camif Habitat', 'Groupe Balas', 'Financière Saint James'],
+      services: [
+        { icon: I.zap, eyebrow: 'Électricité générale', title: 'Rénovation & mise aux normes', text: "Audit avant achat, tableaux et circuits, éclairage d'ambiance et extérieur, domotique et réseaux RJ45." },
+        { icon: I.sun, eyebrow: 'Photovoltaïque', title: 'Solaire en autoconsommation', text: 'Étude de rentabilité sur mesure, installation, démarches administratives et suivi de production.' },
+        { icon: I.plug, eyebrow: 'Bornes de recharge', title: 'Recharge de véhicule', text: 'Prises renforcées et bornes de 7 à 11 kW, étude de puissance, couplage solaire et pilotage intelligent.' }
+      ],
+      clients: [
+        { icon: I.key, title: 'Nouveaux propriétaires', text: "Sécurisation, mise aux normes et rénovation de l'installation lors d'une acquisition." },
+        { icon: I.home, title: 'Rénovation & extension', text: 'Adaptation de l\u2019électricité pour une cuisine, une salle de bain, une extension ou une pergola.' },
+        { icon: I.trend, title: 'Maîtriser ses dépenses', text: 'Réduction des factures grâce au photovoltaïque, complété au besoin par une borne de recharge.' },
+        { icon: I.building, title: 'Professionnels', text: 'Solaire et bornes adaptés à l\u2019entreprise : valoriser le patrimoine et accompagner la mobilité électrique.' }
+      ],
+      reviews: [
+        { initial: 'M', name: 'Marie L.', meta: 'Rénovation électrique · Cholet', text: "Réhabilitation complète du réseau électrique suite à l'achat de notre maison. Félicien a été de très bon conseil, le travail est impeccable." },
+        { initial: 'J', name: 'Jérôme B.', meta: 'Photovoltaïque · Les Herbiers', text: "Installation de panneaux solaires sur mon toit. Travail très bien fait, entreprise très professionnelle et de bons conseils." },
+        { initial: 'S', name: 'Sophie R.', meta: 'Électricité générale · Cholet', text: 'Électricien très professionnel, réactif et sympathique. Le travail est soigné et réalisé dans les délais. Je recommande vivement.' },
+        { initial: 'A', name: 'André P.', meta: 'Photovoltaïque · Vendée', text: "Sur conseils de ma fille, j'ai fait appel à eux pour les panneaux solaires. L'équipe est très professionnelle, je suis très contente du résultat." },
+        { initial: 'C', name: 'Claire D.', meta: 'Rénovation · Maine-et-Loire', text: 'Merci pour la qualité du travail effectué, le professionnalisme et la bonne humeur de chacun sur mon chantier. Je recommande.' },
+        { initial: 'T', name: 'Thomas G.', meta: 'Électricité · Cholet', text: 'Excellents conseils et travail très professionnel. Je recommande cette entreprise les yeux fermés !' },
+        { initial: 'M', name: 'Marie L.', meta: 'Rénovation électrique · Cholet', text: "Réhabilitation complète du réseau électrique suite à l'achat de notre maison. Félicien a été de très bon conseil, le travail est impeccable." },
+        { initial: 'J', name: 'Jérôme B.', meta: 'Photovoltaïque · Les Herbiers', text: "Installation de panneaux solaires sur mon toit. Travail très bien fait, entreprise très professionnelle et de bons conseils." },
+        { initial: 'S', name: 'Sophie R.', meta: 'Électricité générale · Cholet', text: 'Électricien très professionnel, réactif et sympathique. Le travail est soigné et réalisé dans les délais. Je recommande vivement.' },
+        { initial: 'A', name: 'André P.', meta: 'Photovoltaïque · Vendée', text: "Sur conseils de ma fille, j'ai fait appel à eux pour les panneaux solaires. L'équipe est très professionnelle, je suis très contente du résultat." },
+        { initial: 'C', name: 'Claire D.', meta: 'Rénovation · Maine-et-Loire', text: 'Merci pour la qualité du travail effectué, le professionnalisme et la bonne humeur de chacun sur mon chantier. Je recommande.' },
+        { initial: 'T', name: 'Thomas G.', meta: 'Électricité · Cholet', text: 'Excellents conseils et travail très professionnel. Je recommande cette entreprise les yeux fermés !' }
+      ],
+      engagements: [
+        'Des conseils adaptés à chaque projet',
+        'Une étude technique personnalisée',
+        'La gestion des démarches administratives',
+        'Des installations soignées, dans le respect des normes',
+        'Un chantier propre et respectueux des lieux',
+        'Un suivi après la réalisation',
+        'Une entreprise facilement joignable et disponible'
+      ],
+      engColA: ['Des conseils adaptés à chaque projet', 'Une étude technique personnalisée', 'La gestion des démarches administratives', 'Des installations soignées, dans le respect des normes', 'Des conseils adaptés à chaque projet', 'Une étude technique personnalisée', 'La gestion des démarches administratives', 'Des installations soignées, dans le respect des normes'],
+      engColB: ['Un chantier propre et respectueux des lieux', 'Un suivi après la réalisation', 'Une entreprise facilement joignable et disponible', 'Un seul contact, du début à la fin', 'Un chantier propre et respectueux des lieux', 'Un suivi après la réalisation', 'Une entreprise facilement joignable et disponible', 'Un seul contact, du début à la fin'],
+      simPerks: ["Jusqu'à 60 % d'électricité produite sur place", 'Plusieurs centaines d\u2019euros économisés chaque année', 'Valorisation de votre habitation'],
+      bill, setBill: (e) => this.setState({ bill: Number(e.target.value) }),
+      simSavings: this.fmt(savings), simKwc: kwc, simProduction: this.fmt(production), simSavings20: this.fmt(savings * 20),
+
+      animStats: this._buildStats(), statsRef: this._statsRef, mapRef: this._mapRef,
+
+      cities, activeName: activeCity.name, activeDept: activeCity.dept,
+      activeProjects: activeCity.projects, activeBlurb: activeCity.blurb,
+
+      filters, countText, visibleProjects, gridKey: filter,
+
+      steps: [
+        { n: '01', t: 'L\u2019écoute', d: 'On prend le temps de comprendre vos besoins, vos usages et vos projets futurs.' },
+        { n: '02', t: 'L\u2019étude & le devis', d: 'Une étude technique personnalisée et un devis transparent, sans jargon.' },
+        { n: '03', t: 'La réalisation', d: 'Une exécution soignée, normes respectées, chantier propre et démarches gérées.' },
+        { n: '04', t: 'Le suivi', d: 'Un accompagnement après l\u2019intervention — une entreprise joignable et disponible.' }
+      ],
+
+      submitted: this.state.submitted, notSubmitted: !this.state.submitted,
+      submitForm: (e) => { e.preventDefault(); this.setState({ submitted: true }); },
+      resetForm: () => this.setState({ submitted: false }),
+      halfField: { flex: '1 1 160px' },
+      projectTypes,
+      contactRows: [
+        { icon: I.pin, label: 'Agence', value: 'Cholet (49) · ≈ 50 km autour' },
+        { icon: I.phone, label: 'Téléphone', value: '02 41 00 00 00' },
+        { icon: I.mail, label: 'Email', value: 'contact@voltory.fr' },
+        { icon: I.clock, label: 'Horaires', value: 'Lun–Ven · 8h–18h' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
