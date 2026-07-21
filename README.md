@@ -1,25 +1,68 @@
-# CODING AGENTS: READ THIS FIRST
+# Voltory — site vitrine
 
-This is a **handoff bundle** from Claude Design (claude.ai/design).
+Site vitrine de **Voltory**, entreprise familiale d'électricité, de photovoltaïque et de
+bornes de recharge à Cholet (Maine-et-Loire & Vendée). De père en fils depuis 2007.
 
-A user mocked up designs in HTML/CSS/JS using an AI design tool, then exported this bundle so a coding agent can implement the designs for real.
+Implémenté en **React + Vite** à partir de la maquette exportée depuis Claude Design
+(`project/Voltory.dc.html`), fidèle au design system Voltory (duo pétrole/or, Poppins,
+numéro doré signature, coins généreux, ombres douces).
 
-## What you should do — IMPORTANT
+## Stack
 
-**Read the chat transcripts first.** There are 1 chat transcript(s) in `chats/`. The transcripts show the full back-and-forth between the user and the design assistant — they tell you **what the user actually wants** and **where they landed** after iterating. Don't skip them. The final HTML files are the output, but the chat is where the intent lives.
+- **React 18** + **Vite 5**
+- **Leaflet** pour la carte interactive de la zone d'intervention (OpenStreetMap)
+- Styles inline pilotés par les **tokens CSS** du design system (`src/styles/tokens/`)
 
-**Read `project/Voltory.dc.html` in full.** The user had this file open when they triggered the handoff, so it's almost certainly the primary design they want built. Read it top to bottom — don't skim. Then **follow its imports**: open every file it pulls in (shared components, CSS, scripts) so you understand how the pieces fit together before you start implementing.
+## Démarrer
 
-**If anything is ambiguous, ask the user to confirm before you start implementing.** It's much cheaper to clarify scope up front than to build the wrong thing.
+```bash
+npm install
+npm run dev      # serveur de dev (http://localhost:5173)
+npm run build    # build de production → dist/
+npm run preview  # prévisualise le build
+```
 
-## About the design files
+## Structure
 
-The design medium is **HTML/CSS/JS** — these are prototypes, not production code. Your job is to **recreate them pixel-perfectly** in whatever technology makes sense for the target codebase (React, Vue, native, whatever fits). Match the visual output; don't copy the prototype's internal structure unless it happens to fit.
+```
+index.html                 Point d'entrée HTML
+src/
+  main.jsx                 Bootstrap React
+  App.jsx                  Navigation par onglets (accueil / prestations / entreprise / contact)
+  styles/
+    index.css              Styles globaux + keyframes ; importe les tokens et Leaflet
+    tokens/                Tokens du design system (couleurs, typo, espacement, fonts)
+  components/
+    ds/                    Composants du design system (Button, Badge, Card, StatCard,
+                           StepCard, Input) recréés en React
+    Nav.jsx / Footer.jsx   Chrome du site
+    HeroCarousel.jsx       Header plein-cadre, carrousel des réalisations en fondu
+    Simulator.jsx          Simulateur d'économies solaires
+    Metiers.jsx            Trois métiers en grands blocs, photos qui défilent
+    StatsBand.jsx          Chiffres clés — odomètre déclenché au scroll
+    Reviews.jsx            Avis Google (carrousel horizontal)
+    ZoneMap.jsx            Carte Leaflet interactive de la zone d'intervention
+    CtaBand.jsx            Bandeau CTA final
+  pages/
+    Home.jsx               Accueil (hero → simulateur → métiers → chiffres → avis → carte → CTA)
+    Realisations.jsx       Prestations + galerie de réalisations filtrable par métier
+    Entreprise.jsx         Histoire, méthode, « pour qui », engagements (marquee)
+    Contact.jsx            Formulaire d'étude + coordonnées agence
+  lib/
+    data.js                Contenu réel (métiers, réalisations, villes, avis, engagements…)
+    icons.jsx              Pictogrammes au trait
+    layout.js              Conteneur unifié et helpers de mise en page
 
-**Don't render these files in a browser or take screenshots unless the user asks you to.** Everything you need — dimensions, colors, layout rules — is spelled out in the source. Read the HTML and CSS directly; a screenshot won't tell you anything they don't.
+public/assets/             Photos (hero, réalisations, agence, logos)
+project/                   Bundle de handoff original (maquette + design system)
+```
 
-## Bundle contents
+## Notes
 
-- `README.md` — this file
-- `chats/` — conversation transcripts (read these!)
-- `project/` — the `Voltory` project files (HTML prototypes, assets, components)
+- **Navigation** : le site est une SPA à onglets ; le logo Voltory ramène à l'accueil,
+  les onglets « Prestations » et « L'entreprise » et le bouton « Demander une étude »
+  sont à droite de la barre.
+- **Carte** : les tuiles OpenStreetMap nécessitent un accès réseau sortant.
+- **Placeholders** : le téléphone (`02 41 00 00 00`), l'email et le SIRET restent des
+  valeurs à remplacer par les vraies coordonnées. Les intitulés/chiffres des réalisations
+  sont des exemples cohérents. Les prénoms des avis Google sont indicatifs.

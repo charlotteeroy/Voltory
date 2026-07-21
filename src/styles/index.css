@@ -1,0 +1,85 @@
+/* ============================================================
+   VOLTORY — feuille de style globale
+   Reprend les tokens du design system + les réglages de base
+   de la maquette (Poppins partout, sélection, range, keyframes).
+   ============================================================ */
+@import './tokens/fonts.css';
+@import './tokens/colors.css';
+@import './tokens/typography.css';
+@import './tokens/spacing.css';
+@import 'leaflet/dist/leaflet.css';
+
+/* La maquette finale force Poppins comme police de corps. */
+:root {
+  --font-body: 'Poppins', 'Inter', ui-sans-serif, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--surface-card);
+  color: var(--text-strong);
+  -webkit-font-smoothing: antialiased;
+  line-height: var(--lh-body);
+}
+
+::selection {
+  background: var(--or-200);
+  color: var(--petrole-900);
+}
+
+input[type='range'] {
+  accent-color: var(--petrole-600);
+  height: 4px;
+}
+
+::placeholder {
+  color: var(--brume);
+}
+
+button {
+  font-family: inherit;
+}
+
+.leaflet-container {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ---- Keyframes signature Voltory ---- */
+@keyframes vFadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes vRise {
+  from { transform: translateY(16px); }
+  to   { transform: none; }
+}
+@keyframes vPop {
+  from { opacity: 0; transform: scale(.96); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes vScrollUp {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+@keyframes vScrollDown {
+  0%   { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
+}
+@keyframes hScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Pause des marquees au survol (équivalent style-hover de la maquette) */
+.v-marquee:hover {
+  animation-play-state: paused;
+}
