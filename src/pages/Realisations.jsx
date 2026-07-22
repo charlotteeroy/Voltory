@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { WRAP } from '../lib/layout.js'
 import { PROJECTS, FILTER_DEFS, SERVICES } from '../lib/data.js'
 import Card from '../components/ds/Card.jsx'
@@ -17,7 +18,9 @@ function ProjectModal({ project, onClose }) {
     }
   }, [onClose])
 
-  return (
+  /* Rendu dans <body> via portal : un ancêtre animé (transform) ferait
+     sinon dériver le position:fixed et sortirait le pop-up de l'écran. */
+  return createPortal(
     <div
       onClick={onClose}
       style={{
@@ -154,7 +157,8 @@ function ProjectModal({ project, onClose }) {
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
 
@@ -389,6 +393,8 @@ export default function Realisations({ navigate }) {
                 key={p.title}
                 onClick={() => setSelected(p)}
                 style={{
+                  display: 'flex',
+                  flexDirection: 'column',
                   background: 'var(--surface-card)',
                   border: '1px solid var(--border-subtle)',
                   borderRadius: 'var(--r-md)',
@@ -412,6 +418,7 @@ export default function Realisations({ navigate }) {
                   style={{
                     position: 'relative',
                     height: '184px',
+                    flexShrink: 0,
                     overflow: 'hidden',
                     background: `url('${p.img}') center/cover, linear-gradient(140deg, var(--petrole-500), var(--petrole-800))`,
                   }}
@@ -443,25 +450,8 @@ export default function Realisations({ navigate }) {
                   >
                     {p.catLabel}
                   </span>
-                  <span
-                    style={{
-                      position: 'absolute',
-                      top: '14px',
-                      right: '14px',
-                      fontFamily: 'var(--font-display)',
-                      fontSize: '12px',
-                      fontWeight: 600,
-                      color: 'var(--text-on-dark)',
-                      background: 'rgba(7,58,67,.5)',
-                      backdropFilter: 'blur(4px)',
-                      padding: '6px 11px',
-                      borderRadius: 'var(--r-pill)',
-                    }}
-                  >
-                    {p.photos.length > 1 ? `${p.photos.length} photos` : '1 photo'}
-                  </span>
                 </div>
-                <div style={{ padding: '22px' }}>
+                <div style={{ padding: '22px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                   <h3
                     style={{
                       fontFamily: 'var(--font-display)',
@@ -475,51 +465,57 @@ export default function Realisations({ navigate }) {
                   >
                     {p.title}
                   </h3>
-                  <p style={{ fontSize: '14px', lineHeight: 1.55, color: 'var(--text-body)', margin: '12px 0 0' }}>
+                  <p style={{ fontSize: '14px', lineHeight: 1.55, color: 'var(--text-body)', margin: '12px 0 18px' }}>
                     {p.blurb}
                   </p>
                   <div
                     style={{
                       display: 'flex',
+                      flexWrap: 'wrap',
                       alignItems: 'flex-end',
-                      gap: '12px',
-                      marginTop: '18px',
+                      justifyContent: 'space-between',
+                      gap: '10px 14px',
+                      marginTop: 'auto',
                       paddingTop: '18px',
                       borderTop: '1px solid var(--border-subtle)',
                     }}
                   >
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: 1.3 }}>
-                        Localisation
+                    <div style={{ display: 'flex', gap: '24px', minWidth: 0 }}>
+                      <div>
+                        <div style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: 1.3 }}>
+                          Localisation
+                        </div>
+                        <div
+                          style={{
+                            fontFamily: 'var(--font-display)',
+                            fontWeight: 600,
+                            fontSize: '14px',
+                            color: 'var(--text-strong)',
+                            marginTop: '5px',
+                            letterSpacing: '-.01em',
+                            whiteSpace: 'nowrap',
+                          }}
+                        >
+                          {p.place}
+                        </div>
                       </div>
-                      <div
-                        style={{
-                          fontFamily: 'var(--font-display)',
-                          fontWeight: 600,
-                          fontSize: '14px',
-                          color: 'var(--text-strong)',
-                          marginTop: '5px',
-                          letterSpacing: '-.01em',
-                        }}
-                      >
-                        {p.place}
-                      </div>
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: 1.3 }}>
-                        Réalisation
-                      </div>
-                      <div
-                        style={{
-                          fontFamily: 'var(--font-display)',
-                          fontWeight: 600,
-                          fontSize: '14px',
-                          color: 'var(--text-strong)',
-                          marginTop: '5px',
-                          letterSpacing: '-.01em',
-                        }}
-                      >
-                        {p.date}
+                      <div>
+                        <div style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: 1.3 }}>
+                          Réalisation
+                        </div>
+                        <div
+                          style={{
+                            fontFamily: 'var(--font-display)',
+                            fontWeight: 600,
+                            fontSize: '14px',
+                            color: 'var(--text-strong)',
+                            marginTop: '5px',
+                            letterSpacing: '-.01em',
+                            whiteSpace: 'nowrap',
+                          }}
+                        >
+                          {p.date}
+                        </div>
                       </div>
                     </div>
                     <span
@@ -529,6 +525,8 @@ export default function Realisations({ navigate }) {
                         fontSize: '13px',
                         color: 'var(--or-700)',
                         whiteSpace: 'nowrap',
+                        paddingBottom: '1px',
+                        marginLeft: 'auto',
                       }}
                     >
                       Voir le chantier →
