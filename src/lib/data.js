@@ -83,127 +83,166 @@ export const SERVICES = [
   },
 ]
 
-/* Réalisations filtrables par métier. */
+/* Réalisations filtrables par métier.
+   Chaque entrée est un chantier : `photos` alimente le pop-up de la galerie.
+   NB : les dates et localisations sont déduites des dossiers photos — à faire
+   valider par Félicien avant mise en ligne. */
+const chantier = (slug, count) =>
+  Array.from({ length: count }, (_, i) => `assets/chantiers/${slug}/${String(i + 1).padStart(2, '0')}.jpg`)
+
 export const PROJECTS = [
   {
     cat: 'patrimoine',
     catLabel: 'Patrimoine',
-    img: 'assets/real-hotel-hall.jpg',
-    title: 'Hôtel particulier — hall & escalier',
+    title: 'Château — grande chambre',
     place: 'Maine-et-Loire',
-    year: '2025',
+    date: '2025',
     blurb:
-      "Éclairage d'accentuation du hall et de la cage d'escalier, appareillage discret intégré à la pierre.",
-    stats: [
-      { v: '180', l: 'points lumineux' },
-      { v: '100 %', l: 'sur-mesure' },
-      { v: '6 sem.', l: 'de pose' },
-    ],
+      "Réfection électrique complète d'une chambre de château : appliques laiton sur boiseries laquées, circuits repris sans abîmer les décors.",
+    photos: chantier('chateau-grande-chambre', 13),
   },
   {
     cat: 'patrimoine',
     catLabel: 'Patrimoine',
-    img: 'assets/real-lustre-ferronnerie.jpg',
-    title: 'Lustre & ferronnerie dorée — demeure de caractère',
+    title: 'Château — petite chambre',
     place: 'Maine-et-Loire',
-    year: '2024',
+    date: '2025',
     blurb:
-      "Remise en lumière d’un lustre d’époque et ligne discrète le long de la ferronnerie restaurée.",
-    stats: [
-      { v: 'IRC 95', l: 'qualité' },
-      { v: '2700 K', l: 'blanc chaud' },
-      { v: '100 %', l: 'gradable' },
-    ],
+      "Mise aux normes et éclairage d'une chambre d'époque : appliques, lampes de chevet et appareillage discret dans les soubassements.",
+    photos: chantier('chateau-petite-chambre', 14),
   },
   {
     cat: 'patrimoine',
     catLabel: 'Patrimoine',
-    img: 'assets/real-cuisine-marbre.jpg',
-    title: 'Cuisine en marbre vert — appartement bourgeois',
-    place: 'Loire-Atlantique',
-    year: '2025',
+    title: 'Château — salle de bain',
+    place: 'Maine-et-Loire',
+    date: '2025',
     blurb:
-      'Éclairage sur-mesure et appareillage laiton sur un intérieur classé, sans percer les moulures.',
-    stats: [
-      { v: 'Laiton', l: 'appareillage' },
-      { v: '0', l: 'moulure percée' },
-      { v: '3 sem.', l: 'de pose' },
-    ],
+      "Création d'une salle de bain sous combles : sèche-serviettes, éclairage de douche et alimentation dissimulée dans le travertin.",
+    photos: chantier('chateau-sdb', 6),
+    cover: 5,
   },
   {
-    cat: 'solaire',
-    catLabel: 'Solaire',
-    img: 'assets/real-solaire-toiture.webp',
-    title: 'Autoconsommation — toiture tuiles',
-    place: 'Maine-et-Loire',
-    year: '2025',
-    blurb: "Panneaux full black plein sud, micro-onduleurs et pilotage fin de l’autoconsommation.",
-    stats: [
-      { v: '3 200', l: 'kWh / an' },
-      { v: '−58 %', l: 'sur la facture' },
-      { v: '6,5 ans', l: 'de retour' },
-    ],
+    cat: 'patrimoine',
+    catLabel: 'Patrimoine',
+    title: "Appartement haussmannien — rue Jouffroy-d'Abbans",
+    place: 'Paris 17e',
+    date: '2024',
+    blurb:
+      "Rénovation électrique complète d'un appartement de réception : éclairage des salons, moulures préservées, appareillage affleurant.",
+    photos: chantier('jouffroy-dabbans', 3),
   },
   {
-    cat: 'solaire',
-    catLabel: 'Solaire',
-    img: 'assets/agence-aerien.png',
-    title: 'Toiture tertiaire — bâtiment professionnel',
-    place: 'Maine-et-Loire',
-    year: '2024',
+    cat: 'patrimoine',
+    catLabel: 'Patrimoine',
+    title: 'Salle de bain en marbre — rue Vanneau',
+    place: 'Paris 7e',
+    date: '2023',
     blurb:
-      "Centrale en toiture de bâtiment d’activité, dimensionnée sur la consommation de l’entreprise.",
-    stats: [
-      { v: '36 kWc', l: 'installés' },
-      { v: '≈ 40 000', l: 'kWh / an' },
-      { v: 'Pro', l: 'tertiaire' },
-    ],
+      "Salle de bain en marbre de Carrare : éclairage intégré aux verrières, miroirs rétroéclairés et circuits dédiés.",
+    photos: chantier('varenne-vanneau', 4),
+  },
+  {
+    cat: 'patrimoine',
+    catLabel: 'Patrimoine',
+    title: 'Appartement de maître — 38 rue de Varenne',
+    place: 'Paris 7e',
+    date: '2023',
+    blurb:
+      "Rénovation totale d'un appartement de maître : distribution refaite, éclairage des enfilades et des parquets en point de Hongrie.",
+    photos: chantier('varenne-38', 6),
   },
   {
     cat: 'renovation',
     catLabel: 'Rénovation',
-    img: 'assets/real-renovation-carrelage.jpg',
-    title: 'Rénovation complète — pièce de vie',
-    place: 'Vendée',
-    year: '2025',
+    title: 'Demeure de village — la Madeleine',
+    place: 'Normandie',
+    date: '2025',
     blurb:
-      'Reprise des circuits et alimentation des nouveaux points, en coordination avec le carreleur.',
-    stats: [
-      { v: 'NF C 15-100', l: 'conforme' },
-      { v: '12', l: 'circuits repris' },
-      { v: '5 jours', l: 'sur site' },
-    ],
+      "Reprise complète d'une demeure de village et de ses dépendances : diagnostic, dépose de l'existant et réseau neuf du tableau aux extérieurs.",
+    photos: chantier('madeleine', 13),
+    cover: 9,
+  },
+  {
+    cat: 'renovation',
+    catLabel: 'Rénovation',
+    title: 'Parties communes — rue du Dragon',
+    place: 'Paris 6e',
+    date: '2024',
+    blurb:
+      "Rénovation des parties communes d'un immeuble ancien : hall, interphonie, boîtes aux lettres et éclairage des circulations.",
+    photos: chantier('dragon', 2),
+  },
+  {
+    cat: 'renovation',
+    catLabel: 'Rénovation',
+    title: 'Cuisine contemporaine — rue Guénégaud',
+    place: 'Paris 6e',
+    date: '2024',
+    blurb:
+      "Cuisine ouverte dans un immeuble ancien : spots encastrés, plan de travail éclairé et circuits spécialisés pour l'électroménager.",
+    photos: chantier('guenegaud', 3),
   },
   {
     cat: 'eclairage',
     catLabel: 'Éclairage',
-    img: 'assets/real-eclairage-terrasse.png',
+    title: 'Corniches lumineuses — rue Lota',
+    place: 'Paris 16e',
+    date: '2023',
+    blurb:
+      'Mise en lumière indirecte : rubans LED dissimulés dans les corniches et gorges lumineuses gradables pièce par pièce.',
+    photos: chantier('lota', 8),
+    cover: 2,
+  },
+  {
+    cat: 'renovation',
+    catLabel: 'Rénovation',
+    title: 'Rénovation complète — pièce de vie',
+    place: 'Vendée',
+    date: '2025',
+    blurb:
+      'Reprise des circuits et alimentation des nouveaux points, en coordination avec le carreleur.',
+    photos: ['assets/real-renovation-carrelage.jpg'],
+  },
+  {
+    cat: 'eclairage',
+    catLabel: 'Éclairage',
     title: 'Éclairage extérieur — terrasse & jardin',
     place: 'Vendée',
-    year: '2025',
+    date: '2025',
     blurb:
-      "Scénographie lumineuse d’une terrasse : balisage, éclairage de massif et façade en blanc chaud.",
-    stats: [
-      { v: 'IP65', l: 'extérieur' },
-      { v: '2700 K', l: 'blanc chaud' },
-      { v: 'Pilotable', l: 'par zones' },
-    ],
+      "Scénographie lumineuse d'une terrasse : balisage, éclairage de massif et façade en blanc chaud.",
+    photos: ['assets/real-eclairage-terrasse.png'],
+  },
+  {
+    cat: 'solaire',
+    catLabel: 'Solaire',
+    title: 'Autoconsommation — toiture tuiles',
+    place: 'Maine-et-Loire',
+    date: '2025',
+    blurb: "Panneaux full black plein sud, micro-onduleurs et pilotage fin de l'autoconsommation.",
+    photos: ['assets/real-solaire-toiture.webp'],
+  },
+  {
+    cat: 'solaire',
+    catLabel: 'Solaire',
+    title: 'Toiture tertiaire — bâtiment professionnel',
+    place: 'Maine-et-Loire',
+    date: '2024',
+    blurb:
+      "Centrale en toiture de bâtiment d'activité, dimensionnée sur la consommation de l'entreprise.",
+    photos: ['assets/agence-aerien.png'],
   },
   {
     cat: 'borne',
     catLabel: 'Borne de recharge',
-    img: 'assets/real-borne-felicien.jpg',
     title: 'Borne de recharge — véhicule électrique',
     place: 'Maine-et-Loire',
-    year: '2024',
-    blurb: "Borne 7,4 kW couplée à l’installation, étude de puissance et pilotage de la recharge.",
-    stats: [
-      { v: '7,4 kW', l: 'de charge' },
-      { v: 'Solaire', l: 'couplable' },
-      { v: '1 jour', l: 'de pose' },
-    ],
+    date: '2024',
+    blurb: "Borne 7,4 kW couplée à l'installation, étude de puissance et pilotage de la recharge.",
+    photos: ['assets/real-borne-felicien.jpg'],
   },
-]
+].map((p) => ({ ...p, img: p.photos[(p.cover ?? 1) - 1] }))
 
 export const FILTER_DEFS = [
   { key: 'all', label: 'Tous les projets' },
@@ -383,7 +422,7 @@ export const PROJECT_TYPES = ['Électricité', 'Photovoltaïque', 'Borne de rech
 /* Coordonnées agence. */
 export const CONTACT_ROWS = [
   { icon: Icons.pin, label: 'Agence', value: 'Cholet (49) · ≈ 50 km autour' },
-  { icon: Icons.phone, label: 'Téléphone', value: '02 41 00 00 00' },
-  { icon: Icons.mail, label: 'Email', value: 'contact@voltory.fr' },
+  { icon: Icons.phone, label: 'Téléphone', value: '06 19 19 73 52' },
+  { icon: Icons.mail, label: 'Email', value: 'felicien.gury@voltory.fr' },
   { icon: Icons.clock, label: 'Horaires', value: 'Lun–Ven · 8h–18h' },
 ]

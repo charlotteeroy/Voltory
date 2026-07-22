@@ -1,8 +1,162 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { WRAP } from '../lib/layout.js'
 import { PROJECTS, FILTER_DEFS, SERVICES } from '../lib/data.js'
 import Card from '../components/ds/Card.jsx'
 import Button from '../components/ds/Button.jsx'
+
+/* Pop-up chantier : toutes les photos du projet + son descriptif. */
+function ProjectModal({ project, onClose }) {
+  useEffect(() => {
+    const onKey = (e) => e.key === 'Escape' && onClose()
+    window.addEventListener('keydown', onKey)
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.body.style.overflow = prev
+    }
+  }, [onClose])
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 1000,
+        background: 'rgba(7,58,67,.58)',
+        backdropFilter: 'blur(6px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 'clamp(12px,3vw,40px)',
+        animation: 'vFade .25s var(--ease-out) both',
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label={project.title}
+        style={{
+          background: 'var(--surface-card)',
+          borderRadius: 'var(--r-lg)',
+          boxShadow: 'var(--e3, 0 24px 64px rgba(7,58,67,.35))',
+          maxWidth: '980px',
+          width: '100%',
+          maxHeight: '92vh',
+          overflowY: 'auto',
+          animation: 'vRise .35s var(--ease-out) both',
+        }}
+      >
+        <div
+          style={{
+            position: 'sticky',
+            top: 0,
+            zIndex: 2,
+            display: 'flex',
+            alignItems: 'flex-start',
+            justifyContent: 'space-between',
+            gap: '16px',
+            padding: '26px 28px 18px',
+            background: 'var(--surface-card)',
+            borderBottom: '1px solid var(--border-subtle)',
+          }}
+        >
+          <div>
+            <span
+              style={{
+                display: 'inline-flex',
+                fontFamily: 'var(--font-display)',
+                fontSize: '11.5px',
+                fontWeight: 600,
+                color: 'var(--petrole-900)',
+                background: 'var(--or-500)',
+                padding: '5px 11px',
+                borderRadius: 'var(--r-pill)',
+              }}
+            >
+              {project.catLabel}
+            </span>
+            <h3
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontWeight: 700,
+                fontSize: 'clamp(1.3rem,2.4vw,1.7rem)',
+                letterSpacing: '-.02em',
+                color: 'var(--text-strong)',
+                margin: '10px 0 6px',
+                lineHeight: 1.15,
+              }}
+            >
+              {project.title}
+            </h3>
+            <div style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
+              {project.place} · {project.date}
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            aria-label="Fermer"
+            style={{
+              flexShrink: 0,
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              border: '1.5px solid var(--border-strong)',
+              background: 'var(--surface-card)',
+              color: 'var(--petrole-700)',
+              fontSize: '18px',
+              lineHeight: 1,
+              cursor: 'pointer',
+              transition: 'all var(--dur-fast) var(--ease-out)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'var(--petrole-600)'
+              e.currentTarget.style.color = 'var(--blanc)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'var(--surface-card)'
+              e.currentTarget.style.color = 'var(--petrole-700)'
+            }}
+          >
+            ✕
+          </button>
+        </div>
+        <div style={{ padding: '22px 28px 30px' }}>
+          <p
+            style={{
+              fontSize: '15px',
+              lineHeight: 1.6,
+              color: 'var(--text-body)',
+              margin: '0 0 22px',
+              maxWidth: '70ch',
+            }}
+          >
+            {project.blurb}
+          </p>
+          <div style={{ columns: '2 300px', columnGap: '16px' }}>
+            {project.photos.map((src) => (
+              <img
+                key={src}
+                src={src}
+                alt={project.title}
+                loading="lazy"
+                style={{
+                  width: '100%',
+                  display: 'block',
+                  borderRadius: 'var(--r-md)',
+                  marginBottom: '16px',
+                  breakInside: 'avoid',
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 const chipBase = {
   fontFamily: 'var(--font-display)',
@@ -44,6 +198,7 @@ function sectionEyebrow(label) {
 
 export default function Realisations({ navigate }) {
   const [filter, setFilter] = useState('all')
+  const [selected, setSelected] = useState(null)
 
   const visible = filter === 'all' ? PROJECTS : PROJECTS.filter((p) => p.cat === filter)
   const countText = visible.length + (visible.length > 1 ? ' projets' : ' projet')
@@ -119,8 +274,8 @@ export default function Realisations({ navigate }) {
               maxWidth: '60ch',
             }}
           >
-            Du tableau électrique au château restauré : une sélection de projets, leurs chiffres et
-            leurs résultats. Filtrez par métier.
+            Du tableau électrique au château restauré : une sélection de chantiers en photos.
+            Filtrez par métier, cliquez pour ouvrir la galerie.
           </p>
         </div>
       </section>
@@ -232,12 +387,14 @@ export default function Realisations({ navigate }) {
             {visible.map((p) => (
               <div
                 key={p.title}
+                onClick={() => setSelected(p)}
                 style={{
                   background: 'var(--surface-card)',
                   border: '1px solid var(--border-subtle)',
                   borderRadius: 'var(--r-md)',
                   overflow: 'hidden',
                   boxShadow: 'var(--e1)',
+                  cursor: 'pointer',
                   animation: 'vRise .45s var(--ease-out) both',
                   transition:
                     'transform var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out)',
@@ -301,7 +458,7 @@ export default function Realisations({ navigate }) {
                       borderRadius: 'var(--r-pill)',
                     }}
                   >
-                    {p.year}
+                    {p.photos.length > 1 ? `${p.photos.length} photos` : '1 photo'}
                   </span>
                 </div>
                 <div style={{ padding: '22px' }}>
@@ -318,40 +475,64 @@ export default function Realisations({ navigate }) {
                   >
                     {p.title}
                   </h3>
-                  <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '7px' }}>
-                    {p.place}
-                  </div>
                   <p style={{ fontSize: '14px', lineHeight: 1.55, color: 'var(--text-body)', margin: '12px 0 0' }}>
                     {p.blurb}
                   </p>
                   <div
                     style={{
                       display: 'flex',
+                      alignItems: 'flex-end',
                       gap: '12px',
                       marginTop: '18px',
                       paddingTop: '18px',
                       borderTop: '1px solid var(--border-subtle)',
                     }}
                   >
-                    {p.stats.map((st) => (
-                      <div key={st.l} style={{ flex: 1 }}>
-                        <div
-                          style={{
-                            fontFamily: 'var(--font-display)',
-                            fontWeight: 700,
-                            fontSize: '18px',
-                            color: 'var(--or-600)',
-                            lineHeight: 1,
-                            letterSpacing: '-.01em',
-                          }}
-                        >
-                          {st.v}
-                        </div>
-                        <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '5px', lineHeight: 1.3 }}>
-                          {st.l}
-                        </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: 1.3 }}>
+                        Localisation
                       </div>
-                    ))}
+                      <div
+                        style={{
+                          fontFamily: 'var(--font-display)',
+                          fontWeight: 600,
+                          fontSize: '14px',
+                          color: 'var(--text-strong)',
+                          marginTop: '5px',
+                          letterSpacing: '-.01em',
+                        }}
+                      >
+                        {p.place}
+                      </div>
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: '11px', color: 'var(--text-muted)', lineHeight: 1.3 }}>
+                        Réalisation
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: 'var(--font-display)',
+                          fontWeight: 600,
+                          fontSize: '14px',
+                          color: 'var(--text-strong)',
+                          marginTop: '5px',
+                          letterSpacing: '-.01em',
+                        }}
+                      >
+                        {p.date}
+                      </div>
+                    </div>
+                    <span
+                      style={{
+                        fontFamily: 'var(--font-display)',
+                        fontWeight: 600,
+                        fontSize: '13px',
+                        color: 'var(--or-700)',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      Voir le chantier →
+                    </span>
                   </div>
                 </div>
               </div>
@@ -389,6 +570,7 @@ export default function Realisations({ navigate }) {
           </div>
         </div>
       </section>
+      {selected && <ProjectModal project={selected} onClose={() => setSelected(null)} />}
     </div>
   )
 }

@@ -63,6 +63,6 @@ project/                   Bundle de handoff original (maquette + design system)
   les onglets « Prestations » et « L'entreprise » et le bouton « Demander une étude »
   sont à droite de la barre.
 - **Carte** : les tuiles OpenStreetMap nécessitent un accès réseau sortant.
-- **Placeholders** : le téléphone (`02 41 00 00 00`), l'email et le SIRET restent des
-  valeurs à remplacer par les vraies coordonnées. Les intitulés/chiffres des réalisations
-  sont des exemples cohérents. Les prénoms des avis Google sont indicatifs.
+- **Placeholders** : le SIRET reste à remplacer. Les dates et localisations des
+  réalisations (`src/lib/data.js`) sont déduites des dossiers photos — à faire valider.
+  Les prénoms des avis Google sont indicatifs.

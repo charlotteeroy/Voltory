@@ -99,8 +99,8 @@ export default function Footer({ navigate }) {
               }}
             >
               <span>Cholet, Maine-et-Loire</span>
-              <span>02 41 00 00 00</span>
-              <span>contact@voltory.fr</span>
+              <span>06 19 19 73 52</span>
+              <span>felicien.gury@voltory.fr</span>
             </div>
           </div>
         </div>
