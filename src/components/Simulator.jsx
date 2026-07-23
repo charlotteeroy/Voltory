@@ -22,10 +22,11 @@ export default function Simulator({ onStudy }) {
   const resultNum = {
     fontFamily: 'var(--font-display)',
     fontWeight: 700,
-    fontSize: '30px',
+    fontSize: 'clamp(22px,5.5vw,30px)',
     color: 'var(--petrole-700)',
     lineHeight: 1,
     letterSpacing: '-.02em',
+    whiteSpace: 'nowrap',
   }
   const resultLabel = { fontSize: '12.5px', color: 'var(--text-muted)', marginTop: '7px' }
 
@@ -200,13 +201,14 @@ export default function Simulator({ onStudy }) {
                 style={{
                   fontFamily: 'var(--font-display)',
                   fontWeight: 700,
-                  fontSize: '30px',
+                  fontSize: 'clamp(22px,5.5vw,30px)',
                   color: 'var(--or-500)',
                   lineHeight: 1,
                   letterSpacing: '-.02em',
+                  whiteSpace: 'nowrap',
                 }}
               >
-                {fmt(savings)} €
+                {fmt(savings)}{' '}€
               </div>
               <div style={{ fontSize: '12.5px', color: 'var(--text-on-dark-soft)', marginTop: '7px' }}>
                 économisés / an
@@ -223,7 +225,7 @@ export default function Simulator({ onStudy }) {
               <div style={resultLabel}>kWh produits / an</div>
             </div>
             <div style={resultBoxLight}>
-              <div style={resultNum}>{fmt(savings * 20)} €</div>
+              <div style={resultNum}>{fmt(savings * 20)}{' '}€</div>
               <div style={resultLabel}>économisés sur 20 ans</div>
             </div>
           </div>
