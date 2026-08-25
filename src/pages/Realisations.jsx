@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { WRAP } from '../lib/layout.js'
-import { PROJECTS, FILTER_DEFS, SERVICES } from '../lib/data.js'
+import { PROJECTS, FILTER_DEFS, ZONE_DEFS, SERVICES } from '../lib/data.js'
 import Card from '../components/ds/Card.jsx'
 import Button from '../components/ds/Button.jsx'
 
@@ -200,11 +200,23 @@ function sectionEyebrow(label) {
   )
 }
 
-export default function Realisations({ navigate }) {
-  const [filter, setFilter] = useState('all')
-  const [selected, setSelected] = useState(null)
+/* Le Grand Ouest d'abord : c'est l'activité courante depuis Cholet.
+   Les chantiers franciliens, antérieurs, suivent. */
+const ZONE_ORDER = { ouest: 0, autre: 1, idf: 2 }
+const ORDERED = [...PROJECTS].sort(
+  (a, b) => ZONE_ORDER[a.zone] - ZONE_ORDER[b.zone] || Number(b.date) - Number(a.date)
+)
 
-  const visible = filter === 'all' ? PROJECTS : PROJECTS.filter((p) => p.cat === filter)
+export default function Realisations({ navigate, intent = null }) {
+  const [filter, setFilter] = useState(intent?.filter ?? 'all')
+  const [zone, setZone] = useState('all')
+  const [selected, setSelected] = useState(
+    () => (intent?.project && PROJECTS.find((p) => p.title === intent.project)) || null
+  )
+
+  const visible = ORDERED.filter(
+    (p) => (filter === 'all' || p.cat === filter) && (zone === 'all' || p.zone === zone)
+  )
   const countText = visible.length + (visible.length > 1 ? ' projets' : ' projet')
 
   return (
@@ -345,7 +357,7 @@ export default function Realisations({ navigate }) {
               gap: '10px',
               alignItems: 'center',
               justifyContent: 'space-between',
-              marginBottom: '32px',
+              marginBottom: '18px',
             }}
           >
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
@@ -380,14 +392,97 @@ export default function Realisations({ navigate }) {
               {countText}
             </span>
           </div>
+
+          {/* Zone géographique — assume les chantiers franciliens, antérieurs à
+              l'installation à Cholet, sans brouiller le discours local. */}
           <div
-            key={filter}
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '8px',
+              alignItems: 'center',
+              marginBottom: '32px',
+            }}
+          >
+            <span
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: '12px',
+                fontWeight: 600,
+                letterSpacing: '.14em',
+                textTransform: 'uppercase',
+                color: 'var(--text-muted)',
+                marginRight: '6px',
+              }}
+            >
+              Zone
+            </span>
+            {ZONE_DEFS.map((z) => {
+              const active = z.key === zone
+              return (
+                <button
+                  key={z.key}
+                  onClick={() => setZone(z.key)}
+                  style={{
+                    ...chipBase,
+                    fontSize: '13px',
+                    padding: '7px 14px',
+                    background: active ? 'var(--or-500)' : 'transparent',
+                    color: active ? 'var(--petrole-900)' : 'var(--text-muted)',
+                    border: active
+                      ? '1.5px solid var(--or-500)'
+                      : '1.5px solid var(--border-subtle)',
+                  }}
+                >
+                  {z.label}
+                </button>
+              )
+            })}
+          </div>
+          <div
+            key={filter + zone}
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fill,minmax(300px,1fr))',
               gap: '24px',
             }}
           >
+            {visible.length === 0 && (
+              <div
+                style={{
+                  gridColumn: '1 / -1',
+                  background: 'var(--surface-card)',
+                  border: '1px dashed var(--border-strong)',
+                  borderRadius: 'var(--r-md)',
+                  padding: '48px 28px',
+                  textAlign: 'center',
+                }}
+              >
+                <p
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    fontWeight: 600,
+                    fontSize: '17px',
+                    color: 'var(--text-strong)',
+                    margin: '0 0 8px',
+                  }}
+                >
+                  Aucun chantier ne correspond à ces filtres
+                </p>
+                <p style={{ fontSize: '14.5px', color: 'var(--text-body)', margin: '0 auto 20px', maxWidth: '44ch' }}>
+                  Nous intervenons pourtant sur ce type de projet — parlons-en directement.
+                </p>
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    setFilter('all')
+                    setZone('all')
+                  }}
+                >
+                  Réinitialiser les filtres
+                </Button>
+              </div>
+            )}
             {visible.map((p) => (
               <div
                 key={p.title}

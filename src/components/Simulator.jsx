@@ -32,12 +32,14 @@ export default function Simulator({ onStudy }) {
 
   return (
     <section
+      id="simulateur"
       style={{
         position: 'relative',
         overflow: 'hidden',
         background: 'var(--surface-brand)',
         color: 'var(--text-on-dark)',
         padding: '96px 0 150px',
+        scrollMarginTop: '74px',
       }}
     >
       <div

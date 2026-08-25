@@ -1,4 +1,5 @@
 import { WRAP } from '../lib/layout.js'
+import { LEGAL } from '../lib/data.js'
 import { NAV_DEFS } from './Nav.jsx'
 
 export default function Footer({ navigate }) {
@@ -120,7 +121,25 @@ export default function Footer({ navigate }) {
         }}
       >
         <span>© 2026 Voltory · Électricité · Photovoltaïque · Bornes de recharge</span>
-        <span>RGE QualiPV · SIRET 000 000 000 00000</span>
+        <span style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 14px', alignItems: 'center' }}>
+          <span>RGE QualiPV · SIRET {LEGAL.siret}</span>
+          <button
+            onClick={() => navigate('mentions')}
+            style={{
+              background: 'none',
+              border: 'none',
+              padding: 0,
+              cursor: 'pointer',
+              fontFamily: 'var(--font-body)',
+              fontSize: '12.5px',
+              color: 'var(--or-400)',
+              textDecoration: 'underline',
+              textUnderlineOffset: '2px',
+            }}
+          >
+            Mentions légales
+          </button>
+        </span>
       </div>
     </footer>
   )

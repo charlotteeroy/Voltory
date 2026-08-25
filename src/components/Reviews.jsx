@@ -2,11 +2,17 @@ import { WRAP } from '../lib/layout.js'
 import { REVIEWS } from '../lib/data.js'
 
 /** Avis Google — badge note + carrousel horizontal en boucle (pause au survol). */
-export default function Reviews() {
+export default function Reviews({ compact = false }) {
   const loop = [...REVIEWS, ...REVIEWS] // duplication pour un défilement continu
 
   return (
-    <section style={{ background: 'var(--surface-page)', padding: '96px 0', overflow: 'hidden' }}>
+    <section
+      style={{
+        background: 'var(--surface-page)',
+        padding: compact ? '52px 0 56px' : '96px 0',
+        overflow: 'hidden',
+      }}
+    >
       <div style={WRAP}>
         <div
           style={{
@@ -15,7 +21,7 @@ export default function Reviews() {
             gap: '24px',
             alignItems: 'flex-end',
             justifyContent: 'space-between',
-            marginBottom: '44px',
+            marginBottom: compact ? '28px' : '44px',
           }}
         >
           <div>
