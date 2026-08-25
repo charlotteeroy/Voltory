@@ -1,5 +1,5 @@
 import { WRAP } from '../lib/layout.js'
-import { STEPS, CLIENTS, ENG_COL_A, ENG_COL_B } from '../lib/data.js'
+import { STEPS, CLIENTS, ENG_COL_A, ENG_COL_B, WORK_PILLARS } from '../lib/data.js'
 import Button from '../components/ds/Button.jsx'
 import Card from '../components/ds/Card.jsx'
 import StatCard from '../components/ds/StatCard.jsx'
@@ -226,11 +226,53 @@ export default function Entreprise({ navigate }) {
         </div>
       </section>
 
+      {/* Notre façon de travailler — trois piliers (brief du gérant) */}
+      <section style={{ background: 'var(--surface-card)', padding: '96px 0 0' }}>
+        <div style={WRAP}>
+          <div style={{ maxWidth: '58ch', marginBottom: '44px' }}>
+            {eyebrow('Notre façon de travailler')}
+            <hr style={rule} />
+            <h2
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontWeight: 700,
+                fontSize: 'clamp(1.9rem,3.4vw,2.6rem)',
+                letterSpacing: '-.02em',
+                lineHeight: 1.1,
+                margin: 0,
+                textWrap: 'balance',
+              }}
+            >
+              Bien conseiller, bien réaliser, durer
+            </h2>
+            <p style={{ fontSize: '1.05rem', lineHeight: 1.65, color: 'var(--text-body)', margin: '20px 0 0' }}>
+              Depuis 2007, nous accompagnons les particuliers et les petites entreprises dans leurs
+              projets électriques à Cholet et plus largement dans notre région. Notre approche est
+              simple&nbsp;: bien vous conseiller, bien réaliser, et construire une relation de
+              confiance dans le temps.
+            </p>
+          </div>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit,minmax(250px,1fr))',
+              gap: '28px',
+            }}
+          >
+            {WORK_PILLARS.map((w) => (
+              <Card key={w.title} icon={w.icon} title={w.title}>
+                {w.text}
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Méthode */}
       <section style={{ background: 'var(--surface-card)', padding: '96px 0' }}>
         <div style={WRAP}>
           <div style={{ maxWidth: '56ch', marginBottom: '44px' }}>
-            {eyebrow('Notre façon de travailler')}
+            {eyebrow('Les quatre temps du chantier')}
             <hr style={rule} />
             <h2
               style={{

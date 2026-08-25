@@ -4,7 +4,7 @@ import { HERO_IMGS } from '../lib/data.js'
 import Button from './ds/Button.jsx'
 
 /** Header plein-cadre : carrousel des réalisations en fondu (Ken Burns lent). */
-export default function HeroCarousel({ onDiscover }) {
+export default function HeroCarousel({ onDiscover, onContact }) {
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
@@ -74,8 +74,7 @@ export default function HeroCarousel({ onDiscover }) {
               textShadow: '0 2px 24px rgba(4,30,34,.4)',
             }}
           >
-            L'énergie de <span style={{ color: 'var(--or-500)' }}>votre maison</span>,<br />
-            maîtrisée
+            L'énergie pour <span style={{ color: 'var(--or-500)' }}>votre quotidien</span>
           </h1>
           <p
             style={{
@@ -86,12 +85,25 @@ export default function HeroCarousel({ onDiscover }) {
               maxWidth: '48ch',
             }}
           >
-            Électricité, photovoltaïque, recharge électrique. Conseil, installation, suivi. Une
-            entreprise familiale, un travail durable.
+            Électricité · Photovoltaïque · Bornes de recharge. Depuis 2007, notre entreprise
+            familiale à taille humaine accompagne vos projets électriques, à Cholet et dans les
+            environs.
           </p>
           <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', marginTop: '28px' }}>
-            <Button variant="accent" onClick={onDiscover}>
-              Découvrir nos prestations →
+            <Button variant="accent" onClick={onContact}>
+              Parler de mon projet →
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={onDiscover}
+              style={{
+                color: 'var(--blanc)',
+                borderColor: 'rgba(255,255,255,.5)',
+                background: 'rgba(255,255,255,.06)',
+                backdropFilter: 'blur(4px)',
+              }}
+            >
+              Découvrir nos prestations
             </Button>
           </div>
         </div>

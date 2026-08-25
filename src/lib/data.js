@@ -50,11 +50,11 @@ export const METIERS = [
   {
     eyebrow: 'Bornes de recharge',
     title: 'Recharge de véhicule électrique',
-    text: 'Prises renforcées et bornes adaptées à votre installation, avec étude de puissance et pilotage intelligent de la recharge.',
+    text: "Prises renforcées et bornes jusqu'à 22 kW, adaptées à votre installation, avec étude de puissance et pilotage intelligent de la recharge.",
     points: [
       'Prises renforcées dès 349 € TTC',
-      'Bornes de 7 à 11 kW',
-      'Étude de puissance disponible',
+      "Bornes jusqu'à 22 kW",
+      'Délestage et programmation de la recharge',
       'Couplage avec le solaire',
     ],
     imgs: ['assets/real-borne-felicien.jpg', 'assets/agence-aerien.png'],
@@ -64,22 +64,34 @@ export const METIERS = [
 /* Récapitulatif des prestations (cartes DS, accueil + page prestations). */
 export const SERVICES = [
   {
+    key: 'electricite',
     icon: Icons.zap,
-    eyebrow: 'Électricité générale',
-    title: 'Rénovation & mise aux normes',
-    text: "Audit avant achat, tableaux et circuits, éclairage d'ambiance et extérieur, domotique et réseaux RJ45.",
+    eyebrow: 'Électricité',
+    title: 'Tableau, circuits, mise aux normes',
+    text: "Tableau électrique, création de circuits, protection des personnes et mise aux normes — en neuf comme en rénovation.",
+    cta: 'Découvrir nos prestations',
+    target: 'realisations',
+    filter: 'renovation',
   },
   {
+    key: 'photovoltaique',
     icon: Icons.sun,
     eyebrow: 'Photovoltaïque',
     title: 'Solaire en autoconsommation',
-    text: 'Étude de rentabilité sur mesure, installation, démarches administratives et suivi de production.',
+    text: 'Panneaux solaires en autoconsommation, pilotage du surplus solaire et stockage, dimensionnés sur votre consommation réelle.',
+    cta: 'Calculer mes économies',
+    target: 'simulateur',
+    filter: 'solaire',
   },
   {
-    icon: Icons.plug,
+    key: 'borne',
+    icon: Icons.car,
     eyebrow: 'Bornes de recharge',
-    title: 'Recharge de véhicule',
-    text: 'Prises renforcées et bornes de 7 à 11 kW, étude de puissance, couplage solaire et pilotage intelligent.',
+    title: 'Recharge de véhicule électrique',
+    text: "Borne jusqu'à 22 kW, prise renforcée, délestage et programmation — installées par un électricien qualifié.",
+    cta: 'Choisir ma solution de recharge',
+    target: 'contact',
+    filter: 'borne',
   },
 ]
 
@@ -90,7 +102,7 @@ export const SERVICES = [
 const chantier = (slug, count) =>
   Array.from({ length: count }, (_, i) => `assets/chantiers/${slug}/${String(i + 1).padStart(2, '0')}.jpg`)
 
-export const PROJECTS = [
+const PROJECT_DEFS = [
   {
     cat: 'patrimoine',
     catLabel: 'Patrimoine',
@@ -242,7 +254,38 @@ export const PROJECTS = [
     blurb: "Borne 7,4 kW couplée à l'installation, étude de puissance et pilotage de la recharge.",
     photos: ['assets/real-borne-felicien.jpg'],
   },
-].map((p) => ({ ...p, img: p.photos[(p.cover ?? 1) - 1] }))
+]
+
+/* Zone géographique — déduite du lieu, pour distinguer les chantiers du Grand Ouest
+   (activité actuelle depuis Cholet) des références antérieures en Île-de-France. */
+const OUEST = ['Maine-et-Loire', 'Vendée', 'Loire-Atlantique']
+
+export const PROJECTS = PROJECT_DEFS.map((p) => ({
+  ...p,
+  img: p.photos[(p.cover ?? 1) - 1],
+  zone: OUEST.includes(p.place) ? 'ouest' : p.place.startsWith('Paris') ? 'idf' : 'autre',
+}))
+
+/* Sélection affichée sur l'accueil : uniquement le Grand Ouest, et un chantier par
+   métier plutôt que les quatre plus récents — sans cette règle, trois châteaux
+   consécutifs occupent la vitrine et un visiteur venu pour du solaire ne s'y
+   reconnaît pas. Les chantiers franciliens, antérieurs à l'installation à Cholet,
+   restent visibles sur la page Prestations. */
+const HOME_CAT_ORDER = ['solaire', 'borne', 'renovation', 'patrimoine', 'eclairage']
+
+export const HOME_PROJECTS = HOME_CAT_ORDER.map((cat) =>
+  PROJECTS.filter((p) => p.zone === 'ouest' && p.cat === cat).sort(
+    (a, b) => Number(b.date) - Number(a.date)
+  )[0]
+)
+  .filter(Boolean)
+  .slice(0, 4)
+
+export const ZONE_DEFS = [
+  { key: 'all', label: 'Toutes zones' },
+  { key: 'ouest', label: 'Maine-et-Loire & Vendée' },
+  { key: 'idf', label: 'Île-de-France' },
+]
 
 export const FILTER_DEFS = [
   { key: 'all', label: 'Tous les projets' },
@@ -426,3 +469,95 @@ export const CONTACT_ROWS = [
   { icon: Icons.mail, label: 'Email', value: 'felicien.gury@voltory.fr' },
   { icon: Icons.clock, label: 'Horaires', value: 'Lun–Ven · 8h–18h' },
 ]
+
+/* ============================================================
+   Contenus issus du brief du gérant (Homepage – VOLTORY.pdf).
+   Les affirmations sont les siennes ; seule la mise en avant
+   et la formulation ont été retravaillées.
+   ============================================================ */
+
+/* « Notre façon de travailler » — page Entreprise.
+   Le pilier « prix transparents » du brief est écarté tant qu'aucun tarif
+   n'est publié : la promesse ne serait pas tenue par la page. */
+export const WORK_PILLARS = [
+  {
+    icon: Icons.user,
+    title: 'Un seul interlocuteur',
+    text: "Félicien vous accompagne de la conception à la réalisation, pour un suivi simple et personnalisé.",
+  },
+  {
+    icon: Icons.trend,
+    title: 'Des installations évolutives',
+    text: 'Nous concevons des installations pensées pour durer et pouvoir évoluer avec vos besoins.',
+  },
+  {
+    icon: Icons.shield,
+    title: 'Un suivi après la réalisation',
+    text: "Une entreprise joignable et disponible une fois le chantier terminé — pas seulement pendant.",
+  },
+]
+
+/* « Nous utilisons ce que nous installons » — accueil.
+   L'argument le plus différenciant du brief. */
+export const SELF_PROOF = {
+  eyebrow: 'Notre conviction',
+  title: 'Nous utilisons ce que nous installons',
+  intro:
+    'Nous ne nous contentons pas de vous conseiller des solutions : nous les utilisons au quotidien dans notre propre entreprise.',
+  outro:
+    "Parce que nous sommes nous-mêmes utilisateurs de ces solutions, nous savons ce qu'elles apportent au quotidien — et comment les rendre réellement utiles à nos clients.",
+  items: [
+    {
+      icon: Icons.building,
+      title: "Notre agence comme terrain d'expérimentation",
+      text: 'Nous avons équipé nos bureaux avec une majorité des solutions électriques que nous proposons à nos clients.',
+    },
+    {
+      icon: Icons.sun,
+      title: 'Notre propre production solaire',
+      text: "Notre agence de Cholet produit une partie de son électricité grâce à une installation photovoltaïque.",
+    },
+    {
+      icon: Icons.car,
+      title: 'Une mobilité qui évolue',
+      text: 'Nous remplaçons progressivement nos véhicules thermiques par des véhicules électriques.',
+    },
+  ],
+}
+
+/* « Une équipe qualifiée et assurée » — bas de l'accueil.
+   Chaque qualification est traduite en bénéfice client : un visiteur non initié
+   ne sait pas ce que « RGE QualiPV » lui apporte. */
+export const CERTIFICATIONS = [
+  {
+    name: 'RGE QualiPV',
+    scope: 'Photovoltaïque',
+    benefit: "Qualification reconnue par l'État, exigée pour accéder aux aides publiques sur une installation solaire.",
+  },
+  {
+    name: 'Recharge+ élec',
+    scope: 'Bornes de recharge',
+    benefit: "Habilitation à installer les bornes de recharge, condition d'éligibilité aux aides sur ce type d'équipement.",
+  },
+  {
+    name: 'Assurance décennale',
+    scope: 'Tous nos chantiers',
+    benefit: 'Nos installations sont couvertes dix ans après la réception du chantier.',
+  },
+]
+
+/* Identité légale — source : base SIRENE / annuaire des entreprises (INSEE).
+   Le capital social et le numéro de police décennale restent à confirmer par le gérant. */
+export const LEGAL = {
+  raisonSociale: 'Voltory',
+  formeJuridique: 'SARL',
+  siren: '498 685 692',
+  siret: '498 685 692 00044',
+  tva: 'FR92 498 685 692',
+  ape: '43.21A — Travaux d’installation électrique dans tous locaux',
+  rcs: 'RCS Angers 498 685 692',
+  adresse: '41 avenue du Lac, 49300 Cholet',
+  creation: '21 mars 2007',
+  gerants: 'Olivier Gury et Félicien Gury',
+  hebergeur: 'Cloudflare, Inc. — 101 Townsend St, San Francisco, CA 94107, États-Unis',
+}

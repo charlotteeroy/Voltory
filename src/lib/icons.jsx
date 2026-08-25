@@ -81,6 +81,33 @@ export const Icons = {
       <path d="m22 7-10 5L2 7" />
     </Svg>
   ),
+  car: (
+    <Svg>
+      <path d="M3.2 15.2h17.6" />
+      <path d="M5.4 15.2v-4.4l2-4.2h9.2l2 4.2v4.4" />
+      <path d="M5.4 10.8h13.2" />
+      <circle cx={8.2} cy={16.9} r={1.7} />
+      <circle cx={15.8} cy={16.9} r={1.7} />
+    </Svg>
+  ),
+  user: (
+    <Svg>
+      <circle cx={12} cy={8} r={3.6} />
+      <path d="M4.8 20a7.2 7.2 0 0 1 14.4 0" />
+    </Svg>
+  ),
+  shield: (
+    <Svg>
+      <path d="M12 2.8 4.8 5.6v5.6c0 4.4 3 8.4 7.2 9.9 4.2-1.5 7.2-5.5 7.2-9.9V5.6Z" />
+      <path d="m9.2 11.8 2 2 3.6-3.8" />
+    </Svg>
+  ),
+  arrow: (
+    <Svg size={18}>
+      <path d="M4 12h15" />
+      <path d="m13 6 6 6-6 6" />
+    </Svg>
+  ),
   clock: (
     <Svg size={17}>
       <circle cx={12} cy={12} r={10} />
