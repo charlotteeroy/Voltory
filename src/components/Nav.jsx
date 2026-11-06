@@ -1,11 +1,27 @@
 import { useEffect, useState } from 'react'
 import Button from './ds/Button.jsx'
 import { useMediaQuery } from '../lib/useMediaQuery.js'
+import { ROUTES } from '../lib/routes.js'
 
+/* Ordre = priorité d'activité : électricité, puis bornes, puis solaire. */
 const NAV_DEFS = [
-  { key: 'realisations', label: 'Prestations' },
+  { key: 'electricite', label: 'Électricité' },
+  { key: 'bornes', label: 'Bornes de recharge' },
+  { key: 'photovoltaique', label: 'Photovoltaïque' },
   { key: 'entreprise', label: "L'entreprise" },
 ]
+
+/** Lien interne : vraie adresse (clic droit, nouvel onglet, SEO), navigation SPA au clic simple. */
+export function navLinkProps(key, go) {
+  return {
+    href: ROUTES[key].path,
+    onClick: (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return
+      e.preventDefault()
+      go(key)
+    },
+  }
+}
 
 const NAV_LINK_BASE = {
   fontFamily: 'var(--font-display)',
@@ -56,7 +72,7 @@ function BurgerButton({ open, onClick }) {
 }
 
 export default function Nav({ page, navigate }) {
-  const isMobile = useMediaQuery('(max-width: 719px)')
+  const isMobile = useMediaQuery('(max-width: 959px)')
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -90,29 +106,32 @@ export default function Nav({ page, navigate }) {
           gap: '24px',
         }}
       >
-        <div
-          onClick={() => go('home')}
+        <a
+          {...navLinkProps('home', go)}
+          aria-label="Voltory — accueil"
           style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
         >
           <img
-            src="assets/voltory-logo-white.png"
+            src="/assets/voltory-logo-white.png"
             alt="Voltory"
             style={{ height: '32px', display: 'block' }}
           />
-        </div>
+        </a>
         {isMobile ? (
           <BurgerButton open={open} onClick={() => setOpen(!open)} />
         ) : (
           <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
               {NAV_DEFS.map((n) => {
                 const active = n.key === page
                 return (
-                  <button
+                  <a
                     key={n.key}
-                    onClick={() => go(n.key)}
+                    {...navLinkProps(n.key, go)}
+                    aria-current={active ? 'page' : undefined}
                     style={{
                       ...NAV_LINK_BASE,
+                      whiteSpace: 'nowrap',
                       border: 'none',
                       opacity: active ? 0.45 : 1,
                       borderBottom: active
@@ -129,7 +148,7 @@ export default function Nav({ page, navigate }) {
                     }}
                   >
                     {n.label}
-                  </button>
+                  </a>
                 )
               })}
             </div>
@@ -159,11 +178,13 @@ export default function Nav({ page, navigate }) {
           {NAV_DEFS.map((n) => {
             const active = n.key === page
             return (
-              <button
+              <a
                 key={n.key}
-                onClick={() => go(n.key)}
+                {...navLinkProps(n.key, go)}
+                aria-current={active ? 'page' : undefined}
                 style={{
                   ...NAV_LINK_BASE,
+                  display: 'block',
                   fontSize: '17px',
                   border: 'none',
                   textAlign: 'left',
@@ -173,7 +194,7 @@ export default function Nav({ page, navigate }) {
                 }}
               >
                 {n.label}
-              </button>
+              </a>
             )
           })}
           <div style={{ marginTop: '16px' }}>

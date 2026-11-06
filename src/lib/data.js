@@ -6,81 +6,75 @@ import { Icons } from './icons.jsx'
 
 /* Photos du carrousel hero (réalisations qui défilent en fond). */
 export const HERO_IMGS = [
-  'assets/hero/01-salon.jpg',
-  'assets/hero/02-sdb-verte.jpg',
-  'assets/hero/03-chambre-chateau.jpg',
-  'assets/hero/04-terrasse.jpg',
-  'assets/hero/05-cuisine.jpg',
-  'assets/hero/06-sdb-marbre.jpg',
-  'assets/hero/07-hall.jpg',
-  'assets/hero/08-corniche.jpg',
+  '/assets/hero/01-salon.jpg',
+  '/assets/hero/02-sdb-verte.jpg',
+  '/assets/hero/03-chambre-chateau.jpg',
+  '/assets/hero/04-terrasse.jpg',
+  '/assets/hero/05-cuisine.jpg',
+  '/assets/hero/06-sdb-marbre.jpg',
+  '/assets/hero/07-hall.jpg',
+  '/assets/hero/08-corniche.jpg',
 ]
 
-/* Les trois métiers, mis en avant sur l'accueil (blocs larges + photos qui défilent). */
+/* Les trois métiers, mis en avant sur l'accueil (blocs larges + photos qui défilent).
+   Ordre = priorité d'activité : l'électricité est le cœur de métier, les bornes
+   la demande en forte croissance, le solaire vient ensuite. */
 export const METIERS = [
   {
+    key: 'electricite',
+    cta: "Découvrir l'électricité générale",
     eyebrow: 'Électricité générale',
     title: 'Rénovation & mise aux normes',
     text: "Du tableau électrique à l'appareillage de prestige : des installations sûres, soignées et conformes, en neuf comme en rénovation.",
     points: [
       "Audit de l’installation avant achat",
-      'Rénovation complète & mise aux normes',
+      'Tableau électrique & mise aux normes',
       "Éclairage d’ambiance et extérieur",
       'Domotique & réseaux RJ45',
     ],
     imgs: [
-      'assets/hero/01-salon.jpg',
-      'assets/real-hotel-hall.jpg',
-      'assets/real-lustre-ferronnerie.jpg',
-      'assets/hero/04-terrasse.jpg',
+      '/assets/hero/01-salon.jpg',
+      '/assets/real-hotel-hall.jpg',
+      '/assets/real-lustre-ferronnerie.jpg',
+      '/assets/hero/04-terrasse.jpg',
     ],
   },
   {
+    key: 'bornes',
+    cta: 'Découvrir nos bornes de recharge',
+    eyebrow: 'Bornes de recharge',
+    title: 'Recharger son véhicule à la maison',
+    text: 'Prise renforcée ou borne : la solution adaptée à vos trajets et à votre installation, posée en une journée, à prix standard.',
+    points: [
+      'Prises renforcées dès 349 € TTC',
+      'Bornes de 7 à 11 kW, 4× plus rapides',
+      'Installation standard à prix clair',
+      'Couplage avec le solaire',
+    ],
+    imgs: ['/assets/real-borne-felicien.jpg', '/assets/agence-aerien.png'],
+  },
+  {
+    key: 'photovoltaique',
+    cta: 'Découvrir le photovoltaïque',
     eyebrow: 'Photovoltaïque',
     title: 'Solaire en autoconsommation',
     text: "Un solaire dimensionné sur votre consommation réelle, jamais vendu à la hâte — de l’étude de rentabilité au suivi de production.",
     points: [
       'Étude de rentabilité sur mesure',
-      'Installation en surimposition soignée',
       'Démarches administratives gérées',
-      'Suivi de production à distance',
+      'Installation modulable et évolutive',
+      'Entretien annuel, le premier offert',
     ],
-    imgs: ['assets/real-solaire-toiture.webp', 'assets/agence-aerien.png'],
-  },
-  {
-    eyebrow: 'Bornes de recharge',
-    title: 'Recharge de véhicule électrique',
-    text: 'Prises renforcées et bornes adaptées à votre installation, avec étude de puissance et pilotage intelligent de la recharge.',
-    points: [
-      'Prises renforcées dès 349 € TTC',
-      'Bornes de 7 à 11 kW',
-      'Étude de puissance disponible',
-      'Couplage avec le solaire',
-    ],
-    imgs: ['assets/real-borne-felicien.jpg', 'assets/agence-aerien.png'],
+    imgs: ['/assets/real-solaire-toiture.webp', '/assets/agence-aerien.png'],
   },
 ]
 
-/* Récapitulatif des prestations (cartes DS, accueil + page prestations). */
-export const SERVICES = [
-  {
-    icon: Icons.zap,
-    eyebrow: 'Électricité générale',
-    title: 'Rénovation & mise aux normes',
-    text: "Audit avant achat, tableaux et circuits, éclairage d'ambiance et extérieur, domotique et réseaux RJ45.",
-  },
-  {
-    icon: Icons.sun,
-    eyebrow: 'Photovoltaïque',
-    title: 'Solaire en autoconsommation',
-    text: 'Étude de rentabilité sur mesure, installation, démarches administratives et suivi de production.',
-  },
-  {
-    icon: Icons.plug,
-    eyebrow: 'Bornes de recharge',
-    title: 'Recharge de véhicule',
-    text: 'Prises renforcées et bornes de 7 à 11 kW, étude de puissance, couplage solaire et pilotage intelligent.',
-  },
+/* Qualifications affichées dans le header de l'accueil.
+   `logo` : chemin du logo officiel une fois fourni par Félicien (sinon badge texte). */
+export const CERTIFICATIONS = [
+  { label: 'RGE QualiPV', detail: 'Photovoltaïque', logo: null },
+  { label: 'Qualification IRVE', detail: 'Bornes de recharge', logo: null },
+  { label: 'Garantie décennale', detail: 'Tous nos travaux', logo: null },
 ]
 
 /* Réalisations filtrables par métier.
@@ -88,7 +82,16 @@ export const SERVICES = [
    NB : les dates et localisations sont déduites des dossiers photos — à faire
    valider par Félicien avant mise en ligne. */
 const chantier = (slug, count) =>
-  Array.from({ length: count }, (_, i) => `assets/chantiers/${slug}/${String(i + 1).padStart(2, '0')}.jpg`)
+  Array.from({ length: count }, (_, i) => `/assets/chantiers/${slug}/${String(i + 1).padStart(2, '0')}.jpg`)
+
+/* Catégorie de chantier → page métier où il apparaît. */
+const CAT_TO_METIER = {
+  patrimoine: 'electricite',
+  renovation: 'electricite',
+  eclairage: 'electricite',
+  solaire: 'photovoltaique',
+  borne: 'bornes',
+}
 
 export const PROJECTS = [
   {
@@ -202,7 +205,7 @@ export const PROJECTS = [
     date: '2025',
     blurb:
       'Reprise des circuits et alimentation des nouveaux points, en coordination avec le carreleur.',
-    photos: ['assets/real-renovation-carrelage.jpg'],
+    photos: ['/assets/real-renovation-carrelage.jpg'],
   },
   {
     cat: 'eclairage',
@@ -212,7 +215,7 @@ export const PROJECTS = [
     date: '2025',
     blurb:
       "Scénographie lumineuse d'une terrasse : balisage, éclairage de massif et façade en blanc chaud.",
-    photos: ['assets/real-eclairage-terrasse.png'],
+    photos: ['/assets/real-eclairage-terrasse.png'],
   },
   {
     cat: 'solaire',
@@ -221,7 +224,7 @@ export const PROJECTS = [
     place: 'Maine-et-Loire',
     date: '2025',
     blurb: "Panneaux full black plein sud, micro-onduleurs et pilotage fin de l'autoconsommation.",
-    photos: ['assets/real-solaire-toiture.webp'],
+    photos: ['/assets/real-solaire-toiture.webp'],
   },
   {
     cat: 'solaire',
@@ -231,7 +234,7 @@ export const PROJECTS = [
     date: '2024',
     blurb:
       "Centrale en toiture de bâtiment d'activité, dimensionnée sur la consommation de l'entreprise.",
-    photos: ['assets/agence-aerien.png'],
+    photos: ['/assets/agence-aerien.png'],
   },
   {
     cat: 'borne',
@@ -240,18 +243,12 @@ export const PROJECTS = [
     place: 'Maine-et-Loire',
     date: '2024',
     blurb: "Borne 7,4 kW couplée à l'installation, étude de puissance et pilotage de la recharge.",
-    photos: ['assets/real-borne-felicien.jpg'],
+    photos: ['/assets/real-borne-felicien.jpg'],
   },
-].map((p) => ({ ...p, img: p.photos[(p.cover ?? 1) - 1] }))
-
-export const FILTER_DEFS = [
-  { key: 'all', label: 'Tous les projets' },
-  { key: 'patrimoine', label: 'Patrimoine' },
-  { key: 'solaire', label: 'Solaire' },
-  { key: 'renovation', label: 'Rénovation' },
-  { key: 'eclairage', label: 'Éclairage' },
-  { key: 'borne', label: 'Bornes' },
 ]
+  .map((p) => ({ ...p, metier: CAT_TO_METIER[p.cat], img: p.photos[(p.cover ?? 1) - 1] }))
+  /* Plus récents d'abord : chaque page métier affiche ses dernières réalisations. */
+  .sort((a, b) => Number(b.date) - Number(a.date))
 
 /* Chiffres clés animés (odomètre au scroll). */
 export const STATS = [
@@ -417,7 +414,7 @@ export const CLIENTS = [
 ]
 
 /* Types de projet (formulaire contact). */
-export const PROJECT_TYPES = ['Électricité', 'Photovoltaïque', 'Borne de recharge', 'Rénovation']
+export const PROJECT_TYPES = ['Électricité', 'Borne de recharge', 'Photovoltaïque', 'Rénovation']
 
 /* Coordonnées agence. */
 export const CONTACT_ROWS = [

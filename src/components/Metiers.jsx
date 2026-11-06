@@ -3,7 +3,7 @@ import { WRAP } from '../lib/layout.js'
 import { METIERS } from '../lib/data.js'
 
 /** Savoir-faire : trois métiers en grands blocs, photos qui défilent en fond. */
-export default function Metiers({ onSeeMore }) {
+export default function Metiers({ onOpen }) {
   const [tick, setTick] = useState(0)
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function Metiers({ onSeeMore }) {
   }, [])
 
   return (
-    <section style={{ background: 'var(--surface-page)', padding: '104px 0 96px' }}>
+    <section id="metiers" style={{ background: 'var(--surface-page)', padding: '104px 0 96px' }}>
       <div style={WRAP}>
         <div style={{ marginBottom: '56px' }}>
           <span
@@ -209,7 +209,7 @@ export default function Metiers({ onSeeMore }) {
                   </ul>
                   <div style={{ marginTop: '26px' }}>
                     <button
-                      onClick={onSeeMore}
+                      onClick={() => onOpen(m.key)}
                       style={{
                         fontFamily: 'var(--font-display)',
                         fontWeight: 600,
@@ -227,7 +227,7 @@ export default function Metiers({ onSeeMore }) {
                       onMouseEnter={(e) => (e.currentTarget.style.gap = '12px')}
                       onMouseLeave={(e) => (e.currentTarget.style.gap = '8px')}
                     >
-                      Voir les réalisations →
+                      {m.cta} →
                     </button>
                   </div>
                 </div>

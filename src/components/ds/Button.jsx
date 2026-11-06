@@ -27,6 +27,12 @@ const VARIANTS = {
     color: 'var(--action-primary)',
     border: '2px solid var(--petrole-200)',
   },
+  /* Secondaire sur fond sombre (hero, bandeaux pétrole). */
+  ghostDark: {
+    background: 'transparent',
+    color: 'var(--blanc)',
+    border: '2px solid rgba(255,255,255,.55)',
+  },
 }
 
 export default function Button({
@@ -73,11 +79,16 @@ export default function Button({
           e.currentTarget.style.borderColor = 'var(--action-primary)'
           e.currentTarget.style.background = 'var(--petrole-50)'
         }
+        if (variant === 'ghostDark') {
+          e.currentTarget.style.borderColor = 'var(--blanc)'
+          e.currentTarget.style.background = 'rgba(255,255,255,.12)'
+        }
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.transform = 'translateY(0)'
         e.currentTarget.style.background = VARIANTS[variant].background
         if (variant === 'ghost') e.currentTarget.style.borderColor = 'var(--petrole-200)'
+        if (variant === 'ghostDark') e.currentTarget.style.borderColor = 'rgba(255,255,255,.55)'
       }}
       {...rest}
     >

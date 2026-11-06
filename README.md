@@ -28,28 +28,36 @@ npm run preview  # prévisualise le build
 index.html                 Point d'entrée HTML
 src/
   main.jsx                 Bootstrap React
-  App.jsx                  Navigation par onglets (accueil / prestations / entreprise / contact)
+  App.jsx                  Routage : une adresse par page (history API, sans dépendance)
   styles/
     index.css              Styles globaux + keyframes ; importe les tokens et Leaflet
     tokens/                Tokens du design system (couleurs, typo, espacement, fonts)
   components/
     ds/                    Composants du design system (Button, Badge, Card, StatCard,
                            StepCard, Input) recréés en React
-    Nav.jsx / Footer.jsx   Chrome du site
-    HeroCarousel.jsx       Header plein-cadre, carrousel des réalisations en fondu
-    Simulator.jsx          Simulateur d'économies solaires
-    Metiers.jsx            Trois métiers en grands blocs, photos qui défilent
+    Nav.jsx / Footer.jsx   Chrome du site (vrais liens <a href>)
+    HeroCarousel.jsx       Header plein-cadre, carrousel en fondu + qualifications
+    Simulator.jsx          Simulateur d'économies solaires (page Photovoltaïque)
+    Metiers.jsx            Trois métiers en grands blocs, chacun mène à sa page
+    ServiceHero.jsx        En-tête des pages métier
+    ServiceBlocks.jsx      Listes à coches, grilles de cartes
+    SectionHead.jsx        Surtitre + titre + chapeau de section
+    StepsSection.jsx       Les quatre temps du chantier (sur chaque page métier)
+    Projects.jsx           Cartes chantier, pop-up photos, « dernières réalisations »
     StatsBand.jsx          Chiffres clés — odomètre déclenché au scroll
     Reviews.jsx            Avis Google (carrousel horizontal)
     ZoneMap.jsx            Carte Leaflet interactive de la zone d'intervention
     CtaBand.jsx            Bandeau CTA final
   pages/
-    Home.jsx               Accueil (hero → simulateur → métiers → chiffres → avis → carte → CTA)
-    Realisations.jsx       Prestations + galerie de réalisations filtrable par métier
-    Entreprise.jsx         Histoire, méthode, « pour qui », engagements (marquee)
-    Contact.jsx            Formulaire d'étude + coordonnées agence
+    Home.jsx               /  Accueil (hero → métiers → chiffres → avis → carte → CTA)
+    Electricite.jsx        /electricite
+    Bornes.jsx             /bornes-de-recharge
+    Photovoltaique.jsx     /photovoltaique  (simulateur, entretien)
+    Entreprise.jsx         /entreprise  Histoire, agence, « pour qui », engagements
+    Contact.jsx            /contact  Formulaire d'étude + coordonnées agence
   lib/
-    data.js                Contenu réel (métiers, réalisations, villes, avis, engagements…)
+    data.js                Contenu réel (métiers, qualifications, réalisations, villes, avis…)
+    routes.js              Clés de page ↔ adresses et titres d'onglet
     icons.jsx              Pictogrammes au trait
     layout.js              Conteneur unifié et helpers de mise en page
 
@@ -59,10 +67,14 @@ project/                   Bundle de handoff original (maquette + design system)
 
 ## Notes
 
-- **Navigation** : le site est une SPA à onglets ; le logo Voltory ramène à l'accueil,
-  les onglets « Prestations » et « L'entreprise » et le bouton « Demander une étude »
-  sont à droite de la barre.
+- **Navigation** : une page par métier (Électricité · Bornes de recharge · Photovoltaïque,
+  dans l'ordre de priorité de l'activité) + L'entreprise. Chaque page a sa propre adresse ;
+  Cloudflare renvoie `index.html` pour toutes les routes (`not_found_handling`).
+- **Réalisations** : chaque chantier de `PROJECTS` est rattaché à une page métier
+  (`CAT_TO_METIER`) ; les plus récents s'affichent en premier.
 - **Carte** : les tuiles OpenStreetMap nécessitent un accès réseau sortant.
-- **Placeholders** : le SIRET reste à remplacer. Les dates et localisations des
+- **Placeholders** : le SIRET reste à remplacer. Les logos des qualifications
+  (`CERTIFICATIONS`) sont à fournir ; la distance incluse pour la pose d'une borne (3 m)
+  est à confirmer. Les dates et localisations des
   réalisations (`src/lib/data.js`) sont déduites des dossiers photos — à faire valider.
   Les prénoms des avis Google sont indicatifs.
