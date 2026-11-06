@@ -4,6 +4,7 @@ import { PROJECT_TYPES, CONTACT_ROWS } from '../lib/data.js'
 import Button from '../components/ds/Button.jsx'
 import Input from '../components/ds/Input.jsx'
 import Badge from '../components/ds/Badge.jsx'
+import { sendContact } from '../lib/sendContact.js'
 
 const ptBase = {
   fontFamily: 'var(--font-display)',
@@ -16,8 +17,30 @@ const ptBase = {
 }
 
 export default function Contact() {
-  const [submitted, setSubmitted] = useState(false)
+  const [status, setStatus] = useState('idle') // idle | sending | sent | error
   const [projType, setProjType] = useState('Photovoltaïque')
+  const submitted = status === 'sent'
+
+  const onSubmit = async (e) => {
+    e.preventDefault()
+    if (status === 'sending') return
+    const f = new FormData(e.currentTarget)
+    setStatus('sending')
+    try {
+      await sendContact({
+        name: f.get('name'),
+        email: f.get('email'),
+        phone: f.get('phone'),
+        type: projType,
+        message: f.get('message'),
+        botcheck: f.get('botcheck'),
+      })
+      setStatus('sent')
+    } catch (err) {
+      console.error('Envoi du formulaire impossible :', err)
+      setStatus('error')
+    }
+  }
 
   return (
     <div style={{ animation: 'vRise .45s var(--ease-out) both' }}>
@@ -97,17 +120,14 @@ export default function Contact() {
                     Félicien vous recontacte sous 48&nbsp;h pour votre étude. À très vite.
                   </p>
                   <div style={{ marginTop: '26px', display: 'flex', justifyContent: 'center' }}>
-                    <Button variant="ghost" onClick={() => setSubmitted(false)}>
+                    <Button variant="ghost" onClick={() => setStatus('idle')}>
                       Envoyer une autre demande
                     </Button>
                   </div>
                 </div>
               ) : (
                 <form
-                  onSubmit={(e) => {
-                    e.preventDefault()
-                    setSubmitted(true)
-                  }}
+                  onSubmit={onSubmit}
                   style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}
                 >
                   <h3
@@ -121,16 +141,27 @@ export default function Contact() {
                   >
                     Demander mon étude gratuite
                   </h3>
-                  <Input label="Nom complet" placeholder="Jean Dupont" required />
+                  {/* Champ piège anti-spam : invisible pour les humains, rempli par les robots. */}
+                  <input
+                    type="checkbox"
+                    name="botcheck"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    style={{ display: 'none' }}
+                  />
+                  <Input label="Nom complet" name="name" autoComplete="name" placeholder="Jean Dupont" required />
                   <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
                     <Input
                       label="Email"
                       type="email"
+                      name="email"
+                      autoComplete="email"
                       placeholder="jean@exemple.fr"
                       required
                       style={{ flex: '1 1 160px' }}
                     />
-                    <Input label="Téléphone" type="tel" placeholder="06 12 34 56 78" style={{ flex: '1 1 160px' }} />
+                    <Input label="Téléphone" type="tel" name="phone" autoComplete="tel" placeholder="06 12 34 56 78" style={{ flex: '1 1 160px' }} />
                   </div>
                   <div>
                     <label
@@ -182,6 +213,7 @@ export default function Contact() {
                     </label>
                     <textarea
                       id="msg"
+                      name="message"
                       rows={4}
                       placeholder="Quelques mots sur votre lieu et vos besoins…"
                       style={{
@@ -206,8 +238,27 @@ export default function Contact() {
                       }}
                     />
                   </div>
-                  <Button variant="accent" size="lg" full type="submit">
-                    Envoyer ma demande
+                  {status === 'error' && (
+                    <p
+                      role="alert"
+                      style={{
+                        fontSize: '14px',
+                        lineHeight: 1.5,
+                        color: 'var(--text-strong)',
+                        background: 'var(--or-100)',
+                        border: '1px solid var(--or-500)',
+                        borderRadius: 'var(--r-sm)',
+                        padding: '12px 14px',
+                        margin: 0,
+                      }}
+                    >
+                      L'envoi n'a pas abouti. Réessayez dans un instant, ou contactez Félicien
+                      directement au <a href="tel:+33619197352">06 19 19 73 52</a> ou à{' '}
+                      <a href="mailto:felicien.gury@voltory.fr">felicien.gury@voltory.fr</a>.
+                    </p>
+                  )}
+                  <Button variant="accent" size="lg" full type="submit" disabled={status === 'sending'}>
+                    {status === 'sending' ? 'Envoi en cours…' : 'Envoyer ma demande'}
                   </Button>
                   <p style={{ fontSize: '12.5px', color: 'var(--text-muted)', textAlign: 'center', margin: 0 }}>
                     Conseil d'artisan, jamais de démarchage. Vos données restent confidentielles.
