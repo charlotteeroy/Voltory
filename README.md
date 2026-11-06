@@ -73,7 +73,10 @@ project/                   Bundle de handoff original (maquette + design system)
 - **Réalisations** : chaque chantier de `PROJECTS` est rattaché à une page métier
   (`CAT_TO_METIER`) ; les plus récents s'affichent en premier.
 - **Carte** : les tuiles OpenStreetMap nécessitent un accès réseau sortant.
-- **Placeholders** : le SIRET reste à remplacer. Les logos des qualifications
+- **Contenus issus des devis** : détail du tableau électrique et de la centrale solaire,
+  options (routeur, batterie), entretien VOLTORY+, déplacement offert sous 15 km, paiement
+  échelonné (`GoodToKnow.jsx`). Les prix des devis ne sont volontairement pas affichés.
+- **Placeholders** : les logos des qualifications
   (`CERTIFICATIONS`) sont à fournir ; la distance incluse pour la pose d'une borne (3 m)
   est à confirmer. Les dates et localisations des
   réalisations (`src/lib/data.js`) sont déduites des dossiers photos — à faire valider.

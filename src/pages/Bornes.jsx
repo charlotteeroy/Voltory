@@ -4,6 +4,7 @@ import ServiceHero from '../components/ServiceHero.jsx'
 import SectionHead from '../components/SectionHead.jsx'
 import { CheckList, FeatureGrid } from '../components/ServiceBlocks.jsx'
 import StepsSection from '../components/StepsSection.jsx'
+import GoodToKnow from '../components/GoodToKnow.jsx'
 import { LatestProjects } from '../components/Projects.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 import Button from '../components/ds/Button.jsx'
@@ -270,9 +271,10 @@ export default function Bornes({ navigate }) {
 
       <StepsSection />
 
+      <GoodToKnow background="var(--surface-page)" />
+
       <LatestProjects
         metier="bornes"
-        background="var(--surface-page)"
         intro="Prises renforcées et bornes posées chez nos clients. Cliquez pour voir les photos."
       />
 

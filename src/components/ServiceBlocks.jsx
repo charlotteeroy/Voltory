@@ -59,3 +59,47 @@ export function FeatureGrid({ items, min = '280px' }) {
     </div>
   )
 }
+
+/** Contenu détaillé d'une prestation, par groupes (repris des devis Voltory). */
+export function ScopeGrid({ groups, min = '250px' }) {
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit,minmax(${min},1fr))`, gap: '22px' }}>
+      {groups.map((g, i) => (
+        <div
+          key={g.title}
+          style={{
+            background: 'var(--surface-card)',
+            border: '1px solid var(--border-subtle)',
+            borderRadius: 'var(--r-md)',
+            padding: '26px',
+            boxShadow: 'var(--e1)',
+          }}
+        >
+          <div
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: '13px',
+              fontWeight: 700,
+              letterSpacing: '.08em',
+              color: 'var(--or-700)',
+            }}
+          >
+            {String(i + 1).padStart(2, '0')}
+          </div>
+          <div
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontWeight: 700,
+              fontSize: '18px',
+              color: 'var(--text-strong)',
+              margin: '6px 0 18px',
+            }}
+          >
+            {g.title}
+          </div>
+          <CheckList items={g.items} gap="10px" />
+        </div>
+      ))}
+    </div>
+  )
+}
