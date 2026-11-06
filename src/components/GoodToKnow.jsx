@@ -7,7 +7,7 @@ import { FeatureGrid } from './ServiceBlocks.jsx'
 const ITEMS = [
   {
     icon: Icons.car,
-    title: 'Déplacement offert sous 15 km',
+    title: 'Déplacement offert',
     text: "Nous passons nos véhicules à l'électrique : nos frais baissent, vous en profitez. Déplacement offert dans un rayon de 15 km autour de l'agence de Cholet, puis 8 € HT par tranche de 5 km.",
   },
   {
