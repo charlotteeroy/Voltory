@@ -37,7 +37,7 @@ function Certifications() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontSize: '13px',
-                  fontWeight: 700,
+                  fontWeight: 600,
                   flexShrink: 0,
                 }}
               >
@@ -130,7 +130,7 @@ export default function HeroCarousel({ onContact, onDiscover }) {
           <h1
             style={{
               fontFamily: 'var(--font-display)',
-              fontWeight: 700,
+              fontWeight: 600,
               fontSize: 'clamp(2.5rem,4.8vw,3.9rem)',
               lineHeight: 1.05,
               letterSpacing: '-.03em',
@@ -150,8 +150,7 @@ export default function HeroCarousel({ onContact, onDiscover }) {
               maxWidth: '48ch',
             }}
           >
-            Électricité générale, bornes de recharge et photovoltaïque. Depuis 2007, notre équipe
-            familiale vous accompagne à Cholet et alentours — du conseil au suivi.
+            Électricité, bornes de recharge et photovoltaïque à Cholet. Une entreprise familiale, depuis 2007.
           </p>
           <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', marginTop: '28px' }}>
             <Button variant="accent" onClick={onContact}>

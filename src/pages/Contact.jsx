@@ -48,7 +48,7 @@ export default function Contact() {
             <h1
               style={{
                 fontFamily: 'var(--font-display)',
-                fontWeight: 700,
+                fontWeight: 600,
                 fontSize: 'clamp(2.2rem,4.2vw,3rem)',
                 letterSpacing: '-.03em',
                 lineHeight: 1.04,
@@ -85,7 +85,7 @@ export default function Contact() {
                   <h3
                     style={{
                       fontFamily: 'var(--font-display)',
-                      fontWeight: 700,
+                      fontWeight: 600,
                       fontSize: '24px',
                       color: 'var(--text-strong)',
                       margin: '14px 0 8px',
@@ -113,7 +113,7 @@ export default function Contact() {
                   <h3
                     style={{
                       fontFamily: 'var(--font-display)',
-                      fontWeight: 700,
+                      fontWeight: 600,
                       fontSize: '20px',
                       color: 'var(--text-strong)',
                       margin: 0,
@@ -226,7 +226,7 @@ export default function Contact() {
                   boxShadow: 'var(--e2)',
                 }}
               >
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '18px' }}>
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '18px' }}>
                   Voltory — agence de Cholet
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '22px' }}>

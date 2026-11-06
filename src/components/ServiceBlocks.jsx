@@ -15,7 +15,7 @@ export function Tick({ size = 22 }) {
         alignItems: 'center',
         justifyContent: 'center',
         fontSize: `${Math.round(size * 0.55)}px`,
-        fontWeight: 700,
+        fontWeight: 600,
       }}
     >
       ✓
@@ -79,7 +79,7 @@ export function ScopeGrid({ groups, min = '250px' }) {
             style={{
               fontFamily: 'var(--font-display)',
               fontSize: '13px',
-              fontWeight: 700,
+              fontWeight: 600,
               letterSpacing: '.08em',
               color: 'var(--or-700)',
             }}
@@ -89,16 +89,83 @@ export function ScopeGrid({ groups, min = '250px' }) {
           <div
             style={{
               fontFamily: 'var(--font-display)',
-              fontWeight: 700,
+              fontWeight: 600,
               fontSize: '18px',
               color: 'var(--text-strong)',
-              margin: '6px 0 18px',
+              margin: '6px 0 16px',
             }}
           >
             {g.title}
           </div>
-          <CheckList items={g.items} gap="10px" />
+          <Chips items={g.items} />
         </div>
+      ))}
+    </div>
+  )
+}
+
+/** Mosaïque de photos légendées (une prestation = une photo + un titre court). */
+export function PhotoTiles({ items, min = '260px', height = '240px' }) {
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit,minmax(${min},1fr))`, gap: '16px' }}>
+      {items.map((it) => (
+        <figure
+          key={it.title}
+          style={{
+            position: 'relative',
+            margin: 0,
+            height,
+            borderRadius: 'var(--r-md)',
+            overflow: 'hidden',
+            background: 'var(--petrole-800)',
+            boxShadow: 'var(--e1)',
+          }}
+        >
+          <img
+            src={it.img}
+            alt=""
+            loading="lazy"
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+          <figcaption
+            style={{
+              position: 'absolute',
+              inset: 'auto 0 0 0',
+              padding: '40px 18px 16px',
+              background: 'linear-gradient(0deg, rgba(4,30,34,.85), rgba(4,30,34,0))',
+              color: 'var(--text-on-dark)',
+            }}
+          >
+            <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '17px' }}>{it.title}</div>
+            {it.text && (
+              <div style={{ fontSize: '13.5px', color: 'var(--text-on-dark-soft)', marginTop: '2px' }}>{it.text}</div>
+            )}
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  )
+}
+
+/** Étiquettes « pilule » (remplacent les listes à puces courtes). */
+export function Chips({ items, onDark = false }) {
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+      {items.map((it) => (
+        <span
+          key={it}
+          style={{
+            fontSize: '13.5px',
+            fontWeight: 500,
+            padding: '7px 14px',
+            borderRadius: 'var(--r-pill)',
+            background: onDark ? 'rgba(255,255,255,.1)' : 'var(--surface-page)',
+            border: `1px solid ${onDark ? 'rgba(255,255,255,.2)' : 'var(--border-subtle)'}`,
+            color: onDark ? 'var(--text-on-dark)' : 'var(--text-strong)',
+          }}
+        >
+          {it}
+        </span>
       ))}
     </div>
   )

@@ -42,7 +42,7 @@ src/
     ServiceHero.jsx        En-tête des pages métier
     ServiceBlocks.jsx      Listes à coches, grilles de cartes
     SectionHead.jsx        Surtitre + titre + chapeau de section
-    StepsSection.jsx       Les quatre temps du chantier (sur chaque page métier)
+    Method.jsx             Méthode en 4 étapes + engagements (sur chaque page métier)
     Projects.jsx           Cartes chantier, pop-up photos, « dernières réalisations »
     StatsBand.jsx          Chiffres clés — odomètre déclenché au scroll
     Reviews.jsx            Avis Google (carrousel horizontal)
@@ -75,7 +75,7 @@ project/                   Bundle de handoff original (maquette + design system)
 - **Carte** : les tuiles OpenStreetMap nécessitent un accès réseau sortant.
 - **Contenus issus des devis** : détail du tableau électrique et de la centrale solaire,
   options (routeur, batterie), entretien VOLTORY+, déplacement offert sous 15 km, paiement
-  échelonné (`GoodToKnow.jsx`). Les prix des devis ne sont volontairement pas affichés.
+  échelonné (`Method.jsx`). Les prix des devis ne sont volontairement pas affichés.
 - **Placeholders** : les logos des qualifications
   (`CERTIFICATIONS`) sont à fournir ; la distance incluse pour la pose d'une borne (3 m)
   est à confirmer. Les dates et localisations des

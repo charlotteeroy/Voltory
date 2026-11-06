@@ -25,13 +25,7 @@ export const METIERS = [
     cta: "Découvrir l'électricité générale",
     eyebrow: 'Électricité générale',
     title: 'Rénovation & mise aux normes',
-    text: "Du tableau électrique à l'appareillage de prestige : des installations sûres, soignées et conformes, en neuf comme en rénovation.",
-    points: [
-      "Audit de l’installation avant achat",
-      'Tableau électrique & mise aux normes',
-      "Éclairage d’ambiance et extérieur",
-      'Domotique & réseaux RJ45',
-    ],
+    points: ['Tableau électrique', 'Rénovation', 'Éclairage', 'Audit avant achat', 'Domotique'],
     imgs: [
       '/assets/hero/01-salon.jpg',
       '/assets/real-hotel-hall.jpg',
@@ -43,28 +37,16 @@ export const METIERS = [
     key: 'bornes',
     cta: 'Découvrir nos bornes de recharge',
     eyebrow: 'Bornes de recharge',
-    title: 'Recharger son véhicule à la maison',
-    text: 'Prise renforcée ou borne : la solution adaptée à vos trajets et à votre installation, posée en une journée, à prix standard.',
-    points: [
-      'Prises renforcées dès 349 € TTC',
-      'Bornes de 7 à 11 kW, 4× plus rapides',
-      'Installation standard à prix clair',
-      'Couplage avec le solaire',
-    ],
+    title: 'Rechargez à la maison',
+    points: ['Prise renforcée dès 349 €', 'Borne 7 à 11 kW', 'Posée en une journée', 'Prix standard'],
     imgs: ['/assets/real-borne-felicien.jpg', '/assets/agence-aerien.png'],
   },
   {
     key: 'photovoltaique',
     cta: 'Découvrir le photovoltaïque',
     eyebrow: 'Photovoltaïque',
-    title: 'Solaire en autoconsommation',
-    text: "Un solaire dimensionné sur votre consommation réelle, jamais vendu à la hâte — de l’étude de rentabilité au suivi de production.",
-    points: [
-      'Étude de rentabilité sur mesure',
-      'Démarches administratives gérées',
-      'Installation modulable et évolutive',
-      'Entretien annuel, le premier offert',
-    ],
+    title: 'Produisez votre électricité',
+    points: ['Étude de rentabilité', 'Démarches gérées', 'Évolutive', '1er entretien offert'],
     imgs: ['/assets/real-solaire-toiture.webp', '/assets/agence-aerien.png'],
   },
 ]
@@ -383,10 +365,10 @@ export const ENG_COL_B = [
 
 /* Méthode en 4 temps. */
 export const STEPS = [
-  { n: '01', t: "L’écoute", d: 'On prend le temps de comprendre vos besoins, vos usages et vos projets futurs.' },
-  { n: '02', t: "L’étude & le devis", d: 'Une étude technique personnalisée et un devis transparent, sans jargon.' },
-  { n: '03', t: 'La réalisation', d: 'Une exécution soignée, normes respectées, chantier propre et démarches gérées.' },
-  { n: '04', t: 'Le suivi', d: "Un accompagnement après l’intervention — une entreprise joignable et disponible." },
+  { n: '01', t: "L’écoute", d: 'Vos besoins et vos projets' },
+  { n: '02', t: "L’étude & le devis", d: 'Détaillé, sans jargon' },
+  { n: '03', t: 'La réalisation', d: 'Soignée et conforme' },
+  { n: '04', t: 'Le suivi', d: 'Joignables après le chantier' },
 ]
 
 /* Profils clients (« Pour qui ? »). */

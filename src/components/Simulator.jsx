@@ -21,7 +21,7 @@ export default function Simulator({ onStudy, id }) {
   }
   const resultNum = {
     fontFamily: 'var(--font-display)',
-    fontWeight: 700,
+    fontWeight: 600,
     fontSize: 'clamp(22px,5.5vw,30px)',
     color: 'var(--petrole-700)',
     lineHeight: 1,
@@ -90,7 +90,7 @@ export default function Simulator({ onStudy, id }) {
           <h2
             style={{
               fontFamily: 'var(--font-display)',
-              fontWeight: 700,
+              fontWeight: 600,
               fontSize: 'clamp(1.9rem,3.4vw,2.7rem)',
               letterSpacing: '-.02em',
               lineHeight: 1.06,
@@ -128,7 +128,7 @@ export default function Simulator({ onStudy, id }) {
           <div
             style={{
               fontFamily: 'var(--font-display)',
-              fontWeight: 700,
+              fontWeight: 600,
               fontSize: '18px',
               color: 'var(--text-strong)',
             }}
@@ -156,7 +156,7 @@ export default function Simulator({ onStudy, id }) {
             <span
               style={{
                 fontFamily: 'var(--font-display)',
-                fontWeight: 700,
+                fontWeight: 600,
                 fontSize: '22px',
                 color: 'var(--petrole-700)',
               }}
@@ -201,7 +201,7 @@ export default function Simulator({ onStudy, id }) {
               <div
                 style={{
                   fontFamily: 'var(--font-display)',
-                  fontWeight: 700,
+                  fontWeight: 600,
                   fontSize: 'clamp(22px,5.5vw,30px)',
                   color: 'var(--or-500)',
                   lineHeight: 1,

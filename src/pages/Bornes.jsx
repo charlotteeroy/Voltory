@@ -2,9 +2,8 @@ import { WRAP, scrollToId } from '../lib/layout.js'
 import { Icons } from '../lib/icons.jsx'
 import ServiceHero from '../components/ServiceHero.jsx'
 import SectionHead from '../components/SectionHead.jsx'
-import { CheckList, FeatureGrid } from '../components/ServiceBlocks.jsx'
-import StepsSection from '../components/StepsSection.jsx'
-import GoodToKnow from '../components/GoodToKnow.jsx'
+import { CheckList, Chips, FeatureGrid } from '../components/ServiceBlocks.jsx'
+import Method from '../components/Method.jsx'
 import { LatestProjects } from '../components/Projects.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 import Button from '../components/ds/Button.jsx'
@@ -15,12 +14,8 @@ const SOLUTIONS = [
     tag: 'La plus accessible',
     name: 'Prise renforcée',
     price: 'dès 349 € TTC',
-    spec: "≈ 10 km d'autonomie récupérés par heure de charge",
-    points: [
-      'Idéale pour les trajets du quotidien',
-      'Recharge la nuit, sur une prise dédiée et sécurisée',
-      'Le budget le plus léger',
-    ],
+    spec: "≈ 10 km d'autonomie par heure de charge",
+    points: ['Trajets du quotidien', 'Recharge la nuit', 'Budget léger'],
     dark: false,
   },
   {
@@ -28,11 +23,7 @@ const SOLUTIONS = [
     name: 'Borne de recharge',
     price: 'de 7 à 11 kW',
     spec: '≈ 4× plus rapide qu’une prise renforcée',
-    points: [
-      'Pour les gros rouleurs ou les foyers à deux véhicules',
-      'Pilotage intelligent de la recharge',
-      'Couplage possible avec vos panneaux solaires',
-    ],
+    points: ['Gros rouleurs', 'Deux véhicules', 'Pilotage intelligent', 'Couplage solaire'],
     dark: true,
   },
 ]
@@ -48,17 +39,17 @@ const OPTIONS = [
   {
     icon: Icons.tool,
     title: 'Borne éloignée du tableau',
-    text: 'Garage, allée, parking : la borne est posée où vous le souhaitez. Le câble supplémentaire est chiffré selon la distance.',
+    text: 'Garage, allée, parking : où vous le souhaitez.',
   },
   {
     icon: Icons.zap,
     title: 'Étude de puissance',
-    text: 'On vérifie que votre abonnement et votre installation supportent la recharge, sans faire disjoncter la maison.',
+    text: 'Rechargez sans faire disjoncter la maison.',
   },
   {
     icon: Icons.sun,
     title: 'Couplage avec le solaire',
-    text: 'Rechargez votre véhicule avec l’électricité produite par vos propres panneaux.',
+    text: 'Roulez avec l’électricité de vos panneaux.',
   },
 ]
 
@@ -95,7 +86,7 @@ function SolutionCard({ s }) {
       <h3
         style={{
           fontFamily: 'var(--font-display)',
-          fontWeight: 700,
+          fontWeight: 600,
           fontSize: 'clamp(1.5rem,2.4vw,1.9rem)',
           letterSpacing: '-.02em',
           color: fg,
@@ -107,7 +98,7 @@ function SolutionCard({ s }) {
       <div
         style={{
           fontFamily: 'var(--font-display)',
-          fontWeight: 700,
+          fontWeight: 600,
           fontSize: '20px',
           color: s.dark ? 'var(--or-400)' : 'var(--or-700)',
           margin: '8px 0 0',
@@ -126,7 +117,7 @@ function SolutionCard({ s }) {
       >
         {s.spec}
       </div>
-      <CheckList items={s.points} onDark={s.dark} />
+      <Chips items={s.points} onDark={s.dark} />
     </div>
   )
 }
@@ -137,7 +128,7 @@ export default function Bornes({ navigate }) {
       <ServiceHero
         eyebrow="Bornes de recharge"
         title="Rechargez votre véhicule électrique à la maison"
-        intro="Prise renforcée ou borne : on vous conseille la solution adaptée à vos trajets et à votre installation, posée en une journée, à un prix standard connu d'avance."
+        intro="Prise renforcée ou borne, posée en une journée à prix connu d'avance."
         img="/assets/real-borne-felicien.jpg"
         primary={{ label: 'Recevoir mon devis', onClick: () => navigate('contact') }}
         secondary={{ label: 'Comparer les solutions', onClick: () => scrollToId('solutions') }}
@@ -149,7 +140,7 @@ export default function Bornes({ navigate }) {
           <SectionHead
             eyebrow="Deux solutions"
             title="Laquelle vous correspond ?"
-            intro="Pour un particulier, l'une de ces deux solutions suffit amplement. Les options viennent ensuite rendre la recharge plus confortable."
+            mb="36px"
           />
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '28px', alignItems: 'stretch' }}>
             {SOLUTIONS.map((s) => (
@@ -198,7 +189,7 @@ export default function Bornes({ navigate }) {
               mb="0"
               eyebrow="Un prix clair"
               title="Une installation standard, un prix connu d'avance"
-              intro="Nous avons standardisé la pose pour vous envoyer un devis dès votre demande. Il est ensuite confirmé lors d'une visite sur place — parce qu'en électricité, chaque maison est différente."
+              intro="Un devis dès votre demande, confirmé lors d'une visite sur place."
             />
           </div>
           <div
@@ -211,7 +202,7 @@ export default function Bornes({ navigate }) {
               boxShadow: 'var(--e3)',
             }}
           >
-            <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '18px', marginBottom: '20px' }}>
+            <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '18px', marginBottom: '20px' }}>
               Inclus dans l'installation standard
             </div>
             <CheckList items={INCLUDED} />
@@ -229,7 +220,7 @@ export default function Bornes({ navigate }) {
       {/* Options */}
       <section style={{ background: 'var(--surface-card)', padding: '96px 0' }}>
         <div style={WRAP}>
-          <SectionHead eyebrow="Pour aller plus loin" title="Les options, selon votre projet" />
+          <SectionHead eyebrow="Pour aller plus loin" title="Les options, selon votre projet" mb="36px" />
           <FeatureGrid items={OPTIONS} />
         </div>
       </section>
@@ -250,7 +241,7 @@ export default function Bornes({ navigate }) {
             <h3
               style={{
                 fontFamily: 'var(--font-display)',
-                fontWeight: 700,
+                fontWeight: 600,
                 fontSize: 'clamp(1.4rem,2.4vw,1.8rem)',
                 letterSpacing: '-.02em',
                 margin: 0,
@@ -258,9 +249,8 @@ export default function Bornes({ navigate }) {
             >
               Votre tableau électrique est ancien ?
             </h3>
-            <p style={{ fontSize: '1.05rem', lineHeight: 1.6, color: 'var(--text-body)', margin: '12px 0 0' }}>
-              C'est fréquent. Nous pouvons installer un coffret dédié à côté de votre tableau pour la
-              recharge, ou profiter de l'intervention pour remettre votre tableau aux normes.
+            <p style={{ fontSize: '1.05rem', lineHeight: 1.6, color: 'var(--text-body)', margin: '8px 0 0' }}>
+              Coffret dédié ou tableau remis aux normes : on s'adapte.
             </p>
           </div>
           <Button variant="ghost" onClick={() => navigate('electricite')}>
@@ -269,19 +259,14 @@ export default function Bornes({ navigate }) {
         </div>
       </section>
 
-      <StepsSection />
+      <Method />
 
-      <GoodToKnow background="var(--surface-page)" />
-
-      <LatestProjects
-        metier="bornes"
-        intro="Prises renforcées et bornes posées chez nos clients. Cliquez pour voir les photos."
-      />
+      <LatestProjects metier="bornes" background="var(--surface-page)" />
 
       <CtaBand
         onContact={() => navigate('contact')}
         title="Vous passez à l'électrique ?"
-        text="Recevez un devis standard pour votre prise renforcée ou votre borne, confirmé lors d'une visite sur place."
+        text="Un devis standard, confirmé lors d'une visite sur place."
         label="Recevoir mon devis"
       />
     </div>

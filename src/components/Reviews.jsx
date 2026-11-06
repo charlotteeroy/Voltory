@@ -43,7 +43,7 @@ export default function Reviews() {
             <h2
               style={{
                 fontFamily: 'var(--font-display)',
-                fontWeight: 700,
+                fontWeight: 600,
                 fontSize: 'clamp(1.9rem,3.4vw,2.6rem)',
                 letterSpacing: '-.02em',
                 lineHeight: 1.1,
@@ -68,7 +68,7 @@ export default function Reviews() {
             <span
               style={{
                 fontFamily: 'var(--font-display)',
-                fontWeight: 700,
+                fontWeight: 600,
                 fontSize: '26px',
                 color: 'var(--text-strong)',
               }}
@@ -80,7 +80,7 @@ export default function Reviews() {
                 <span
                   style={{
                     fontFamily: 'var(--font-display)',
-                    fontWeight: 700,
+                    fontWeight: 600,
                     fontSize: '20px',
                     color: 'var(--text-strong)',
                   }}
@@ -139,7 +139,7 @@ export default function Reviews() {
                 <span
                   style={{
                     fontFamily: 'var(--font-display)',
-                    fontWeight: 700,
+                    fontWeight: 600,
                     fontSize: '16px',
                     color: 'var(--text-muted)',
                   }}
@@ -162,7 +162,7 @@ export default function Reviews() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     fontFamily: 'var(--font-display)',
-                    fontWeight: 700,
+                    fontWeight: 600,
                     fontSize: '14px',
                   }}
                 >
