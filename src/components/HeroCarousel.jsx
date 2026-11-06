@@ -1,10 +1,74 @@
 import { useEffect, useState } from 'react'
 import { WRAP } from '../lib/layout.js'
-import { HERO_IMGS } from '../lib/data.js'
+import { HERO_IMGS, CERTIFICATIONS } from '../lib/data.js'
 import Button from './ds/Button.jsx'
 
+/** Qualifications : logos officiels dès qu'ils sont fournis, badge texte en attendant. */
+function Certifications() {
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '30px' }}>
+      {CERTIFICATIONS.map((c) => (
+        <div
+          key={c.label}
+          title={`${c.label} — ${c.detail}`}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            padding: c.logo ? '6px 12px' : '8px 14px 8px 8px',
+            borderRadius: 'var(--r-md)',
+            background: 'rgba(255,255,255,.1)',
+            border: '1px solid rgba(255,255,255,.22)',
+            backdropFilter: 'blur(6px)',
+          }}
+        >
+          {c.logo ? (
+            <img src={c.logo} alt={c.label} style={{ height: '40px', display: 'block' }} />
+          ) : (
+            <>
+              <span
+                style={{
+                  width: '28px',
+                  height: '28px',
+                  borderRadius: '50%',
+                  background: 'var(--or-500)',
+                  color: 'var(--petrole-900)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  flexShrink: 0,
+                }}
+              >
+                ✓
+              </span>
+              <span style={{ lineHeight: 1.2 }}>
+                <span
+                  style={{
+                    display: 'block',
+                    fontFamily: 'var(--font-display)',
+                    fontWeight: 600,
+                    fontSize: '13.5px',
+                    color: 'var(--blanc)',
+                  }}
+                >
+                  {c.label}
+                </span>
+                <span style={{ display: 'block', fontSize: '11.5px', color: 'var(--text-on-dark-soft)' }}>
+                  {c.detail}
+                </span>
+              </span>
+            </>
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}
+
 /** Header plein-cadre : carrousel des réalisations en fondu (Ken Burns lent). */
-export default function HeroCarousel({ onDiscover }) {
+export default function HeroCarousel({ onContact, onDiscover }) {
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
@@ -66,7 +130,7 @@ export default function HeroCarousel({ onDiscover }) {
           <h1
             style={{
               fontFamily: 'var(--font-display)',
-              fontWeight: 700,
+              fontWeight: 600,
               fontSize: 'clamp(2.5rem,4.8vw,3.9rem)',
               lineHeight: 1.05,
               letterSpacing: '-.03em',
@@ -86,14 +150,17 @@ export default function HeroCarousel({ onDiscover }) {
               maxWidth: '48ch',
             }}
           >
-            Électricité, photovoltaïque, recharge électrique. Conseil, installation, suivi. Une
-            entreprise familiale, un travail durable.
+            Électricité, bornes de recharge et photovoltaïque à Cholet. Une entreprise familiale, depuis 2007.
           </p>
           <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', marginTop: '28px' }}>
-            <Button variant="accent" onClick={onDiscover}>
-              Découvrir nos prestations →
+            <Button variant="accent" onClick={onContact}>
+              Parler de mon projet
+            </Button>
+            <Button variant="ghostDark" onClick={onDiscover}>
+              Découvrir nos métiers
             </Button>
           </div>
+          <Certifications />
         </div>
         <div style={{ display: 'flex', gap: '8px', marginTop: '44px' }}>
           {HERO_IMGS.map((src, i) => (

@@ -2,7 +2,12 @@ import { WRAP } from '../lib/layout.js'
 import Button from './ds/Button.jsx'
 
 /** Bandeau CTA final (pétrole + halo doré). */
-export default function CtaBand({ onContact }) {
+export default function CtaBand({
+  onContact,
+  title = 'Parlons de votre projet',
+  text = 'Une étude chiffrée, sans engagement. Un seul interlocuteur, dès le départ.',
+  label = 'Demander mon étude gratuite',
+}) {
   return (
     <section
       style={{
@@ -30,7 +35,7 @@ export default function CtaBand({ onContact }) {
         <h2
           style={{
             fontFamily: 'var(--font-display)',
-            fontWeight: 700,
+            fontWeight: 600,
             fontSize: 'clamp(2rem,4vw,3rem)',
             letterSpacing: '-.025em',
             lineHeight: 1.04,
@@ -38,7 +43,7 @@ export default function CtaBand({ onContact }) {
             color: 'var(--text-on-dark)',
           }}
         >
-          Parlons de votre projet
+          {title}
         </h2>
         <p
           style={{
@@ -48,11 +53,11 @@ export default function CtaBand({ onContact }) {
             maxWidth: '42ch',
           }}
         >
-          Une étude chiffrée, sans engagement. Un seul interlocuteur, dès le départ.
+          {text}
         </p>
         <div style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
           <Button variant="accent" size="lg" onClick={onContact}>
-            Demander mon étude gratuite
+            {label}
           </Button>
         </div>
       </div>

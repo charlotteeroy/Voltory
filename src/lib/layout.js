@@ -23,3 +23,7 @@ export const goldRule = {
   border: 'none',
   margin: '16px 0 20px',
 }
+
+/** Défilement doux vers une section de la page (ancres internes). */
+export const scrollToId = (id) =>
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })

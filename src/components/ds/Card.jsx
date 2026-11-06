@@ -49,7 +49,7 @@ export default function Card({ icon = null, title, children, eyebrow = null, sty
           style={{
             fontFamily: 'var(--font-display)',
             fontSize: '11px',
-            fontWeight: 'var(--fw-bold)',
+            fontWeight: 600,
             letterSpacing: 'var(--ls-eyebrow)',
             textTransform: 'uppercase',
             color: 'var(--text-accent)',
@@ -64,7 +64,7 @@ export default function Card({ icon = null, title, children, eyebrow = null, sty
           style={{
             fontFamily: 'var(--font-display)',
             fontSize: '18px',
-            fontWeight: 'var(--fw-bold)',
+            fontWeight: 600,
             color: 'var(--text-strong)',
             margin: '0 0 8px',
             letterSpacing: 'var(--ls-normal)',

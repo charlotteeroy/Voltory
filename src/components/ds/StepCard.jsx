@@ -19,7 +19,7 @@ export default function StepCard({ number, title, children, style = {}, ...rest 
       <div
         style={{
           fontFamily: 'var(--font-display)',
-          fontWeight: 'var(--fw-black)',
+          fontWeight: 600,
           fontSize: '34px',
           color: 'var(--or-500)',
           lineHeight: 1,
@@ -31,7 +31,7 @@ export default function StepCard({ number, title, children, style = {}, ...rest 
       <h5
         style={{
           fontFamily: 'var(--font-display)',
-          fontWeight: 'var(--fw-bold)',
+          fontWeight: 600,
           fontSize: '16px',
           color: 'var(--text-strong)',
           margin: '10px 0 7px',

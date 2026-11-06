@@ -23,7 +23,7 @@ export default function StatCard({ value, unit = null, label, style = {}, ...res
         style={{
           fontFamily: 'var(--font-display)',
           fontSize: '40px',
-          fontWeight: 'var(--fw-black)',
+          fontWeight: 600,
           color: 'var(--or-500)',
           lineHeight: 1,
           letterSpacing: 'var(--ls-snug)',

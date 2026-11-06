@@ -1,5 +1,5 @@
 import { WRAP } from '../lib/layout.js'
-import { NAV_DEFS } from './Nav.jsx'
+import { NAV_DEFS, navLinkProps } from './Nav.jsx'
 
 export default function Footer({ navigate }) {
   return (
@@ -21,7 +21,7 @@ export default function Footer({ navigate }) {
       >
         <div style={{ flex: '1 1 260px', maxWidth: '320px' }}>
           <img
-            src="assets/voltory-logo-white.png"
+            src="/assets/voltory-logo-white.png"
             alt="Voltory"
             style={{ height: '30px', display: 'block' }}
           />
@@ -54,10 +54,11 @@ export default function Footer({ navigate }) {
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {NAV_DEFS.map((n) => (
-                <button
+                <a
                   key={n.key}
-                  onClick={() => navigate(n.key)}
+                  {...navLinkProps(n.key, navigate)}
                   style={{
+                    textDecoration: 'none',
                     background: 'none',
                     border: 'none',
                     color: 'var(--text-on-dark-soft)',
@@ -71,7 +72,7 @@ export default function Footer({ navigate }) {
                   onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-on-dark-soft)')}
                 >
                   {n.label}
-                </button>
+                </a>
               ))}
             </div>
           </div>
@@ -98,7 +99,7 @@ export default function Footer({ navigate }) {
                 color: 'var(--text-on-dark-soft)',
               }}
             >
-              <span>Cholet, Maine-et-Loire</span>
+              <span>41 avenue du Lac, 49300 Cholet</span>
               <span>06 19 19 73 52</span>
               <span>felicien.gury@voltory.fr</span>
             </div>
@@ -120,7 +121,9 @@ export default function Footer({ navigate }) {
         }}
       >
         <span>© 2026 Voltory · Électricité · Photovoltaïque · Bornes de recharge</span>
-        <span>RGE QualiPV · SIRET 000 000 000 00000</span>
+        <span>
+          RGE QualiPV · SIRET 498 685 692 00044 · RCS Angers · Garantie décennale APRIL
+        </span>
       </div>
     </footer>
   )
