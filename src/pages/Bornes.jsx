@@ -84,9 +84,7 @@ function SolutionCard({ s }) {
             width: 'clamp(84px,9vw,120px)',
             height: 'clamp(84px,9vw,120px)',
             objectFit: 'contain',
-            background: s.dark ? 'rgba(255,255,255,.92)' : 'var(--surface-page)',
-            borderRadius: 'var(--r-md)',
-            padding: '8px',
+            filter: 'drop-shadow(0 10px 18px rgba(4,30,34,.25))',
           }}
         />
       )}

@@ -6,63 +6,31 @@ import Button from './ds/Button.jsx'
 /** Qualifications : logos officiels dès qu'ils sont fournis, badge texte en attendant. */
 function Certifications() {
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '30px' }}>
-      {CERTIFICATIONS.map((c) => (
-        <div
-          key={c.label}
-          title={`${c.label} — ${c.detail}`}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            padding: c.logo ? '8px 14px' : '8px 14px 8px 8px',
-            borderRadius: 'var(--r-md)',
-            background: c.logo ? 'rgba(255,255,255,.94)' : 'rgba(255,255,255,.1)',
-            border: '1px solid rgba(255,255,255,.22)',
-            backdropFilter: 'blur(6px)',
-          }}
-        >
-          {c.logo ? (
-            <img src={c.logo} alt={c.label} style={{ height: '38px', display: 'block' }} />
-          ) : (
-            <>
-              <span
-                style={{
-                  width: '28px',
-                  height: '28px',
-                  borderRadius: '50%',
-                  background: 'var(--or-500)',
-                  color: 'var(--petrole-900)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '13px',
-                  fontWeight: 600,
-                  flexShrink: 0,
-                }}
-              >
-                ✓
-              </span>
-              <span style={{ lineHeight: 1.2 }}>
-                <span
-                  style={{
-                    display: 'block',
-                    fontFamily: 'var(--font-display)',
-                    fontWeight: 600,
-                    fontSize: '13.5px',
-                    color: 'var(--blanc)',
-                  }}
-                >
-                  {c.label}
-                </span>
-                <span style={{ display: 'block', fontSize: '11.5px', color: 'var(--text-on-dark-soft)' }}>
-                  {c.detail}
-                </span>
-              </span>
-            </>
-          )}
-        </div>
-      ))}
+    <div style={{ marginTop: '36px' }}>
+      <div
+        style={{
+          fontFamily: 'var(--font-display)',
+          fontSize: '11px',
+          fontWeight: 500,
+          letterSpacing: '.18em',
+          textTransform: 'uppercase',
+          color: 'var(--text-on-dark-soft)',
+          marginBottom: '14px',
+        }}
+      >
+        Qualifiés &amp; assurés
+      </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '18px 32px' }}>
+        {CERTIFICATIONS.map((c) => (
+          <img
+            key={c.label}
+            src={c.logo}
+            alt={`${c.label} — ${c.detail}`}
+            title={`${c.label} — ${c.detail}`}
+            style={{ height: c.label.includes('APRIL') ? '28px' : '34px', display: 'block', opacity: 0.92 }}
+          />
+        ))}
+      </div>
     </div>
   )
 }

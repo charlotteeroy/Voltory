@@ -58,9 +58,9 @@ export const METIERS = [
 /* Qualifications affichées dans le header de l'accueil.
    `logo` : chemin du logo officiel une fois fourni par Félicien (sinon badge texte). */
 export const CERTIFICATIONS = [
-  { label: 'RGE QualiPV', detail: 'Photovoltaïque', logo: '/assets/logos/qualipv.png' },
-  { label: 'Recharge+ élec', detail: 'Bornes de recharge', logo: '/assets/logos/recharge-plus-elec.jpg' },
-  { label: 'Garantie décennale APRIL', detail: 'Tous nos travaux', logo: '/assets/logos/april.png' },
+  { label: 'RGE QualiPV', detail: 'Photovoltaïque', logo: '/assets/logos/qualipv-white.png' },
+  { label: 'Recharge+ élec', detail: 'Bornes de recharge', logo: '/assets/logos/recharge-plus-elec-white.png' },
+  { label: 'Garantie décennale APRIL', detail: 'Tous nos travaux', logo: '/assets/logos/april-white.png' },
 ]
 
 /* Réalisations filtrables par métier.
