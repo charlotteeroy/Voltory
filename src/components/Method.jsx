@@ -44,6 +44,36 @@ export function Perks() {
   )
 }
 
+/** Engagements en barre alignée (sous la frise de la page Photovoltaïque). */
+export function PerksBar() {
+  return (
+    <div className="v-perks">
+      {PERKS.map((p) => (
+        <div key={p.label} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <span
+            style={{
+              flexShrink: 0,
+              width: '40px',
+              height: '40px',
+              borderRadius: '12px',
+              background: 'var(--or-100)',
+              color: 'var(--petrole-800)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            {p.icon}
+          </span>
+          <span style={{ fontSize: '14px', fontWeight: 500, color: 'var(--text-strong)', lineHeight: 1.35 }}>
+            {p.label}
+          </span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 /** Méthode + engagements, en une section compacte reprise sur chaque page métier. */
 export default function Method({ background = 'var(--surface-card)' }) {
   return (

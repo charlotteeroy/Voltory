@@ -5,7 +5,7 @@ import SectionHead from '../components/SectionHead.jsx'
 import Simulator from '../components/Simulator.jsx'
 import { Chips, FeatureGrid } from '../components/ServiceBlocks.jsx'
 import Timeline from '../components/Timeline.jsx'
-import { Perks } from '../components/Method.jsx'
+import { PerksBar } from '../components/Method.jsx'
 import { LatestProjects } from '../components/Projects.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 import BeforeAfter from '../components/BeforeAfter.jsx'
@@ -13,12 +13,12 @@ import { BEFORE_AFTER } from '../lib/data.js'
 
 /* Déroulé d'un projet solaire — repris du devis type (centrale 3 kWc). */
 const PROJECT_STEPS = [
-  { title: 'Étude', text: 'Rentabilité calculée sur votre consommation réelle.' },
-  { title: 'Démarches', text: 'Dossier Enedis et mairie : on s’en occupe.' },
-  { title: 'Pose', text: 'Panneaux 500 W, sur toiture ou au sol.', tag: 'Garantie 25 ans' },
-  { title: 'Raccordement', text: 'Micro-onduleurs, protections, mise à la terre.', tag: 'Garantie 12 ans' },
-  { title: 'Mise en service', text: 'Tests de production, suivi en temps réel.' },
-  { title: 'Entretien', text: 'Le premier passage est offert.' },
+  { title: 'Étude', meta: 'Gratuite', text: 'Sur votre consommation réelle.' },
+  { title: 'Démarches', meta: 'Incluses', text: 'Enedis et mairie, on s’en occupe.' },
+  { title: 'Pose', meta: 'Garantie 25 ans', text: 'Panneaux 500 W, toit ou sol.' },
+  { title: 'Raccordement', meta: 'Garantie 12 ans', text: 'Micro-onduleurs et protections.' },
+  { title: 'Mise en service', meta: 'Suivi en direct', text: 'Production visible en temps réel.' },
+  { title: 'Entretien', meta: '1er offert', text: 'Panneaux propres, production maximale.' },
 ]
 
 const OPTIONS = [
@@ -77,10 +77,19 @@ export default function Photovoltaique({ navigate }) {
 
       <section style={{ background: 'var(--surface-page)', padding: '88px 0' }}>
         <div style={WRAP}>
-          <SectionHead eyebrow="Clé en main" title="Votre projet, de l'étude à l'entretien" mb="44px" />
-          <Timeline steps={PROJECT_STEPS} />
-          <div style={{ marginTop: '30px' }}>
-            <Perks />
+          <SectionHead eyebrow="Clé en main" title="Votre projet, de l'étude à l'entretien" mb="36px" />
+          <div
+            style={{
+              background: 'var(--surface-card)',
+              border: '1px solid var(--border-subtle)',
+              borderRadius: 'var(--r-lg)',
+              boxShadow: 'var(--e1)',
+              padding: 'clamp(26px,3.4vw,44px)',
+            }}
+          >
+            <Timeline steps={PROJECT_STEPS} />
+            <div style={{ borderTop: '1px solid var(--border-subtle)', margin: '40px 0 28px' }} />
+            <PerksBar />
           </div>
         </div>
       </section>
