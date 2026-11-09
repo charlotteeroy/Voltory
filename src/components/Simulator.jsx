@@ -5,7 +5,7 @@ import Button from './ds/Button.jsx'
 const fmt = (n) => Math.round(n).toLocaleString('fr-FR')
 
 /** Simulateur d'économies solaires : facture → puissance, production, économies. */
-export default function Simulator({ onStudy }) {
+export default function Simulator({ onStudy, id }) {
   const [bill, setBill] = useState(120)
 
   const annual = bill * 12
@@ -32,12 +32,13 @@ export default function Simulator({ onStudy }) {
 
   return (
     <section
+      id={id}
       style={{
         position: 'relative',
         overflow: 'hidden',
         background: 'var(--surface-brand)',
         color: 'var(--text-on-dark)',
-        padding: '96px 0 150px',
+        padding: '96px 0',
       }}
     >
       <div

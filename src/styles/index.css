@@ -87,3 +87,8 @@ button {
 .v-marquee:hover {
   animation-play-state: paused;
 }
+
+/* Les ancres internes ne passent pas sous la barre de navigation collante. */
+section[id] {
+  scroll-margin-top: 74px;
+}
