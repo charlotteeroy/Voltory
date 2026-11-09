@@ -3,32 +3,28 @@ import { Icons } from '../lib/icons.jsx'
 import ServiceHero from '../components/ServiceHero.jsx'
 import SectionHead from '../components/SectionHead.jsx'
 import Simulator from '../components/Simulator.jsx'
-import { Chips, FeatureGrid, ScopeGrid } from '../components/ServiceBlocks.jsx'
-import Method from '../components/Method.jsx'
+import { Chips, FeatureGrid } from '../components/ServiceBlocks.jsx'
+import Timeline from '../components/Timeline.jsx'
+import { PerksBar } from '../components/Method.jsx'
 import { LatestProjects } from '../components/Projects.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 import BeforeAfter from '../components/BeforeAfter.jsx'
 import { BEFORE_AFTER } from '../lib/data.js'
 
-/* Contenu d'une centrale clé en main — repris du devis type (centrale 3 kWc). */
-const SCOPE = [
-  { title: 'Production', img: '/assets/materiel/panneau.png', items: ['Panneaux 500 W', 'Garantie 25 ans', 'Toiture ou sol'] },
-  { title: 'Conversion & suivi', img: '/assets/materiel/micro-onduleur.png', items: ['Micro-onduleurs', 'Garantie 12 ans', 'Suivi en temps réel'] },
-  { title: 'Protections', img: '/assets/materiel/parafoudre.png', items: ['Coffret photovoltaïque', 'Parafoudre', 'Mise à la terre'] },
-  { title: 'Mise en service & options', img: '/assets/materiel/routeur.png', items: ['Tests de production', 'Démarches Enedis', 'Routeur en option'] },
+/* Déroulé d'un projet solaire — repris du devis type (centrale 3 kWc). */
+const PROJECT_STEPS = [
+  { title: 'Étude', meta: 'Gratuite', text: 'Sur votre consommation réelle.' },
+  { title: 'Démarches', meta: 'Incluses', text: 'Enedis et mairie, on s’en occupe.' },
+  { title: 'Pose', meta: 'Garantie 25 ans', text: 'Panneaux 500 W, toit ou sol.' },
+  { title: 'Raccordement', meta: 'Garantie 12 ans', text: 'Micro-onduleurs et protections.' },
+  { title: 'Mise en service', meta: 'Suivi en direct', text: 'Production visible en temps réel.' },
+  { title: 'Entretien', meta: '1er offert', text: 'Panneaux propres, production maximale.' },
 ]
 
 const OPTIONS = [
   { icon: Icons.zap, title: 'Routeur solaire', text: 'Votre surplus chauffe le ballon d’eau chaude.' },
   { icon: Icons.battery, title: 'Batterie 5 kWh', text: 'L’énergie du jour, utilisée le soir.' },
   { icon: Icons.car, title: 'Borne de recharge', text: 'Roulez avec votre propre électricité.' },
-]
-
-const WHY = [
-  { icon: Icons.doc, title: 'Zéro paperasse', text: 'Enedis, mairie : on s’occupe de tout.' },
-  { icon: Icons.layers, title: 'Évolutive', text: 'Commencez simple, complétez ensuite.' },
-  { icon: Icons.trend, title: 'Étude honnête', text: 'Dimensionnée sur votre consommation réelle.' },
-  { icon: Icons.sun, title: 'Pose optimisée', text: 'Orientation et ombres étudiées.' },
 ]
 
 export default function Photovoltaique({ navigate }) {
@@ -81,19 +77,24 @@ export default function Photovoltaique({ navigate }) {
 
       <section style={{ background: 'var(--surface-page)', padding: '88px 0' }}>
         <div style={WRAP}>
-          <SectionHead eyebrow="Clé en main" title="Tout est compris, et détaillé sur le devis" mb="36px" />
-          <ScopeGrid groups={SCOPE} min="230px" />
+          <SectionHead eyebrow="Clé en main" title="Votre projet, de l'étude à l'entretien" mb="36px" />
+          <div
+            style={{
+              background: 'var(--surface-card)',
+              border: '1px solid var(--border-subtle)',
+              borderRadius: 'var(--r-lg)',
+              boxShadow: 'var(--e1)',
+              padding: 'clamp(26px,3.4vw,44px)',
+            }}
+          >
+            <Timeline steps={PROJECT_STEPS} />
+            <div style={{ borderTop: '1px solid var(--border-subtle)', margin: '40px 0 28px' }} />
+            <PerksBar />
+          </div>
         </div>
       </section>
 
       <section style={{ background: 'var(--surface-card)', padding: '88px 0' }}>
-        <div style={WRAP}>
-          <SectionHead eyebrow="Pourquoi Voltory" title="Simple, évolutif et bien posé" mb="36px" />
-          <FeatureGrid items={WHY} min="220px" />
-        </div>
-      </section>
-
-      <section style={{ background: 'var(--surface-page)', padding: '88px 0' }}>
         <div style={WRAP}>
           <SectionHead eyebrow="Les options" title="Consommez davantage votre électricité" mb="36px" />
           <FeatureGrid items={OPTIONS} min="240px" />
@@ -128,8 +129,6 @@ export default function Photovoltaique({ navigate }) {
           </div>
         </div>
       </section>
-
-      <Method />
 
       <LatestProjects metier="photovoltaique" background="var(--surface-page)" />
 

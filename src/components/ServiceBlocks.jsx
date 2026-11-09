@@ -60,58 +60,6 @@ export function FeatureGrid({ items, min = '280px' }) {
   )
 }
 
-/** Contenu détaillé d'une prestation, par groupes (repris des devis Voltory). */
-export function ScopeGrid({ groups, min = '250px' }) {
-  return (
-    <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit,minmax(${min},1fr))`, gap: '22px' }}>
-      {groups.map((g, i) => (
-        <div
-          key={g.title}
-          style={{
-            background: 'var(--surface-card)',
-            border: '1px solid var(--border-subtle)',
-            borderRadius: 'var(--r-md)',
-            padding: '26px',
-            boxShadow: 'var(--e1)',
-          }}
-        >
-          {g.img && (
-            <img
-              src={g.img}
-              alt=""
-              loading="lazy"
-              style={{ height: '96px', width: '100%', objectFit: 'contain', display: 'block', marginBottom: '16px' }}
-            />
-          )}
-          <div
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: '13px',
-              fontWeight: 600,
-              letterSpacing: '.08em',
-              color: 'var(--or-700)',
-            }}
-          >
-            {String(i + 1).padStart(2, '0')}
-          </div>
-          <div
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontWeight: 600,
-              fontSize: '18px',
-              color: 'var(--text-strong)',
-              margin: '6px 0 16px',
-            }}
-          >
-            {g.title}
-          </div>
-          <Chips items={g.items} />
-        </div>
-      ))}
-    </div>
-  )
-}
-
 /** Mosaïque de photos légendées (une prestation = une photo + un titre court). */
 export function PhotoTiles({ items, min = '260px', height = '240px' }) {
   return (
