@@ -3,8 +3,9 @@ import { Icons } from '../lib/icons.jsx'
 import ServiceHero from '../components/ServiceHero.jsx'
 import SectionHead from '../components/SectionHead.jsx'
 import Simulator from '../components/Simulator.jsx'
-import { CheckList, FeatureGrid } from '../components/ServiceBlocks.jsx'
+import { CheckList, FeatureGrid, ScopeGrid } from '../components/ServiceBlocks.jsx'
 import StepsSection from '../components/StepsSection.jsx'
+import GoodToKnow from '../components/GoodToKnow.jsx'
 import { LatestProjects } from '../components/Projects.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 
@@ -12,12 +13,12 @@ const WHY = [
   {
     icon: Icons.doc,
     title: 'Démarches administratives gérées',
-    text: 'Déclaration en mairie, raccordement, échanges avec Enedis : on s’occupe de tout. Zéro paperasse pour vous.',
+    text: 'Constitution et dépôt du dossier de raccordement Enedis, déclaration en mairie, suivi des échanges avec les organismes : gardez l’esprit tranquille.',
   },
   {
     icon: Icons.layers,
     title: 'Une installation évolutive',
-    text: 'Commencez simple, sans option, et voyez comment elle produit. Vous pourrez ensuite ajouter des panneaux, une batterie ou un routeur.',
+    text: 'Commencez simple et voyez comment elle produit. Batterie, panneaux supplémentaires, borne de recharge : elle évolue avec vos besoins.',
   },
   {
     icon: Icons.trend,
@@ -31,10 +32,66 @@ const WHY = [
   },
 ]
 
+/* Contenu d'une centrale clé en main — repris du devis type (centrale 3 kWc). */
+const SCOPE = [
+  {
+    title: 'La production',
+    items: [
+      'Panneaux solaires de 500 W',
+      'Garantie constructeur 25 ans',
+      'Pose sur toiture ou au sol (structures lestées)',
+    ],
+  },
+  {
+    title: 'La conversion & le suivi',
+    items: [
+      'Micro-onduleurs : une ombre sur un panneau ne pénalise pas les autres',
+      'Garantie constructeur 12 ans',
+      'Suivi de votre production en temps réel',
+    ],
+  },
+  {
+    title: 'Protections & raccordement',
+    items: [
+      'Coffret de protection photovoltaïque',
+      'Différentiels, disjoncteurs et parafoudre',
+      'Mise à la terre de toute l’installation',
+      'Câbles sous goulotte jusqu’au tableau',
+    ],
+  },
+  {
+    title: 'Mise en service & chantier',
+    items: [
+      'Tests de production et de bon fonctionnement',
+      'Paramétrage du suivi de production',
+      'Chantier nettoyé, déchets évacués en filière agréée',
+    ],
+  },
+]
+
+/* Options pour augmenter l'autoconsommation. */
+const OPTIONS = [
+  {
+    icon: Icons.zap,
+    title: 'Routeur solaire',
+    text: 'Le chauffe-eau représente 15 à 25 % de la consommation d’une maison. Plutôt que de revendre votre surplus, le routeur l’envoie automatiquement chauffer votre ballon d’eau chaude.',
+  },
+  {
+    icon: Icons.battery,
+    title: 'Batterie de stockage',
+    text: 'Une batterie de 5 kWh conserve l’électricité produite en journée pour alimenter la maison le soir et la nuit.',
+  },
+  {
+    icon: Icons.car,
+    title: 'Borne de recharge',
+    text: 'Rechargez votre véhicule avec l’électricité de vos propres panneaux.',
+  },
+]
+
 const MAINTENANCE = [
-  'Nettoyage des panneaux',
-  'Sécurisation de l’installation',
-  'Vérification complète : modules, connexions, production',
+  'Nettoyage professionnel de vos panneaux',
+  'Contrôle de sécurité de toute l’installation électrique',
+  'Rapport de performance de votre centrale',
 ]
 
 export default function Photovoltaique({ navigate }) {
@@ -50,6 +107,28 @@ export default function Photovoltaique({ navigate }) {
       />
 
       <Simulator id="simulateur" onStudy={() => navigate('contact')} />
+
+      <section style={{ background: 'var(--surface-card)', padding: '96px 0' }}>
+        <div style={WRAP}>
+          <SectionHead
+            eyebrow="Une centrale clé en main"
+            title="Tout est compris, et détaillé sur votre devis"
+            intro="Matériel, pose, raccordement, mise en service et démarches : chaque poste apparaît ligne par ligne. Vous savez exactement ce que vous payez."
+          />
+          <ScopeGrid groups={SCOPE} />
+        </div>
+      </section>
+
+      <section style={{ background: 'var(--surface-page)', padding: '96px 0' }}>
+        <div style={WRAP}>
+          <SectionHead
+            eyebrow="Les options"
+            title="Consommez davantage votre propre électricité"
+            intro="Chaque kilowattheure consommé chez vous plutôt que revendu vous rapporte davantage. Ces options s'ajoutent dès l'installation, ou plus tard."
+          />
+          <FeatureGrid items={OPTIONS} />
+        </div>
+      </section>
 
       <section style={{ background: 'var(--surface-card)', padding: '96px 0' }}>
         <div style={WRAP}>
@@ -77,7 +156,7 @@ export default function Photovoltaique({ navigate }) {
               mb="0"
               eyebrow="Entretien & nettoyage"
               title="Des panneaux propres produisent plus"
-              intro="Fientes, poussières, feuilles : il suffit d'une salissure ou d'une ombre sur un coin de panneau pour qu'un tiers de sa surface cesse de produire. Une fois par an, nous passons entretenir votre installation — sans que vous ayez à monter sur le toit."
+              intro="Poussières, pollens, feuilles, mousses : sans entretien, une installation perd en moyenne 5 à 10 % de sa production — et une simple salissure sur un coin de panneau peut suffire à en faire chuter le rendement. Une fois par an, nous passons entretenir votre centrale, sans que vous ayez à monter sur le toit."
             />
           </div>
           <div
@@ -98,7 +177,7 @@ export default function Photovoltaique({ navigate }) {
                 marginBottom: '20px',
               }}
             >
-              Un passage par an
+              Entretien VOLTORY+, une fois par an
             </div>
             <CheckList items={MAINTENANCE} onDark />
             <div
@@ -129,9 +208,10 @@ export default function Photovoltaique({ navigate }) {
 
       <StepsSection />
 
+      <GoodToKnow background="var(--surface-page)" />
+
       <LatestProjects
         metier="photovoltaique"
-        background="var(--surface-page)"
         intro="Toitures de particuliers et de professionnels équipées par nos soins."
       />
 

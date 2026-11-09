@@ -418,7 +418,7 @@ export const PROJECT_TYPES = ['Électricité', 'Borne de recharge', 'Photovolta�
 
 /* Coordonnées agence. */
 export const CONTACT_ROWS = [
-  { icon: Icons.pin, label: 'Agence', value: 'Cholet (49) · ≈ 50 km autour' },
+  { icon: Icons.pin, label: 'Agence', value: '41 avenue du Lac, 49300 Cholet' },
   { icon: Icons.phone, label: 'Téléphone', value: '06 19 19 73 52' },
   { icon: Icons.mail, label: 'Email', value: 'felicien.gury@voltory.fr' },
   { icon: Icons.clock, label: 'Horaires', value: 'Lun–Ven · 8h–18h' },

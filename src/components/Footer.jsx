@@ -99,7 +99,7 @@ export default function Footer({ navigate }) {
                 color: 'var(--text-on-dark-soft)',
               }}
             >
-              <span>Cholet, Maine-et-Loire</span>
+              <span>41 avenue du Lac, 49300 Cholet</span>
               <span>06 19 19 73 52</span>
               <span>felicien.gury@voltory.fr</span>
             </div>
@@ -121,7 +121,9 @@ export default function Footer({ navigate }) {
         }}
       >
         <span>© 2026 Voltory · Électricité · Photovoltaïque · Bornes de recharge</span>
-        <span>RGE QualiPV · SIRET 000 000 000 00000</span>
+        <span>
+          RGE QualiPV · SIRET 498 685 692 00044 · RCS Angers · Garantie décennale APRIL
+        </span>
       </div>
     </footer>
   )
