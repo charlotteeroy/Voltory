@@ -3,19 +3,22 @@ import { Icons } from '../lib/icons.jsx'
 import ServiceHero from '../components/ServiceHero.jsx'
 import SectionHead from '../components/SectionHead.jsx'
 import Simulator from '../components/Simulator.jsx'
-import { Chips, FeatureGrid, ScopeGrid } from '../components/ServiceBlocks.jsx'
-import Method from '../components/Method.jsx'
+import { Chips, FeatureGrid } from '../components/ServiceBlocks.jsx'
+import Timeline from '../components/Timeline.jsx'
+import { Perks } from '../components/Method.jsx'
 import { LatestProjects } from '../components/Projects.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 import BeforeAfter from '../components/BeforeAfter.jsx'
 import { BEFORE_AFTER } from '../lib/data.js'
 
-/* Contenu d'une centrale clé en main — repris du devis type (centrale 3 kWc). */
-const SCOPE = [
-  { title: 'Production', img: '/assets/materiel/panneau.png', items: ['Panneaux 500 W', 'Garantie 25 ans', 'Toiture ou sol'] },
-  { title: 'Conversion & suivi', img: '/assets/materiel/micro-onduleur.png', items: ['Micro-onduleurs', 'Garantie 12 ans', 'Suivi en temps réel'] },
-  { title: 'Protections', img: '/assets/materiel/parafoudre.png', items: ['Coffret photovoltaïque', 'Parafoudre', 'Mise à la terre'] },
-  { title: 'Mise en service & options', img: '/assets/materiel/routeur.png', items: ['Tests de production', 'Démarches Enedis', 'Routeur en option'] },
+/* Déroulé d'un projet solaire — repris du devis type (centrale 3 kWc). */
+const PROJECT_STEPS = [
+  { title: 'Étude', text: 'Rentabilité calculée sur votre consommation réelle.' },
+  { title: 'Démarches', text: 'Dossier Enedis et mairie : on s’en occupe.' },
+  { title: 'Pose', text: 'Panneaux 500 W, sur toiture ou au sol.', tag: 'Garantie 25 ans' },
+  { title: 'Raccordement', text: 'Micro-onduleurs, protections, mise à la terre.', tag: 'Garantie 12 ans' },
+  { title: 'Mise en service', text: 'Tests de production, suivi en temps réel.' },
+  { title: 'Entretien', text: 'Le premier passage est offert.' },
 ]
 
 const OPTIONS = [
@@ -74,8 +77,11 @@ export default function Photovoltaique({ navigate }) {
 
       <section style={{ background: 'var(--surface-page)', padding: '88px 0' }}>
         <div style={WRAP}>
-          <SectionHead eyebrow="Clé en main" title="Tout est compris, et détaillé sur le devis" mb="36px" />
-          <ScopeGrid groups={SCOPE} min="230px" />
+          <SectionHead eyebrow="Clé en main" title="Votre projet, de l'étude à l'entretien" mb="44px" />
+          <Timeline steps={PROJECT_STEPS} />
+          <div style={{ marginTop: '30px' }}>
+            <Perks />
+          </div>
         </div>
       </section>
 
@@ -114,8 +120,6 @@ export default function Photovoltaique({ navigate }) {
           </div>
         </div>
       </section>
-
-      <Method />
 
       <LatestProjects metier="photovoltaique" background="var(--surface-page)" />
 

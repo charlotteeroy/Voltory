@@ -92,3 +92,32 @@ button {
 section[id] {
   scroll-margin-top: 74px;
 }
+
+/* Frise chronologique : horizontale sur grand écran, verticale sur mobile. */
+.v-timeline {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(var(--steps, 6), 1fr);
+  gap: 20px;
+}
+.v-timeline::before {
+  content: '';
+  position: absolute;
+  top: 21px;
+  left: 22px;
+  /* s'arrête au centre de la dernière pastille */
+  right: calc((100% - (var(--steps, 6) - 1) * 20px) / var(--steps, 6) - 22px);
+  height: 2px;
+  background: linear-gradient(90deg, var(--or-500), var(--petrole-400));
+  opacity: .5;
+}
+.v-timeline > li { position: relative; }
+@media (max-width: 860px) {
+  .v-timeline { grid-template-columns: 1fr; gap: 26px; }
+  .v-timeline::before { top: 22px; bottom: 22px; left: 21px; right: auto; width: 2px; height: auto;
+    background: linear-gradient(180deg, var(--or-500), var(--petrole-400)); }
+  .v-timeline > li { display: flex; gap: 18px; align-items: flex-start; }
+}
