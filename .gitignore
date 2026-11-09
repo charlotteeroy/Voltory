@@ -10,3 +10,6 @@ yarn-error.log*
 
 # Transcriptions d’appels (conversations privées)
 chats/*-transcript.md
+
+# Wrangler (état local de `wrangler dev`)
+.wrangler/

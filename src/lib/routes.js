@@ -13,9 +13,12 @@ export const ROUTES = {
   contact: { path: '/contact', title: `Demander une étude — ${SUFFIX}` },
 }
 
-/** Adresse → clé de page (adresse inconnue : accueil). */
+/** Page « introuvable » : n'a pas d'adresse propre, elle s'affiche pour toute adresse inconnue. */
+export const NOT_FOUND = { key: 'notFound', title: `Page introuvable — ${SUFFIX}` }
+
+/** Adresse → clé de page (adresse inconnue : page introuvable). */
 export function keyFromPath(pathname) {
   const clean = pathname.replace(/\/+$/, '') || '/'
   const hit = Object.entries(ROUTES).find(([, r]) => r.path === clean)
-  return hit ? hit[0] : 'home'
+  return hit ? hit[0] : NOT_FOUND.key
 }

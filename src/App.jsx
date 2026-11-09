@@ -7,7 +7,8 @@ import Bornes from './pages/Bornes.jsx'
 import Photovoltaique from './pages/Photovoltaique.jsx'
 import Entreprise from './pages/Entreprise.jsx'
 import Contact from './pages/Contact.jsx'
-import { ROUTES, keyFromPath } from './lib/routes.js'
+import NotFound from './pages/NotFound.jsx'
+import { ROUTES, NOT_FOUND, keyFromPath } from './lib/routes.js'
 
 const PAGES = {
   home: Home,
@@ -16,6 +17,7 @@ const PAGES = {
   photovoltaique: Photovoltaique,
   entreprise: Entreprise,
   contact: Contact,
+  [NOT_FOUND.key]: NotFound,
 }
 
 const scrollTop = () => {
@@ -40,7 +42,19 @@ export default function App() {
 
   /* Titre d'onglet propre à chaque page (partage de lien, historique, SEO). */
   useEffect(() => {
-    document.title = ROUTES[page].title
+    document.title = (ROUTES[page] || NOT_FOUND).title
+    /* La page introuvable ne doit pas être indexée par les moteurs de recherche. */
+    let robots = document.querySelector('meta[name="robots"]')
+    if (page === NOT_FOUND.key) {
+      if (!robots) {
+        robots = document.createElement('meta')
+        robots.name = 'robots'
+        document.head.appendChild(robots)
+      }
+      robots.content = 'noindex'
+    } else if (robots) {
+      robots.remove()
+    }
   }, [page])
 
   const navigate = (key) => {

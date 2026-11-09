@@ -374,7 +374,8 @@ export const PROJECTS = [
     photos: ['/assets/real-borne-felicien.jpg'],
   },
 ]
-  .map((p) => ({ ...p, metier: CAT_TO_METIER[p.cat], img: p.photos[(p.cover ?? 1) - 1] }))
+  /* `id` : identifiant stable (position dans cette liste), indépendant du titre. */
+  .map((p, i) => ({ ...p, id: `projet-${i + 1}`, metier: CAT_TO_METIER[p.cat], img: p.photos[(p.cover ?? 1) - 1] }))
   /* Plus récents d'abord : chaque page métier affiche ses dernières réalisations. */
   .sort((a, b) => Number(b.date) - Number(a.date))
 

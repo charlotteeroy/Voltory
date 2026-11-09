@@ -11,6 +11,16 @@ const PERKS = [
   { icon: Icons.shield, label: 'Remise fidélité' },
 ]
 
+/** Précisions sur les engagements (frais de déplacement, échéancier). */
+function PerksNote({ style }) {
+  return (
+    <p style={{ fontSize: '12.5px', color: 'var(--text-muted)', margin: '14px 0 0', ...style }}>
+      Au-delà de 15 km autour de l'agence de Cholet : 8 € HT par tranche de 5 km. Acompte à la
+      signature, solde à la réception des travaux.
+    </p>
+  )
+}
+
 /** Étiquettes d'engagements (déplacement, chantier, paiement, fidélité). */
 export function Perks() {
   return (
@@ -36,10 +46,7 @@ export function Perks() {
           </span>
         ))}
       </div>
-      <p style={{ fontSize: '12.5px', color: 'var(--text-muted)', margin: '14px 0 0' }}>
-        Au-delà de 15 km autour de l'agence de Cholet : 8 € HT par tranche de 5 km. Acompte à la
-        signature, solde à la réception des travaux.
-      </p>
+      <PerksNote />
     </>
   )
 }
@@ -47,30 +54,33 @@ export function Perks() {
 /** Engagements en barre alignée (sous la frise de la page Photovoltaïque). */
 export function PerksBar() {
   return (
-    <div className="v-perks">
-      {PERKS.map((p) => (
-        <div key={p.label} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <span
-            style={{
-              flexShrink: 0,
-              width: '40px',
-              height: '40px',
-              borderRadius: '12px',
-              background: 'var(--or-100)',
-              color: 'var(--petrole-800)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            {p.icon}
-          </span>
-          <span style={{ fontSize: '14px', fontWeight: 500, color: 'var(--text-strong)', lineHeight: 1.35 }}>
-            {p.label}
-          </span>
-        </div>
-      ))}
-    </div>
+    <>
+      <div className="v-perks">
+        {PERKS.map((p) => (
+          <div key={p.label} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <span
+              style={{
+                flexShrink: 0,
+                width: '40px',
+                height: '40px',
+                borderRadius: '12px',
+                background: 'var(--or-100)',
+                color: 'var(--petrole-800)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              {p.icon}
+            </span>
+            <span style={{ fontSize: '14px', fontWeight: 500, color: 'var(--text-strong)', lineHeight: 1.35 }}>
+              {p.label}
+            </span>
+          </div>
+        ))}
+      </div>
+      <PerksNote style={{ marginTop: '18px' }} />
+    </>
   )
 }
 
