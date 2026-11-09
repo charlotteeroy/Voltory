@@ -24,13 +24,6 @@ const OPTIONS = [
   { icon: Icons.car, title: 'Borne de recharge', text: 'Roulez avec votre propre électricité.' },
 ]
 
-const WHY = [
-  { icon: Icons.doc, title: 'Zéro paperasse', text: 'Enedis, mairie : on s’occupe de tout.' },
-  { icon: Icons.layers, title: 'Évolutive', text: 'Commencez simple, complétez ensuite.' },
-  { icon: Icons.trend, title: 'Étude honnête', text: 'Dimensionnée sur votre consommation réelle.' },
-  { icon: Icons.sun, title: 'Pose optimisée', text: 'Orientation et ombres étudiées.' },
-]
-
 export default function Photovoltaique({ navigate }) {
   return (
     <div style={{ animation: 'vRise .45s var(--ease-out) both' }}>
@@ -87,13 +80,6 @@ export default function Photovoltaique({ navigate }) {
       </section>
 
       <section style={{ background: 'var(--surface-card)', padding: '88px 0' }}>
-        <div style={WRAP}>
-          <SectionHead eyebrow="Pourquoi Voltory" title="Simple, évolutif et bien posé" mb="36px" />
-          <FeatureGrid items={WHY} min="220px" />
-        </div>
-      </section>
-
-      <section style={{ background: 'var(--surface-page)', padding: '88px 0' }}>
         <div style={WRAP}>
           <SectionHead eyebrow="Les options" title="Consommez davantage votre électricité" mb="36px" />
           <FeatureGrid items={OPTIONS} min="240px" />
