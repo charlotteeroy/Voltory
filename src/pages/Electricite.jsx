@@ -6,15 +6,17 @@ import Method from '../components/Method.jsx'
 import { LatestProjects } from '../components/Projects.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 import Button from '../components/ds/Button.jsx'
+import BeforeAfter from '../components/BeforeAfter.jsx'
+import BeforeAfterSection from '../components/BeforeAfterSection.jsx'
+import { BEFORE_AFTER } from '../lib/data.js'
 
 const C = '/assets/chantiers'
 
-/* TODO photos Félicien : remplacer par de vraies photos de tableau (avant / après). */
 const INTERVENTIONS = [
-  { title: 'Tableau électrique', text: 'Remplacement & mise aux normes', img: `${C}/chateau-petite-chambre/06.jpg` },
-  { title: 'Rénovation complète', text: 'Maison ou appartement', img: `${C}/madeleine/12.jpg` },
-  { title: 'Cuisine & salle de bain', text: 'Extension, pergola, dépendances', img: `${C}/varenne-38/02.jpg` },
-  { title: 'Éclairage', text: 'Intérieur & extérieur', img: `${C}/lota/02.jpg` },
+  { title: 'Tableau électrique', text: 'Remplacement & mise aux normes', img: `${C}/big-tableau/01.jpg` },
+  { title: 'Rénovation complète', text: 'Maison ou appartement', img: `${C}/bou-renovation/01.jpg` },
+  { title: 'Cuisine & salle de bain', text: 'Extension, pergola, dépendances', img: `${C}/ric-appartement/07.jpg` },
+  { title: 'Éclairage', text: 'Intérieur & extérieur', img: `${C}/isr-hotel/01.jpg` },
   { title: 'Audit avant achat', text: "L'état réel de l'installation", img: `${C}/madeleine/03.jpg` },
   { title: 'Domotique & réseaux', text: 'Pilotage, interphonie, RJ45', img: `${C}/dragon/02.jpg` },
 ]
@@ -54,19 +56,14 @@ export default function Electricite({ navigate }) {
       {/* Zoom : remplacement du tableau électrique */}
       <section style={{ background: 'var(--surface-brand)', color: 'var(--text-on-dark)', padding: '88px 0' }}>
         <div style={{ ...WRAP, display: 'flex', flexWrap: 'wrap', gap: '48px', alignItems: 'center' }}>
-          {/* TODO photos Félicien : photo d'un tableau posé par Voltory. */}
-          <div
-            style={{
-              flex: '1 1 380px',
-              minHeight: '420px',
-              alignSelf: 'stretch',
-              borderRadius: 'var(--r-lg)',
-              backgroundImage: `url('${C}/chateau-grande-chambre/12.jpg')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              boxShadow: 'var(--e3)',
-            }}
-          />
+          <div style={{ flex: '1 1 380px' }}>
+            <BeforeAfter
+              before={BEFORE_AFTER.tableau.before}
+              after={BEFORE_AFTER.tableau.after}
+              alt="Tableau électrique"
+              height="480px"
+            />
+          </div>
           <div style={{ flex: '1 1 380px' }}>
             <SectionHead
               onDark
@@ -85,12 +82,14 @@ export default function Electricite({ navigate }) {
         </div>
       </section>
 
-      <Method background="var(--surface-page)" />
+      <BeforeAfterSection keys={['chambre', 'chateau']} background="var(--surface-page)" />
 
-      <LatestProjects metier="electricite" />
+      <Method />
+
+      <LatestProjects metier="electricite" background="var(--surface-page)" />
 
       {/* Passerelle vers le photovoltaïque (remise clients) */}
-      <section style={{ background: 'var(--surface-page)', padding: '56px 0' }}>
+      <section style={{ background: 'var(--surface-card)', padding: '56px 0' }}>
         <div
           style={{
             ...WRAP,

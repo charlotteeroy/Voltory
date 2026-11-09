@@ -7,13 +7,15 @@ import { Chips, FeatureGrid, ScopeGrid } from '../components/ServiceBlocks.jsx'
 import Method from '../components/Method.jsx'
 import { LatestProjects } from '../components/Projects.jsx'
 import CtaBand from '../components/CtaBand.jsx'
+import BeforeAfter from '../components/BeforeAfter.jsx'
+import { BEFORE_AFTER } from '../lib/data.js'
 
 /* Contenu d'une centrale clé en main — repris du devis type (centrale 3 kWc). */
 const SCOPE = [
-  { title: 'Production', items: ['Panneaux 500 W', 'Garantie 25 ans', 'Toiture ou sol'] },
-  { title: 'Conversion & suivi', items: ['Micro-onduleurs', 'Garantie 12 ans', 'Suivi en temps réel'] },
-  { title: 'Protections', items: ['Coffret photovoltaïque', 'Parafoudre', 'Mise à la terre'] },
-  { title: 'Mise en service', items: ['Tests de production', 'Démarches Enedis', 'Chantier propre'] },
+  { title: 'Production', img: '/assets/materiel/panneau.png', items: ['Panneaux 500 W', 'Garantie 25 ans', 'Toiture ou sol'] },
+  { title: 'Conversion & suivi', img: '/assets/materiel/micro-onduleur.png', items: ['Micro-onduleurs', 'Garantie 12 ans', 'Suivi en temps réel'] },
+  { title: 'Protections', img: '/assets/materiel/parafoudre.png', items: ['Coffret photovoltaïque', 'Parafoudre', 'Mise à la terre'] },
+  { title: 'Mise en service & options', img: '/assets/materiel/routeur.png', items: ['Tests de production', 'Démarches Enedis', 'Routeur en option'] },
 ]
 
 const OPTIONS = [
@@ -43,21 +45,55 @@ export default function Photovoltaique({ navigate }) {
 
       <Simulator id="simulateur" onStudy={() => navigate('contact')} />
 
+      {/* Avant / après + pose au sol */}
       <section style={{ background: 'var(--surface-card)', padding: '88px 0' }}>
+        <div style={WRAP}>
+          <SectionHead eyebrow="Nos poses" title="Sur votre toit… ou au sol" mb="36px" />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,1fr))', gap: '20px' }}>
+            <BeforeAfter
+              before={BEFORE_AFTER.toiture.before}
+              after={BEFORE_AFTER.toiture.after}
+              alt="Toiture tuiles"
+              caption="Toiture tuiles — avant / après"
+              height="380px"
+            />
+            <figure style={{ margin: 0 }}>
+              <img
+                src="/assets/chantiers/gur-sol/01.jpg"
+                alt="Centrale au sol sur structures lestées"
+                loading="lazy"
+                style={{
+                  width: '100%',
+                  height: '380px',
+                  objectFit: 'cover',
+                  display: 'block',
+                  borderRadius: 'var(--r-lg)',
+                  boxShadow: 'var(--e2)',
+                }}
+              />
+              <figcaption style={{ fontSize: '14px', color: 'var(--text-muted)', marginTop: '10px' }}>
+                Centrale au sol — structures lestées, sans fixation dans le terrain
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section style={{ background: 'var(--surface-page)', padding: '88px 0' }}>
         <div style={WRAP}>
           <SectionHead eyebrow="Clé en main" title="Tout est compris, et détaillé sur le devis" mb="36px" />
           <ScopeGrid groups={SCOPE} min="230px" />
         </div>
       </section>
 
-      <section style={{ background: 'var(--surface-page)', padding: '88px 0' }}>
+      <section style={{ background: 'var(--surface-card)', padding: '88px 0' }}>
         <div style={WRAP}>
           <SectionHead eyebrow="Pourquoi Voltory" title="Simple, évolutif et bien posé" mb="36px" />
           <FeatureGrid items={WHY} min="220px" />
         </div>
       </section>
 
-      <section style={{ background: 'var(--surface-card)', padding: '88px 0' }}>
+      <section style={{ background: 'var(--surface-page)', padding: '88px 0' }}>
         <div style={WRAP}>
           <SectionHead eyebrow="Les options" title="Consommez davantage votre électricité" mb="36px" />
           <FeatureGrid items={OPTIONS} min="240px" />

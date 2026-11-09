@@ -13,6 +13,7 @@ const SOLUTIONS = [
   {
     tag: 'La plus accessible',
     name: 'Prise renforcée',
+    img: '/assets/materiel/prise-renforcee.png',
     price: 'dès 349 € TTC',
     spec: "≈ 10 km d'autonomie par heure de charge",
     points: ['Trajets du quotidien', 'Recharge la nuit', 'Budget léger'],
@@ -21,6 +22,7 @@ const SOLUTIONS = [
   {
     tag: 'La plus rapide',
     name: 'Borne de recharge',
+    img: '/assets/materiel/borne-schneider.png',
     price: 'de 7 à 11 kW',
     spec: '≈ 4× plus rapide qu’une prise renforcée',
     points: ['Gros rouleurs', 'Deux véhicules', 'Pilotage intelligent', 'Couplage solaire'],
@@ -67,8 +69,25 @@ function SolutionCard({ s }) {
         boxShadow: s.dark ? 'var(--e3)' : 'var(--e1)',
         display: 'flex',
         flexDirection: 'column',
+        position: 'relative',
       }}
     >
+      {s.img && (
+        <img
+          src={s.img}
+          alt=""
+          loading="lazy"
+          style={{
+            position: 'absolute',
+            top: 'clamp(20px,2.4vw,30px)',
+            right: 'clamp(20px,2.4vw,30px)',
+            width: 'clamp(84px,9vw,120px)',
+            height: 'clamp(84px,9vw,120px)',
+            objectFit: 'contain',
+            filter: 'drop-shadow(0 10px 18px rgba(4,30,34,.25))',
+          }}
+        />
+      )}
       <span
         style={{
           alignSelf: 'flex-start',

@@ -75,6 +75,14 @@ export function ScopeGrid({ groups, min = '250px' }) {
             boxShadow: 'var(--e1)',
           }}
         >
+          {g.img && (
+            <img
+              src={g.img}
+              alt=""
+              loading="lazy"
+              style={{ height: '96px', width: '100%', objectFit: 'contain', display: 'block', marginBottom: '16px' }}
+            />
+          )}
           <div
             style={{
               fontFamily: 'var(--font-display)',

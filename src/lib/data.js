@@ -39,7 +39,11 @@ export const METIERS = [
     eyebrow: 'Bornes de recharge',
     title: 'Rechargez à la maison',
     points: ['Prise renforcée dès 349 €', 'Borne 7 à 11 kW', 'Posée en une journée', 'Prix standard'],
-    imgs: ['/assets/real-borne-felicien.jpg', '/assets/agence-aerien.png'],
+    imgs: [
+      '/assets/chantiers/fav-borne/01.jpg',
+      '/assets/real-borne-felicien.jpg',
+      '/assets/chantiers/hbon-borne/01.jpg',
+    ],
   },
   {
     key: 'photovoltaique',
@@ -54,9 +58,9 @@ export const METIERS = [
 /* Qualifications affichées dans le header de l'accueil.
    `logo` : chemin du logo officiel une fois fourni par Félicien (sinon badge texte). */
 export const CERTIFICATIONS = [
-  { label: 'RGE QualiPV', detail: 'Photovoltaïque', logo: null },
-  { label: 'Qualification IRVE', detail: 'Bornes de recharge', logo: null },
-  { label: 'Garantie décennale', detail: 'Tous nos travaux', logo: null },
+  { label: 'RGE QualiPV', detail: 'Photovoltaïque', logo: '/assets/logos/qualipv-white.png' },
+  { label: 'Recharge+ élec', detail: 'Bornes de recharge', logo: '/assets/logos/recharge-plus-elec-white.png' },
+  { label: 'Garantie décennale APRIL', detail: 'Tous nos travaux', logo: '/assets/logos/april-white.png' },
 ]
 
 /* Réalisations filtrables par métier.
@@ -76,21 +80,163 @@ const CAT_TO_METIER = {
 }
 
 export const PROJECTS = [
+  /* ——— Chantiers 2025-2026 (dossiers « Photos Site web ») ——— */
+  {
+    cat: 'renovation',
+    catLabel: 'Tableau électrique',
+    title: 'Tableau électrique neuf & GTL',
+    place: 'Manche',
+    date: '2026',
+    blurb: "Remplacement d'un tableau vieillissant : tableau et gaine technique neufs, circuits repérés et protégés.",
+    photos: chantier('big-tableau', 2),
+  },
+  {
+    cat: 'renovation',
+    catLabel: 'Tableau électrique',
+    title: 'Mise en sécurité & GTL',
+    place: 'Maine-et-Loire',
+    date: '2026',
+    blurb: "Création d'une gaine technique logement et reprise de l'installation existante.",
+    photos: chantier('pas-tableau', 2),
+  },
+  {
+    cat: 'renovation',
+    catLabel: 'Rénovation',
+    title: 'Chambre — appliques & papier peint',
+    place: 'Maine-et-Loire',
+    date: '2026',
+    blurb: 'Rénovation d’une chambre : appliques murales, prises repositionnées, finitions soignées.',
+    photos: chantier('dro-chambre', 5),
+  },
+  {
+    cat: 'renovation',
+    catLabel: 'Rénovation',
+    title: 'Rénovation complète — maison',
+    place: 'Vendée',
+    date: '2026',
+    blurb: 'Reprise complète de l’électricité, appareillage laiton et éclairage.',
+    photos: chantier('bou-renovation', 5),
+  },
+  {
+    cat: 'patrimoine',
+    catLabel: 'Haut de gamme',
+    title: 'Appartement contemporain — salle de bain & salon',
+    place: 'Paris',
+    date: '2026',
+    blurb: 'Éclairage intégré, salle de bain sur mesure, appareillage discret.',
+    photos: chantier('ric-appartement', 11),
+  },
+  {
+    cat: 'patrimoine',
+    catLabel: 'Haut de gamme',
+    title: 'Cuisine — plaque de cuisson invisible',
+    place: 'Paris',
+    date: '2026',
+    blurb: 'Raccordement d’une plaque à induction invisible sous plan de travail.',
+    photos: chantier('ric-cuisine', 6),
+  },
+  {
+    cat: 'eclairage',
+    catLabel: 'Éclairage',
+    title: 'Éclairage de façade',
+    place: 'Paris',
+    date: '2026',
+    blurb: 'Pose d’appliques extérieures en laiton sur façade en pierre.',
+    photos: chantier('ric-facade', 3),
+    cover: 3,
+  },
+  {
+    cat: 'eclairage',
+    catLabel: 'Éclairage',
+    title: 'Hôtel particulier — jardin & salons',
+    place: 'Paris',
+    date: '2025',
+    blurb: 'Mise en lumière du jardin, de la cour et des salons de réception.',
+    photos: chantier('isr-hotel', 7),
+  },
+  {
+    cat: 'borne',
+    catLabel: 'Borne de recharge',
+    title: 'Borne Schneider en garage',
+    place: 'Maine-et-Loire',
+    date: '2026',
+    blurb: 'Borne murale, protection dédiée au tableau et câblage sous tube.',
+    photos: chantier('fav-borne', 2),
+  },
+  {
+    cat: 'borne',
+    catLabel: 'Borne de recharge',
+    title: 'Borne sur mur en pierre',
+    place: 'Maine-et-Loire',
+    date: '2026',
+    blurb: 'Borne posée sur un mur ancien, au plus près de la place de stationnement.',
+    photos: chantier('hbon-borne', 1),
+  },
+  {
+    cat: 'borne',
+    catLabel: 'Borne de recharge',
+    title: 'Borne & protections au tableau',
+    place: 'Maine-et-Loire',
+    date: '2026',
+    blurb: 'Borne Schneider et protections dédiées ajoutées au tableau existant.',
+    photos: chantier('bon-borne', 3),
+  },
+  {
+    cat: 'borne',
+    catLabel: 'Prise renforcée',
+    title: 'Prise renforcée en garage',
+    place: 'Maine-et-Loire',
+    date: '2026',
+    blurb: 'Prise renforcée dédiée à la recharge nocturne.',
+    photos: chantier('pas-prise', 1),
+  },
+  {
+    cat: 'solaire',
+    catLabel: 'Solaire',
+    title: 'Centrale au sol — structures lestées',
+    place: 'Meurthe-et-Moselle',
+    date: '2026',
+    blurb: 'Panneaux posés au sol sur bacs lestés, sans fixation dans le terrain.',
+    photos: chantier('gur-sol', 4),
+  },
+  {
+    cat: 'solaire',
+    catLabel: 'Solaire',
+    title: 'Toiture tuiles — panneaux full black',
+    place: 'Seine-et-Marne',
+    date: '2026',
+    blurb: 'Centrale en surimposition sur toiture tuiles.',
+    photos: chantier('sto-toiture', 2),
+  },
+  {
+    cat: 'solaire',
+    catLabel: 'Solaire',
+    title: 'Toiture bac acier',
+    place: 'Seine-et-Marne',
+    date: '2026',
+    blurb: 'Panneaux posés sur une toiture en bac acier.',
+    photos: chantier('boo-toiture', 2),
+  },
   {
     cat: 'patrimoine',
     catLabel: 'Patrimoine',
     title: 'Château — grande chambre',
-    place: 'Maine-et-Loire',
+    place: 'Orne',
     date: '2025',
     blurb:
       "Réfection électrique complète d'une chambre de château : appliques laiton sur boiseries laquées, circuits repris sans abîmer les décors.",
-    photos: chantier('chateau-grande-chambre', 13),
+    photos: [
+      ...chantier('chateau-grande-chambre', 13),
+      '/assets/chantiers/bea-avant/03.jpg',
+      '/assets/chantiers/bea-avant/01.jpg',
+    ],
+    cover: 2,
   },
   {
     cat: 'patrimoine',
     catLabel: 'Patrimoine',
     title: 'Château — petite chambre',
-    place: 'Maine-et-Loire',
+    place: 'Orne',
     date: '2025',
     blurb:
       "Mise aux normes et éclairage d'une chambre d'époque : appliques, lampes de chevet et appareillage discret dans les soubassements.",
@@ -100,7 +246,7 @@ export const PROJECTS = [
     cat: 'patrimoine',
     catLabel: 'Patrimoine',
     title: 'Château — salle de bain',
-    place: 'Maine-et-Loire',
+    place: 'Orne',
     date: '2025',
     blurb:
       "Création d'une salle de bain sous combles : sèche-serviettes, éclairage de douche et alimentation dissimulée dans le travertin.",
@@ -231,6 +377,30 @@ export const PROJECTS = [
   .map((p) => ({ ...p, metier: CAT_TO_METIER[p.cat], img: p.photos[(p.cover ?? 1) - 1] }))
   /* Plus récents d'abord : chaque page métier affiche ses dernières réalisations. */
   .sort((a, b) => Number(b.date) - Number(a.date))
+
+/* Comparaisons avant / après (photos de chantiers alignées). */
+export const BEFORE_AFTER = {
+  tableau: {
+    title: 'Tableau électrique',
+    before: '/assets/chantiers/big-tableau/02.jpg',
+    after: '/assets/chantiers/big-tableau/01.jpg',
+  },
+  chateau: {
+    title: 'Chambre de château',
+    before: '/assets/chantiers/bea-avant/01.jpg',
+    after: '/assets/chantiers/chateau-grande-chambre/02.jpg',
+  },
+  chambre: {
+    title: 'Appliques murales',
+    before: '/assets/chantiers/dro-chambre/04.jpg',
+    after: '/assets/chantiers/dro-chambre/01.jpg',
+  },
+  toiture: {
+    title: 'Toiture photovoltaïque',
+    before: '/assets/chantiers/sto-toiture/02.jpg',
+    after: '/assets/chantiers/sto-toiture/01.jpg',
+  },
+}
 
 /* Chiffres clés animés (odomètre au scroll). */
 export const STATS = [
