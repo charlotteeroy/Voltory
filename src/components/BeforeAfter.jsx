@@ -26,12 +26,20 @@ const focusVisible = (el) => {
 /* Distance (px) à partir de laquelle un geste tactile est considéré comme un glisser ou un défilement. */
 const SLOP = 8
 
+/* Instant du dernier défilement (page ou conteneur). Un toucher qui arrive pendant l'inertie
+   d'un défilement sert à l'arrêter : il ne doit pas déplacer le curseur. */
+let lastScroll = 0
+if (typeof window !== 'undefined') {
+  window.addEventListener('scroll', () => (lastScroll = performance.now()), { capture: true, passive: true })
+}
+
 /** Comparateur avant / après : on touche ou fait glisser n'importe où pour révéler l'après. */
 export default function BeforeAfter({ before, after, alt = '', caption, height = '380px', start = 50 }) {
   const [pos, setPos] = useState(start)
   const [focused, setFocused] = useState(false)
   const frame = useRef(null)
-  /* Geste en cours : point de départ, et `active` une fois qu'il est reconnu comme un glisser du curseur. */
+  /* Geste en cours : pointeur suivi, point de départ, `active` une fois reconnu comme un glisser
+     du curseur, et `tap` si un simple toucher peut placer le curseur (pas d'inertie en cours). */
   const gesture = useRef(null)
 
   /* Position du doigt / de la souris → pourcentage. Géré à la main car, sur iPhone,
@@ -53,8 +61,13 @@ export default function BeforeAfter({ before, after, alt = '', caption, height =
      touche à rien) ; un simple toucher sans mouvement place le curseur au relâchement. */
   const onPointerDown = (e) => {
     if (e.pointerType === 'mouse' && e.button !== 0) return
+    if (!e.isPrimary) {
+      gesture.current = null // deuxième doigt : ce n'est plus un geste sur le curseur
+      return
+    }
     const mouse = e.pointerType === 'mouse'
-    gesture.current = { x: e.clientX, y: e.clientY, active: mouse }
+    const tap = performance.now() - lastScroll > 100
+    gesture.current = { id: e.pointerId, x: e.clientX, y: e.clientY, active: mouse, tap }
     if (mouse) {
       moveTo(e.clientX)
       capture(e)
@@ -62,7 +75,7 @@ export default function BeforeAfter({ before, after, alt = '', caption, height =
   }
   const onPointerMove = (e) => {
     const g = gesture.current
-    if (!g) return
+    if (!g || e.pointerId !== g.id) return
     if (!g.active) {
       const dx = Math.abs(e.clientX - g.x)
       const dy = Math.abs(e.clientY - g.y)
@@ -78,11 +91,12 @@ export default function BeforeAfter({ before, after, alt = '', caption, height =
   }
   const onPointerUp = (e) => {
     const g = gesture.current
-    if (g && !g.active) moveTo(e.clientX) // simple toucher
+    if (!g || e.pointerId !== g.id) return
+    if (!g.active && g.tap) moveTo(e.clientX) // simple toucher
     gesture.current = null
   }
-  const onPointerCancel = () => {
-    gesture.current = null
+  const onPointerCancel = (e) => {
+    if (gesture.current?.id === e.pointerId) gesture.current = null
   }
 
   return (
