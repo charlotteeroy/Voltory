@@ -83,7 +83,7 @@ export function ProjectModal({ project, onClose }) {
             <h3
               style={{
                 fontFamily: 'var(--font-display)',
-                fontWeight: 700,
+                fontWeight: 600,
                 fontSize: 'clamp(1.3rem,2.4vw,1.7rem)',
                 letterSpacing: '-.02em',
                 color: 'var(--text-strong)',
@@ -191,7 +191,7 @@ export function ProjectCard({ p, onOpen }) {
       <div
         style={{
           position: 'relative',
-          height: '184px',
+          height: '230px',
           flexShrink: 0,
           overflow: 'hidden',
           background: `url('${p.img}') center/cover, linear-gradient(140deg, var(--petrole-500), var(--petrole-800))`,
@@ -229,19 +229,16 @@ export function ProjectCard({ p, onOpen }) {
         <h3
           style={{
             fontFamily: 'var(--font-display)',
-            fontWeight: 700,
+            fontWeight: 600,
             fontSize: '18px',
             color: 'var(--text-strong)',
             letterSpacing: '-.01em',
-            margin: 0,
+            margin: '0 0 16px',
             lineHeight: 1.25,
           }}
         >
           {p.title}
         </h3>
-        <p style={{ fontSize: '14px', lineHeight: 1.55, color: 'var(--text-body)', margin: '12px 0 18px' }}>
-          {p.blurb}
-        </p>
         <div
           style={{
             display: 'flex',
@@ -250,7 +247,7 @@ export function ProjectCard({ p, onOpen }) {
             justifyContent: 'space-between',
             gap: '10px 14px',
             marginTop: 'auto',
-            paddingTop: '18px',
+            paddingTop: '16px',
             borderTop: '1px solid var(--border-subtle)',
           }}
         >

@@ -35,7 +35,7 @@ export default function CtaBand({
         <h2
           style={{
             fontFamily: 'var(--font-display)',
-            fontWeight: 700,
+            fontWeight: 600,
             fontSize: 'clamp(2rem,4vw,3rem)',
             letterSpacing: '-.025em',
             lineHeight: 1.04,

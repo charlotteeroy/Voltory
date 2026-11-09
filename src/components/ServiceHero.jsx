@@ -40,7 +40,7 @@ export default function ServiceHero({ eyebrow, title, intro, img, primary, secon
           <h1
             style={{
               fontFamily: 'var(--font-display)',
-              fontWeight: 700,
+              fontWeight: 600,
               fontSize: 'clamp(2.3rem,4.4vw,3.4rem)',
               letterSpacing: '-.03em',
               lineHeight: 1.05,

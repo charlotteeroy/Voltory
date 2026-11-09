@@ -66,7 +66,7 @@ function EngColumn({ items, animation, dark }) {
               alignItems: 'center',
               justifyContent: 'center',
               fontSize: '14px',
-              fontWeight: 700,
+              fontWeight: 600,
             }}
           >
             ✓
@@ -101,7 +101,7 @@ export default function Entreprise({ navigate }) {
             <h1
               style={{
                 fontFamily: 'var(--font-display)',
-                fontWeight: 700,
+                fontWeight: 600,
                 fontSize: 'clamp(2.2rem,4.2vw,3rem)',
                 letterSpacing: '-.03em',
                 lineHeight: 1.05,
@@ -205,7 +205,7 @@ export default function Entreprise({ navigate }) {
                 <h2
                   style={{
                     fontFamily: 'var(--font-display)',
-                    fontWeight: 700,
+                    fontWeight: 600,
                     fontSize: 'clamp(1.6rem,3vw,2.4rem)',
                     letterSpacing: '-.02em',
                     lineHeight: 1.08,
@@ -234,7 +234,7 @@ export default function Entreprise({ navigate }) {
             <h2
               style={{
                 fontFamily: 'var(--font-display)',
-                fontWeight: 700,
+                fontWeight: 600,
                 fontSize: 'clamp(1.9rem,3.4vw,2.6rem)',
                 letterSpacing: '-.02em',
                 lineHeight: 1.15,
@@ -273,7 +273,7 @@ export default function Entreprise({ navigate }) {
             <h2
               style={{
                 fontFamily: 'var(--font-display)',
-                fontWeight: 700,
+                fontWeight: 600,
                 fontSize: 'clamp(1.9rem,3.4vw,2.6rem)',
                 letterSpacing: '-.02em',
                 lineHeight: 1.1,
@@ -320,7 +320,7 @@ export default function Entreprise({ navigate }) {
           <h2
             style={{
               fontFamily: 'var(--font-display)',
-              fontWeight: 700,
+              fontWeight: 600,
               fontSize: 'clamp(1.8rem,3.4vw,2.6rem)',
               letterSpacing: '-.02em',
               margin: 0,

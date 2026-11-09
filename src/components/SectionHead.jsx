@@ -17,7 +17,7 @@ export default function SectionHead({ eyebrow, title, intro, onDark = false, cen
       <h2
         style={{
           fontFamily: 'var(--font-display)',
-          fontWeight: 700,
+          fontWeight: 600,
           fontSize: 'clamp(1.9rem,3.4vw,2.6rem)',
           letterSpacing: '-.02em',
           lineHeight: 1.1,
