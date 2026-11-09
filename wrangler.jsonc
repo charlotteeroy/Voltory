@@ -4,6 +4,9 @@
   "compatibility_date": "2026-07-22",
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "single-page-application"
+    // Chaque page connue a son fichier HTML (généré au build, cf. vite.config.js) ;
+    // toute autre adresse reçoit 404.html avec un vrai statut 404.
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
   }
 }

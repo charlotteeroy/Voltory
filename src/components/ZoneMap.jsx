@@ -64,9 +64,10 @@ export default function ZoneMap({ onContact }) {
       markersRef.current[c.name] = { marker: m, hq: !!c.hq }
     })
     syncMarkers(activeRef.current)
-    setTimeout(() => map.invalidateSize(), 300)
+    const resizeTimer = setTimeout(() => map.invalidateSize(), 300)
 
     return () => {
+      clearTimeout(resizeTimer)
       map.remove()
       mapRef.current = null
       markersRef.current = {}

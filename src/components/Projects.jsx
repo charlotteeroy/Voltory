@@ -337,7 +337,7 @@ export function LatestProjects({
           }}
         >
           {visible.map((p) => (
-            <ProjectCard key={p.title} p={p} onOpen={() => setSelected(p)} />
+            <ProjectCard key={p.id} p={p} onOpen={() => setSelected(p)} />
           ))}
         </div>
         {list.length > initial && (
