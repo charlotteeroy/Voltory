@@ -281,7 +281,7 @@ export default function Entreprise({ navigate }) {
       <section style={{ padding: 0 }}>
         <div style={{ position: 'relative', height: 'clamp(260px,42vw,460px)', overflow: 'hidden' }}>
           <img
-            src="/assets/agence-aerien.png"
+            src="/assets/agence-aerien.jpg"
             alt="L'agence Voltory à Cholet, toiture photovoltaïque"
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
           />

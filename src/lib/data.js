@@ -51,7 +51,7 @@ export const METIERS = [
     eyebrow: 'Photovoltaïque',
     title: 'Produisez votre électricité',
     points: ['Étude de rentabilité', 'Démarches gérées', 'Évolutive', '1er entretien offert'],
-    imgs: ['/assets/real-solaire-toiture.webp', '/assets/agence-aerien.png'],
+    imgs: ['/assets/real-solaire-toiture.webp', '/assets/agence-aerien.jpg'],
   },
 ]
 
@@ -343,7 +343,7 @@ export const PROJECTS = [
     date: '2025',
     blurb:
       "Scénographie lumineuse d'une terrasse : balisage, éclairage de massif et façade en blanc chaud.",
-    photos: ['/assets/real-eclairage-terrasse.png'],
+    photos: ['/assets/real-eclairage-terrasse.jpg'],
   },
   {
     cat: 'solaire',
@@ -362,7 +362,7 @@ export const PROJECTS = [
     date: '2024',
     blurb:
       "Centrale en toiture de bâtiment d'activité, dimensionnée sur la consommation de l'entreprise.",
-    photos: ['/assets/agence-aerien.png'],
+    photos: ['/assets/agence-aerien.jpg'],
   },
   {
     cat: 'borne',
