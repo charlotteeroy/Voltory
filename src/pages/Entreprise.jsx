@@ -4,6 +4,20 @@ import Button from '../components/ds/Button.jsx'
 import Card from '../components/ds/Card.jsx'
 import StatCard from '../components/ds/StatCard.jsx'
 
+/* TODO Charlotte / Félicien : prénoms et rôles des deux autres membres de l'équipe. */
+const TEAM = [
+  { img: '/assets/equipe/felicien.png', name: 'Félicien Gury', role: 'Gérant' },
+  { img: '/assets/equipe/membre-2.png', name: null, role: null },
+  { img: '/assets/equipe/membre-3.png', name: null, role: null },
+]
+
+const ON_SITE = [
+  { img: '/assets/chantiers/ric-appartement/05.jpg', pos: 'center 30%' },
+  { img: '/assets/chantiers/ric-facade/02.jpg', pos: 'center 35%' },
+  { img: '/assets/chantiers/gur-sol/04.jpg', pos: 'center' },
+  { img: '/assets/chantiers/ric-cuisine/05.jpg', pos: 'center' },
+]
+
 function eyebrow(label, onDark = false) {
   return (
     <span
@@ -179,6 +193,87 @@ export default function Entreprise({ navigate }) {
           <StatCard value="3" label="métiers complémentaires" style={{ width: '200px' }} />
           <StatCard value="1" label="interlocuteur, du début à la fin" style={{ width: '200px' }} />
           <StatCard value="≈50" unit="km" label="d'intervention autour de Cholet" style={{ width: '200px' }} />
+        </div>
+      </section>
+
+      {/* Équipe */}
+      <section style={{ background: 'var(--surface-card)', padding: '88px 0' }}>
+        <div style={{ ...WRAP, display: 'flex', flexWrap: 'wrap', gap: '48px', alignItems: 'center' }}>
+          <div
+            style={{
+              flex: '1 1 380px',
+              minHeight: '440px',
+              alignSelf: 'stretch',
+              borderRadius: 'var(--r-xl)',
+              backgroundImage: "url('/assets/equipe/felicien-agence.jpg')",
+              backgroundSize: 'cover',
+              backgroundPosition: 'center 40%',
+              boxShadow: 'var(--e2)',
+            }}
+            role="img"
+            aria-label="Félicien Gury devant l'agence Voltory de Cholet"
+          />
+          <div style={{ flex: '1 1 380px' }}>
+            {eyebrow("L'équipe")}
+            <hr style={rule} />
+            <h2
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontWeight: 600,
+                fontSize: 'clamp(1.8rem,3.2vw,2.5rem)',
+                letterSpacing: '-.02em',
+                lineHeight: 1.08,
+                margin: 0,
+              }}
+            >
+              Des visages, pas un standard
+            </h2>
+            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', margin: '28px 0 32px' }}>
+              {TEAM.map((m) => (
+                <div key={m.img} style={{ textAlign: 'center', width: '120px' }}>
+                  <div
+                    style={{
+                      width: '112px',
+                      height: '112px',
+                      margin: '0 auto',
+                      borderRadius: '50%',
+                      background: 'var(--or-100)',
+                      overflow: 'hidden',
+                      boxShadow: 'var(--e1)',
+                    }}
+                  >
+                    <img
+                      src={m.img}
+                      alt={m.name || "Membre de l'équipe Voltory"}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
+                    />
+                  </div>
+                  {m.name && (
+                    <>
+                      <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '14.5px', marginTop: '10px' }}>
+                        {m.name}
+                      </div>
+                      <div style={{ fontSize: '12.5px', color: 'var(--text-muted)' }}>{m.role}</div>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '10px' }}>
+              {ON_SITE.map((o) => (
+                <div
+                  key={o.img}
+                  style={{
+                    aspectRatio: '3 / 4',
+                    borderRadius: 'var(--r-md)',
+                    backgroundImage: `url('${o.img}')`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: o.pos,
+                  }}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 

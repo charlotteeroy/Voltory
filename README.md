@@ -76,8 +76,12 @@ project/                   Bundle de handoff original (maquette + design system)
 - **Contenus issus des devis** : détail du tableau électrique et de la centrale solaire,
   options (routeur, batterie), entretien VOLTORY+, déplacement offert sous 15 km, paiement
   échelonné (`Method.jsx`). Les prix des devis ne sont volontairement pas affichés.
-- **Placeholders** : les logos des qualifications
-  (`CERTIFICATIONS`) sont à fournir ; la distance incluse pour la pose d'une borne (3 m)
+- **Photos** : issues du dossier « Photos Site web » de Félicien, compressées (≤ 1600 px)
+  dans `public/assets/chantiers/<chantier>/`, `equipe/`, `logos/`, `materiel/`. Les
+  avant / après (`BEFORE_AFTER` dans `data.js`) utilisent des paires cadrées à l'identique.
+- **Placeholders** : prénoms et rôles des deux autres membres de l'équipe
+  (`TEAM` dans `Entreprise.jsx`) ; localisation « Meurthe-et-Moselle » de la centrale au
+  sol (dossier 54-GUR) à confirmer ; la distance incluse pour la pose d'une borne (3 m)
   est à confirmer. Les dates et localisations des
   réalisations (`src/lib/data.js`) sont déduites des dossiers photos — à faire valider.
   Les prénoms des avis Google sont indicatifs.

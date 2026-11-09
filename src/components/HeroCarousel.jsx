@@ -15,15 +15,15 @@ function Certifications() {
             display: 'flex',
             alignItems: 'center',
             gap: '10px',
-            padding: c.logo ? '6px 12px' : '8px 14px 8px 8px',
+            padding: c.logo ? '8px 14px' : '8px 14px 8px 8px',
             borderRadius: 'var(--r-md)',
-            background: 'rgba(255,255,255,.1)',
+            background: c.logo ? 'rgba(255,255,255,.94)' : 'rgba(255,255,255,.1)',
             border: '1px solid rgba(255,255,255,.22)',
             backdropFilter: 'blur(6px)',
           }}
         >
           {c.logo ? (
-            <img src={c.logo} alt={c.label} style={{ height: '40px', display: 'block' }} />
+            <img src={c.logo} alt={c.label} style={{ height: '38px', display: 'block' }} />
           ) : (
             <>
               <span

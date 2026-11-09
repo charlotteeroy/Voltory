@@ -1,5 +1,6 @@
 import HeroCarousel from '../components/HeroCarousel.jsx'
 import Metiers from '../components/Metiers.jsx'
+import BeforeAfterSection from '../components/BeforeAfterSection.jsx'
 import StatsBand from '../components/StatsBand.jsx'
 import Reviews from '../components/Reviews.jsx'
 import ZoneMap from '../components/ZoneMap.jsx'
@@ -13,6 +14,7 @@ export default function Home({ navigate }) {
     <div style={{ animation: 'vRise .45s var(--ease-out) both' }}>
       <HeroCarousel onContact={() => navigate('contact')} onDiscover={() => scrollToId('metiers')} />
       <Metiers onOpen={navigate} />
+      <BeforeAfterSection />
       <StatsBand />
       <Reviews />
       <ZoneMap onContact={() => navigate('contact')} />
