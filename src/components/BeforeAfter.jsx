@@ -14,12 +14,25 @@ const tag = {
   pointerEvents: 'none',
 }
 
+/* Focus au clavier ? (`:focus-visible` n'existe pas avant Safari 15.4 : on affiche alors l'anneau.) */
+const focusVisible = (el) => {
+  try {
+    return el.matches(':focus-visible')
+  } catch {
+    return true
+  }
+}
+
+/* Distance (px) à partir de laquelle un geste tactile est considéré comme un glisser ou un défilement. */
+const SLOP = 8
+
 /** Comparateur avant / après : on touche ou fait glisser n'importe où pour révéler l'après. */
 export default function BeforeAfter({ before, after, alt = '', caption, height = '380px', start = 50 }) {
   const [pos, setPos] = useState(start)
   const [focused, setFocused] = useState(false)
   const frame = useRef(null)
-  const dragging = useRef(false)
+  /* Geste en cours : point de départ, et `active` une fois qu'il est reconnu comme un glisser du curseur. */
+  const gesture = useRef(null)
 
   /* Position du doigt / de la souris → pourcentage. Géré à la main car, sur iPhone,
      un <input type="range"> ne réagit qu'au glisser de sa poignée, pas à un simple toucher. */
@@ -27,21 +40,49 @@ export default function BeforeAfter({ before, after, alt = '', caption, height =
     const r = frame.current.getBoundingClientRect()
     setPos(Math.round(Math.min(100, Math.max(0, ((clientX - r.left) / r.width) * 100))))
   }
-  const onPointerDown = (e) => {
-    if (e.pointerType === 'mouse' && e.button !== 0) return
-    dragging.current = true
-    moveTo(e.clientX)
+  const capture = (e) => {
     try {
       e.currentTarget.setPointerCapture(e.pointerId) // le glisser continue même hors du cadre
     } catch {
       /* pointeur déjà relâché : rien à capturer */
     }
   }
-  const onPointerMove = (e) => {
-    if (dragging.current) moveTo(e.clientX)
+
+  /* Souris : le curseur suit dès l'appui. Doigt / stylet : on attend de savoir si le geste
+     est un glisser horizontal (on déplace le curseur) ou un défilement vertical (on ne
+     touche à rien) ; un simple toucher sans mouvement place le curseur au relâchement. */
+  const onPointerDown = (e) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return
+    const mouse = e.pointerType === 'mouse'
+    gesture.current = { x: e.clientX, y: e.clientY, active: mouse }
+    if (mouse) {
+      moveTo(e.clientX)
+      capture(e)
+    }
   }
-  const stopDrag = () => {
-    dragging.current = false
+  const onPointerMove = (e) => {
+    const g = gesture.current
+    if (!g) return
+    if (!g.active) {
+      const dx = Math.abs(e.clientX - g.x)
+      const dy = Math.abs(e.clientY - g.y)
+      if (dy > SLOP && dy >= dx) {
+        gesture.current = null // défilement de la page
+        return
+      }
+      if (dx <= SLOP) return
+      g.active = true
+      capture(e)
+    }
+    moveTo(e.clientX)
+  }
+  const onPointerUp = (e) => {
+    const g = gesture.current
+    if (g && !g.active) moveTo(e.clientX) // simple toucher
+    gesture.current = null
+  }
+  const onPointerCancel = () => {
+    gesture.current = null
   }
 
   return (
@@ -50,8 +91,8 @@ export default function BeforeAfter({ before, after, alt = '', caption, height =
         ref={frame}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
-        onPointerUp={stopDrag}
-        onPointerCancel={stopDrag}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerCancel}
         style={{
           position: 'relative',
           height,
@@ -133,7 +174,7 @@ export default function BeforeAfter({ before, after, alt = '', caption, height =
           max="100"
           value={pos}
           onChange={(e) => setPos(Number(e.target.value))}
-          onFocus={(e) => setFocused(e.currentTarget.matches(':focus-visible'))}
+          onFocus={(e) => setFocused(focusVisible(e.currentTarget))}
           onBlur={() => setFocused(false)}
           aria-label={`Comparer avant et après${alt ? ` : ${alt}` : ''}`}
           style={{
