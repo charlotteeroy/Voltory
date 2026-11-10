@@ -9,21 +9,25 @@ import { sendContact } from '../lib/sendContact.js'
 const PROJECTS = [
   {
     label: 'Électricité',
+    img: '/assets/contact/electricite.jpg',
     icon: Icons.zap,
     hint: 'Tableau, prises, éclairage, rénovation complète…',
   },
   {
     label: 'Borne de recharge',
+    img: '/assets/contact/borne.jpg',
     icon: Icons.plug,
     hint: 'Votre véhicule, la distance entre le tableau et la place de parking…',
   },
   {
     label: 'Photovoltaïque',
+    img: '/assets/contact/photovoltaique.jpg',
     icon: Icons.sun,
     hint: 'Type de toiture, montant de votre facture d’électricité…',
   },
   {
     label: 'Rénovation',
+    img: '/assets/contact/renovation.jpg',
     icon: Icons.home,
     hint: 'Pièces concernées, travaux prévus, calendrier…',
   },
@@ -35,8 +39,6 @@ const FROM_PAGE = {
   bornes: 'Borne de recharge',
   photovoltaique: 'Photovoltaïque',
 }
-
-const CALLBACK = ['Le matin', 'Le midi', 'L’après-midi', 'Peu importe']
 
 const PHONE = CONTACT_ROWS.find((r) => r.label === 'Téléphone')?.value || '06 19 19 73 52'
 const PHONE_HREF = 'tel:+33' + PHONE.replace(/\s/g, '').slice(1)
@@ -136,10 +138,10 @@ function Field({ label, icon, name, type = 'text', required, ...rest }) {
   )
 }
 
-/** Choix du type de projet : tuiles illustrées. */
+/** Choix du type de projet : tuiles photo, bandeau givré pétrole, accent or. */
 function ProjectTiles({ value, onChange }) {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(118px,1fr))', gap: '10px' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(118px,1fr))', gap: '12px' }}>
       {PROJECTS.map((p) => {
         const on = p.label === value
         return (
@@ -148,71 +150,118 @@ function ProjectTiles({ value, onChange }) {
             type="button"
             aria-pressed={on}
             onClick={() => onChange(p.label)}
+            className="v-tile"
             style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              gap: '12px',
-              padding: '16px 14px',
+              position: 'relative',
+              aspectRatio: '1',
+              padding: 0,
               borderRadius: 'var(--r-md)',
-              border: on ? '1.5px solid var(--petrole-600)' : '1.5px solid var(--border-subtle)',
-              background: on ? 'var(--petrole-600)' : 'var(--surface-card)',
-              color: on ? 'var(--blanc)' : 'var(--text-strong)',
-              boxShadow: on ? 'var(--e2)' : 'none',
+              overflow: 'hidden',
+              border: 'none',
+              outline: on ? '2.5px solid var(--or-500)' : '2.5px solid transparent',
+              outlineOffset: '2px',
+              background: 'var(--petrole-800)',
+              boxShadow: on ? 'var(--e2)' : 'var(--e1)',
               cursor: 'pointer',
               textAlign: 'left',
-              transition: 'all var(--dur-fast) var(--ease-out)',
+              color: 'var(--blanc)',
+              transition: 'outline-color var(--dur-fast), box-shadow var(--dur-fast)',
             }}
           >
-            <span
+            <img
+              src={p.img}
+              alt=""
+              loading="lazy"
+              className="v-tile-img"
               style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '12px',
-                background: on ? 'var(--or-500)' : 'var(--or-100)',
-                color: 'var(--petrole-800)',
+                position: 'absolute',
+                inset: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                filter: on ? 'none' : 'saturate(.85)',
+                transition: 'transform .5s var(--ease-out), filter var(--dur-fast)',
+              }}
+            />
+            <span
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: on
+                  ? 'linear-gradient(0deg, rgba(0,95,111,.55) 0%, rgba(0,95,111,0) 60%)'
+                  : 'linear-gradient(0deg, rgba(7,58,67,.75) 0%, rgba(7,58,67,.25) 100%)',
+                transition: 'background var(--dur-fast)',
+              }}
+            />
+            {on && (
+              <span
+                aria-hidden="true"
+                style={{
+                  position: 'absolute',
+                  top: '10px',
+                  right: '10px',
+                  width: '26px',
+                  height: '26px',
+                  borderRadius: 'var(--r-pill)',
+                  background: 'var(--or-500)',
+                  color: 'var(--petrole-900)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  animation: 'vPop .3s var(--ease-out) both',
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12.5l4.5 4.5L19 7.5" />
+                </svg>
+              </span>
+            )}
+            <span
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                top: '9px',
+                left: '9px',
+                width: '34px',
+                height: '34px',
+                borderRadius: 'var(--r-pill)',
+                background: on ? 'var(--or-500)' : 'rgba(5,69,80,.55)',
+                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)',
+                border: on ? '1px solid var(--or-500)' : '1px solid rgba(255,255,255,.16)',
+                color: on ? 'var(--petrole-900)' : 'var(--or-400)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                transition: 'all var(--dur-fast)',
               }}
             >
               {p.icon}
             </span>
-            <span style={{ ...display, fontSize: '14px', fontWeight: 600, lineHeight: 1.25 }}>{p.label}</span>
-          </button>
-        )
-      })}
-    </div>
-  )
-}
-
-/** Petites étiquettes à choix unique (créneau de rappel). */
-function ChipChoice({ options, value, onChange, label }) {
-  return (
-    <div role="radiogroup" aria-label={label} style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-      {options.map((o) => {
-        const on = o === value
-        return (
-          <button
-            key={o}
-            type="button"
-            role="radio"
-            aria-checked={on}
-            onClick={() => onChange(o)}
-            style={{
-              ...display,
-              fontSize: '13px',
-              fontWeight: 500,
-              padding: '8px 14px',
-              borderRadius: 'var(--r-pill)',
-              border: on ? '1.5px solid var(--or-500)' : '1.5px solid var(--border-subtle)',
-              background: on ? 'var(--or-100)' : 'var(--surface-card)',
-              color: 'var(--petrole-800)',
-              cursor: 'pointer',
-              transition: 'all var(--dur-fast)',
-            }}
-          >
-            {o}
+            <span
+              lang="fr"
+              style={{
+                position: 'absolute',
+                left: '5px',
+                right: '5px',
+                bottom: '5px',
+                padding: '9px 8px',
+                borderRadius: '10px',
+                background: on ? 'rgba(0,95,111,.78)' : 'rgba(5,69,80,.5)',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255,255,255,.14)',
+                ...display,
+                fontSize: '13.5px',
+                fontWeight: 600,
+                lineHeight: 1.2,
+                hyphens: 'auto',
+                transition: 'background var(--dur-fast)',
+              }}
+            >
+              {p.label}
+            </span>
           </button>
         )
       })}
@@ -248,8 +297,7 @@ function Sent({ recap, onAgain, navigate }) {
         Demande envoyée&nbsp;!
       </h2>
       <p style={{ fontSize: '15.5px', color: 'var(--text-body)', lineHeight: 1.55, maxWidth: '38ch', margin: '0 auto' }}>
-        Merci{recap.firstName ? ` ${recap.firstName}` : ''}. Félicien vous rappelle sous 48&nbsp;h
-        {recap.callback && recap.callback !== 'Peu importe' ? `, de préférence ${recap.callback.toLowerCase()}` : ''}.
+        Merci{recap.firstName ? ` ${recap.firstName}` : ''}. Félicien vous rappelle sous 48&nbsp;h.
       </p>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '8px', marginTop: '20px' }}>
         {[recap.type, recap.city].filter(Boolean).map((t) => (
@@ -386,7 +434,6 @@ function Aside() {
 export default function Contact({ navigate, from }) {
   const [status, setStatus] = useState('idle') // idle | sending | sent | error
   const [projType, setProjType] = useState(FROM_PAGE[from] || '')
-  const [callback, setCallback] = useState('Peu importe')
   const [recap, setRecap] = useState({})
   const hint = PROJECTS.find((p) => p.label === projType)?.hint || 'Votre lieu, vos besoins, vos questions…'
 
@@ -400,14 +447,13 @@ export default function Contact({ navigate, from }) {
       phone: f.get('phone'),
       city: String(f.get('city') || '').trim(),
       type: projType || 'Non précisé',
-      callback,
       message: f.get('message'),
       botcheck: f.get('botcheck'),
     }
     setStatus('sending')
     try {
       await sendContact(data)
-      setRecap({ firstName: data.name.split(/\s+/)[0], type: data.type, city: data.city, callback })
+      setRecap({ firstName: data.name.split(/\s+/)[0], type: data.type, city: data.city })
       setStatus('sent')
     } catch (err) {
       console.error('Envoi du formulaire impossible :', err)
@@ -488,12 +534,6 @@ export default function Contact({ navigate, from }) {
                       <Field label="Téléphone" name="phone" type="tel" icon={Icons.phone} autoComplete="tel" placeholder="06 12 34 56 78" required />
                       <Field label="Email" name="email" type="email" icon={Icons.mail} autoComplete="email" placeholder="jean@exemple.fr" required />
                       <Field label="Commune" name="city" icon={Icons.pin} autoComplete="address-level2" placeholder="Cholet" />
-                    </div>
-                    <div style={{ marginTop: '18px' }}>
-                      <div style={{ ...display, fontSize: '13px', fontWeight: 600, color: 'var(--text-strong)', marginBottom: '8px' }}>
-                        Quand vous rappeler&nbsp;?
-                      </div>
-                      <ChipChoice options={CALLBACK} value={callback} onChange={setCallback} label="Quand vous rappeler ?" />
                     </div>
                   </Step>
 

@@ -11,7 +11,7 @@ const ENDPOINT = 'https://api.web3forms.com/submit'
 const ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_KEY
 
 /* L'ordre des clés = l'ordre des lignes dans l'e-mail reçu par Félicien. */
-export async function sendContact({ name, email, phone, city, type, callback, message, botcheck }) {
+export async function sendContact({ name, email, phone, city, type, message, botcheck }) {
   if (!ACCESS_KEY) throw new Error('Clé Web3Forms manquante (VITE_WEB3FORMS_KEY).')
 
   const res = await fetch(ENDPOINT, {
@@ -27,7 +27,6 @@ export async function sendContact({ name, email, phone, city, type, callback, me
       // `email` : adresse du client, utilisée comme « Répondre à » par Web3Forms.
       email,
       Commune: city || 'non précisée',
-      'Rappel souhaité': callback || 'Peu importe',
       Message: message || '(aucun message)',
       botcheck: Boolean(botcheck),
     }),
