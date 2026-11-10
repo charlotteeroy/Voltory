@@ -32,6 +32,8 @@ const scrollTop = () => {
 
 export default function App() {
   const [page, setPage] = useState(() => keyFromPath(window.location.pathname))
+  /* Page précédente : permet au formulaire de présélectionner le bon type de projet. */
+  const [from, setFrom] = useState(null)
 
   /* Boutons précédent / suivant du navigateur. */
   useEffect(() => {
@@ -60,6 +62,7 @@ export default function App() {
   const navigate = (key) => {
     const path = ROUTES[key].path
     if (window.location.pathname !== path) window.history.pushState({}, '', path)
+    setFrom(page)
     setPage(key)
     scrollTop()
   }
@@ -69,7 +72,7 @@ export default function App() {
   return (
     <div style={{ fontFamily: 'var(--font-body)', background: 'var(--surface-card)' }}>
       <Nav page={page} navigate={navigate} />
-      <Page key={page} navigate={navigate} />
+      <Page key={page} navigate={navigate} from={from} />
       <Footer navigate={navigate} />
     </div>
   )

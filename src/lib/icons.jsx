@@ -116,6 +116,12 @@ export const Icons = {
       <path d="M9 7h1M9 11h1M9 15h1M13 7h1M13 11h1M13 15h1" />
     </Svg>
   ),
+  user: (
+    <Svg size={17}>
+      <circle cx={12} cy={8} r={4} />
+      <path d="M4 21a8 8 0 0 1 16 0" />
+    </Svg>
+  ),
   pin: (
     <Svg size={17}>
       <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />

@@ -10,7 +10,8 @@
 const ENDPOINT = 'https://api.web3forms.com/submit'
 const ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_KEY
 
-export async function sendContact({ name, email, phone, type, message, botcheck }) {
+/* L'ordre des clés = l'ordre des lignes dans l'e-mail reçu par Félicien. */
+export async function sendContact({ name, email, phone, city, type, callback, message, botcheck }) {
   if (!ACCESS_KEY) throw new Error('Clé Web3Forms manquante (VITE_WEB3FORMS_KEY).')
 
   const res = await fetch(ENDPOINT, {
@@ -18,13 +19,15 @@ export async function sendContact({ name, email, phone, type, message, botcheck 
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
     body: JSON.stringify({
       access_key: ACCESS_KEY,
-      subject: `Demande de devis · ${type} · ${name}`,
+      subject: `Nouvelle demande · ${type} · ${name}${city ? ` (${city})` : ''}`,
       from_name: 'Site Voltory',
-      // Champs affichés dans l'email reçu (« Répondre » écrit directement au client).
+      Projet: type,
       Nom: name,
+      Téléphone: phone,
+      // `email` : adresse du client, utilisée comme « Répondre à » par Web3Forms.
       email,
-      Téléphone: phone || 'non renseigné',
-      'Type de projet': type,
+      Commune: city || 'non précisée',
+      'Rappel souhaité': callback || 'Peu importe',
       Message: message || '(aucun message)',
       botcheck: Boolean(botcheck),
     }),
