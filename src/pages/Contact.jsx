@@ -288,7 +288,7 @@ function Sent({ recap, onAgain, navigate }) {
         Demande envoyée&nbsp;!
       </h2>
       <p style={{ fontSize: '15.5px', color: 'var(--text-body)', lineHeight: 1.55, maxWidth: '38ch', margin: '0 auto' }}>
-        Merci{recap.firstName ? ` ${recap.firstName}` : ''}. Félicien vous rappelle sous 48&nbsp;h.
+        Merci{recap.firstName ? ` ${recap.firstName}` : ''}. Félicien revient vers vous au plus vite.
       </p>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '8px', marginTop: '20px' }}>
         {[recap.type, recap.city].filter(Boolean).map((t) => (
@@ -482,7 +482,7 @@ export default function Contact({ navigate, from }) {
               Parlons de votre projet
             </h1>
             <p style={{ fontSize: '1.125rem', lineHeight: 1.6, color: 'var(--text-body)', margin: '14px 0 0' }}>
-              Trois questions, une minute. Félicien vous rappelle sous 48&nbsp;h.
+              Trois questions, une minute. Nous revenons vers vous au plus vite.
             </p>
           </div>
 
