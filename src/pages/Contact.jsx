@@ -426,7 +426,7 @@ export default function Contact({ navigate, from }) {
   const [status, setStatus] = useState('idle') // idle | sending | sent | error
   const [projType, setProjType] = useState(FROM_PAGE[from] || '')
   const [recap, setRecap] = useState({})
-  const hint = PROJECTS.find((p) => p.label === projType)?.hint || 'Votre lieu, vos besoins, vos questions…'
+  const hint = PROJECTS.find((p) => p.label === projType)?.hint || 'Votre lieu, vos attentes, vos questions…'
 
   const onSubmit = async (e) => {
     e.preventDefault()
@@ -456,7 +456,7 @@ export default function Contact({ navigate, from }) {
     <div style={{ animation: 'vRise .45s var(--ease-out) both' }}>
       <section style={{ background: 'var(--surface-page)', padding: '64px 0 96px' }}>
         <div style={WRAP}>
-          <div style={{ maxWidth: '56ch', marginBottom: '36px' }}>
+          <div style={{ maxWidth: '64ch', marginBottom: '36px' }}>
             <span
               style={{
                 ...display,
@@ -482,7 +482,7 @@ export default function Contact({ navigate, from }) {
               Parlons de votre projet
             </h1>
             <p style={{ fontSize: '1.125rem', lineHeight: 1.6, color: 'var(--text-body)', margin: '14px 0 0' }}>
-              Partagez-nous vos besoins. Nous revenons vers vous au plus vite.
+              Partagez-nous vos besoins. Nous revenons vers vous au plus&nbsp;vite.
             </p>
           </div>
 
