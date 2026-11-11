@@ -482,7 +482,7 @@ export default function Contact({ navigate, from }) {
               Parlons de votre projet
             </h1>
             <p style={{ fontSize: '1.125rem', lineHeight: 1.6, color: 'var(--text-body)', margin: '14px 0 0' }}>
-              Trois questions, une minute. Nous revenons vers vous au plus vite.
+              Partagez-nous vos besoins. Nous revenons vers vous au plus vite.
             </p>
           </div>
 
@@ -528,10 +528,10 @@ export default function Contact({ navigate, from }) {
                     </div>
                   </Step>
 
-                  <Step n="3" title="Quelques mots" optional>
+                  <Step n="3" title="Quels sont vos besoins ?" optional>
                     <textarea
                       name="message"
-                      aria-label="Votre message"
+                      aria-label="Quels sont vos besoins ?"
                       rows={4}
                       placeholder={hint}
                       onFocus={focusOn}
