@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { WRAP } from '../lib/layout.js'
 import { CONTACT_ROWS } from '../lib/data.js'
 import { Icons } from '../lib/icons.jsx'
@@ -265,6 +265,11 @@ function ProjectTiles({ value, onChange }) {
 
 /** Confirmation après envoi. */
 function Sent({ recap, onAgain, navigate }) {
+  /* Le formulaire disparaît : on place le focus (et l'écran) sur la confirmation. */
+  const titleRef = useRef(null)
+  useEffect(() => {
+    titleRef.current?.focus()
+  }, [])
   return (
     <div style={{ textAlign: 'center', padding: '28px 4px 8px', animation: 'vRise .35s var(--ease-out) both' }}>
       <div
@@ -287,7 +292,11 @@ function Sent({ recap, onAgain, navigate }) {
           <path d="M5 12.5l4.5 4.5L19 7.5" />
         </svg>
       </div>
-      <h2 style={{ ...display, fontWeight: 600, fontSize: '26px', color: 'var(--text-strong)', margin: '26px 0 8px' }}>
+      <h2
+        ref={titleRef}
+        tabIndex={-1}
+        style={{ ...display, fontWeight: 600, fontSize: '26px', color: 'var(--text-strong)', margin: '26px 0 8px', outline: 'none' }}
+      >
         Demande envoyée&nbsp;!
       </h2>
       <p style={{ fontSize: '15.5px', color: 'var(--text-body)', lineHeight: 1.55, maxWidth: '38ch', margin: '0 auto' }}>
