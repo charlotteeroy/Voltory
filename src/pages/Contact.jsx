@@ -188,10 +188,7 @@ function ProjectTiles({ value, onChange }) {
               style={{
                 position: 'absolute',
                 inset: 0,
-                background: on
-                  ? 'linear-gradient(0deg, rgba(0,95,111,.55) 0%, rgba(0,95,111,0) 60%)'
-                  : 'linear-gradient(0deg, rgba(7,58,67,.75) 0%, rgba(7,58,67,.25) 100%)',
-                transition: 'background var(--dur-fast)',
+                background: 'linear-gradient(0deg, var(--petrole-600) 0%, rgba(0,95,111,.85) 22%, rgba(0,95,111,0) 62%)',
               }}
             />
             {on && (
@@ -243,21 +240,15 @@ function ProjectTiles({ value, onChange }) {
               lang="fr"
               style={{
                 position: 'absolute',
-                left: '5px',
-                right: '5px',
-                bottom: '5px',
-                padding: '9px 8px',
-                borderRadius: '10px',
-                background: on ? 'rgba(0,95,111,.78)' : 'rgba(5,69,80,.5)',
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255,255,255,.14)',
+                left: '12px',
+                right: '10px',
+                bottom: '11px',
                 ...display,
                 fontSize: '13.5px',
                 fontWeight: 600,
                 lineHeight: 1.2,
                 hyphens: 'auto',
-                transition: 'background var(--dur-fast)',
+                textShadow: '0 1px 2px rgba(7,58,67,.4)',
               }}
             >
               {p.label}
