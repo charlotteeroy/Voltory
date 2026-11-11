@@ -141,121 +141,124 @@ function Field({ label, icon, name, type = 'text', required, ...rest }) {
 /** Choix du type de projet : tuiles photo, bandeau givré pétrole, accent or. */
 function ProjectTiles({ value, onChange }) {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(118px,1fr))', gap: '12px' }}>
-      {PROJECTS.map((p) => {
-        const on = p.label === value
-        return (
-          <button
-            key={p.label}
-            type="button"
-            aria-pressed={on}
-            onClick={() => onChange(p.label)}
-            className="v-tile"
-            style={{
-              position: 'relative',
-              aspectRatio: '1',
-              padding: 0,
-              borderRadius: 'var(--r-md)',
-              overflow: 'hidden',
-              border: 'none',
-              outline: on ? '2.5px solid var(--or-500)' : '2.5px solid transparent',
-              outlineOffset: '2px',
-              background: 'var(--petrole-800)',
-              boxShadow: on ? 'var(--e2)' : 'var(--e1)',
-              cursor: 'pointer',
-              textAlign: 'left',
-              color: 'var(--blanc)',
-              transition: 'outline-color var(--dur-fast), box-shadow var(--dur-fast)',
-            }}
-          >
-            <img
-              src={p.img}
-              alt=""
-              loading="lazy"
-              className="v-tile-img"
+    /* Conteneur mesuré : 2 colonnes, 4 dès que la place le permet (jamais 3 + 1). */
+    <div style={{ containerType: 'inline-size' }}>
+      <div className="v-tiles">
+        {PROJECTS.map((p) => {
+          const on = p.label === value
+          return (
+            <button
+              key={p.label}
+              type="button"
+              aria-pressed={on}
+              onClick={() => onChange(p.label)}
+              className="v-tile"
               style={{
-                position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                filter: on ? 'none' : 'saturate(.85)',
-                transition: 'transform .5s var(--ease-out), filter var(--dur-fast)',
+                position: 'relative',
+                aspectRatio: '1',
+                padding: 0,
+                borderRadius: 'var(--r-md)',
+                overflow: 'hidden',
+                border: 'none',
+                outline: on ? '2.5px solid var(--or-500)' : '2.5px solid transparent',
+                outlineOffset: '2px',
+                background: 'var(--petrole-800)',
+                boxShadow: on ? 'var(--e2)' : 'var(--e1)',
+                cursor: 'pointer',
+                textAlign: 'left',
+                color: 'var(--blanc)',
+                transition: 'outline-color var(--dur-fast), box-shadow var(--dur-fast)',
               }}
-            />
-            <span
-              aria-hidden="true"
-              style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'linear-gradient(0deg, var(--petrole-600) 0%, rgba(0,95,111,.85) 22%, rgba(0,95,111,0) 62%)',
-              }}
-            />
-            {on && (
+            >
+              <img
+                src={p.img}
+                alt=""
+                loading="lazy"
+                className="v-tile-img"
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  filter: on ? 'none' : 'saturate(.85)',
+                  transition: 'transform .5s var(--ease-out), filter var(--dur-fast)',
+                }}
+              />
               <span
                 aria-hidden="true"
                 style={{
                   position: 'absolute',
-                  top: '10px',
-                  right: '10px',
-                  width: '26px',
-                  height: '26px',
+                  inset: 0,
+                  background: 'linear-gradient(0deg, var(--petrole-600) 0%, rgba(0,95,111,.85) 22%, rgba(0,95,111,0) 62%)',
+                }}
+              />
+              {on && (
+                <span
+                  aria-hidden="true"
+                  style={{
+                    position: 'absolute',
+                    top: '10px',
+                    right: '10px',
+                    width: '26px',
+                    height: '26px',
+                    borderRadius: 'var(--r-pill)',
+                    background: 'var(--or-500)',
+                    color: 'var(--petrole-900)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    animation: 'vPop .3s var(--ease-out) both',
+                  }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12.5l4.5 4.5L19 7.5" />
+                  </svg>
+                </span>
+              )}
+              <span
+                aria-hidden="true"
+                style={{
+                  position: 'absolute',
+                  top: '9px',
+                  left: '9px',
+                  width: '34px',
+                  height: '34px',
                   borderRadius: 'var(--r-pill)',
-                  background: 'var(--or-500)',
-                  color: 'var(--petrole-900)',
+                  background: on ? 'var(--or-500)' : 'rgba(5,69,80,.55)',
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
+                  border: on ? '1px solid var(--or-500)' : '1px solid rgba(255,255,255,.16)',
+                  color: on ? 'var(--petrole-900)' : 'var(--or-400)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  animation: 'vPop .3s var(--ease-out) both',
+                  transition: 'all var(--dur-fast)',
                 }}
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12.5l4.5 4.5L19 7.5" />
-                </svg>
+                {p.icon}
               </span>
-            )}
-            <span
-              aria-hidden="true"
-              style={{
-                position: 'absolute',
-                top: '9px',
-                left: '9px',
-                width: '34px',
-                height: '34px',
-                borderRadius: 'var(--r-pill)',
-                background: on ? 'var(--or-500)' : 'rgba(5,69,80,.55)',
-                backdropFilter: 'blur(8px)',
-                WebkitBackdropFilter: 'blur(8px)',
-                border: on ? '1px solid var(--or-500)' : '1px solid rgba(255,255,255,.16)',
-                color: on ? 'var(--petrole-900)' : 'var(--or-400)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all var(--dur-fast)',
-              }}
-            >
-              {p.icon}
-            </span>
-            <span
-              lang="fr"
-              style={{
-                position: 'absolute',
-                left: '12px',
-                right: '10px',
-                bottom: '11px',
-                ...display,
-                fontSize: '13.5px',
-                fontWeight: 600,
-                lineHeight: 1.2,
-                hyphens: 'auto',
-                textShadow: '0 1px 2px rgba(7,58,67,.4)',
-              }}
-            >
-              {p.label}
-            </span>
-          </button>
-        )
-      })}
+              <span
+                lang="fr"
+                style={{
+                  position: 'absolute',
+                  left: '12px',
+                  right: '10px',
+                  bottom: '11px',
+                  ...display,
+                  fontSize: '13.5px',
+                  fontWeight: 600,
+                  lineHeight: 1.2,
+                  hyphens: 'auto',
+                  textShadow: '0 1px 2px rgba(7,58,67,.4)',
+                }}
+              >
+                {p.label}
+              </span>
+            </button>
+          )
+        })}
+      </div>
     </div>
   )
 }
