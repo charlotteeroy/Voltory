@@ -41,7 +41,7 @@ export default function Electricite({ navigate }) {
         eyebrow="Électricité générale"
         title="Une installation sûre, du tableau à la dernière prise"
         intro="Rénovation, mise aux normes, éclairage — à Cholet et dans un rayon de 50 km."
-        img="/assets/hero/01-salon.jpg"
+        img="/assets/hero/01-salon.webp"
         primary={{ label: 'Demander un devis', onClick: () => navigate('contact') }}
         secondary={{ label: 'Voir nos réalisations', onClick: () => scrollToId('realisations') }}
       />
