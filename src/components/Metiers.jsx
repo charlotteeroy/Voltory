@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { WRAP } from '../lib/layout.js'
 import { METIERS } from '../lib/data.js'
 import { navLinkProps } from './Nav.jsx'
 import SectionHead from './SectionHead.jsx'
 
 /** Une carte métier : photos qui défilent, nom, étiquettes, lien vers la page. */
-function MetierCard({ m, index, tick, onOpen }) {
+function MetierCard({ m, index, tick, near, onOpen }) {
   const [hover, setHover] = useState(false)
   const idx = (tick + index) % m.imgs.length
 
@@ -36,7 +36,7 @@ function MetierCard({ m, index, tick, onOpen }) {
           style={{
             position: 'absolute',
             inset: 0,
-            backgroundImage: `url('${src}')`,
+            backgroundImage: near ? `url('${src}')` : 'none',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             opacity: i === idx ? 1 : 0,
@@ -130,17 +130,49 @@ function MetierCard({ m, index, tick, onOpen }) {
 /** Nos trois métiers : trois cartes photo cliquables vers chaque page. */
 export default function Metiers({ onOpen }) {
   const [tick, setTick] = useState(0)
+  // Les photos ne se téléchargent qu'à l'approche de la section (pas au chargement de la page).
+  const sectionRef = useRef(null)
+  const [near, setNear] = useState(false)
 
   useEffect(() => {
+    const el = sectionRef.current
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setNear(true)
+      return
+    }
+    let io
+    // On attend la fin du chargement de la page : la photo du header passe en premier.
+    const start = () => {
+      io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            setNear(true)
+            io.disconnect()
+          }
+        },
+        { rootMargin: '400px 0px' }
+      )
+      io.observe(el)
+    }
+    if (document.readyState === 'complete') start()
+    else window.addEventListener('load', start, { once: true })
+    return () => {
+      window.removeEventListener('load', start)
+      io?.disconnect()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!near) return
     const id = setInterval(() => {
       if (typeof document !== 'undefined' && document.hidden) return
       setTick((t) => t + 1)
     }, 4000)
     return () => clearInterval(id)
-  }, [])
+  }, [near])
 
   return (
-    <section id="metiers" style={{ background: 'var(--surface-page)', padding: '96px 0' }}>
+    <section ref={sectionRef} id="metiers" style={{ background: 'var(--surface-page)', padding: '96px 0' }}>
       <div style={WRAP}>
         <SectionHead eyebrow="Nos métiers" title="Trois métiers, une même exigence" mb="40px" />
         <div
@@ -151,7 +183,7 @@ export default function Metiers({ onOpen }) {
           }}
         >
           {METIERS.map((m, i) => (
-            <MetierCard key={m.key} m={m} index={i} tick={tick} onOpen={onOpen} />
+            <MetierCard key={m.key} m={m} index={i} tick={tick} near={near} onOpen={onOpen} />
           ))}
         </div>
       </div>

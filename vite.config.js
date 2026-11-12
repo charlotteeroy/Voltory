@@ -21,11 +21,16 @@ function pagesPerRoute() {
     },
     closeBundle() {
       const shell = readFileSync(resolve(outDir, 'index.html'), 'utf8')
-      const withTitle = (title, extraHead = '') =>
-        shell.replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(title)}</title>${extraHead}`)
+      // La photo du carrousel d'accueil n'est préchargée que sur l'accueil.
+      const homeOnly = /<!-- accueil:preload -->[\s\S]*?<!-- \/accueil:preload -->\n?\s*/
+      const withTitle = (title, extraHead = '', home = false) =>
+        (home ? shell : shell.replace(homeOnly, '')).replace(
+          /<title>[^<]*<\/title>/,
+          `<title>${escapeHtml(title)}</title>${extraHead}`
+        )
       for (const { path, title } of Object.values(ROUTES)) {
         const file = path === '/' ? 'index.html' : `${path.slice(1)}.html`
-        writeFileSync(resolve(outDir, file), withTitle(title))
+        writeFileSync(resolve(outDir, file), withTitle(title, '', path === '/'))
       }
       writeFileSync(
         resolve(outDir, '404.html'),

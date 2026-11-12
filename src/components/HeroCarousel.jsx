@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { WRAP } from '../lib/layout.js'
 import { HERO_IMGS, CERTIFICATIONS } from '../lib/data.js'
 import Button from './ds/Button.jsx'
@@ -35,14 +35,41 @@ function Certifications() {
   )
 }
 
-/** Header plein-cadre : carrousel des réalisations en fondu (Ken Burns lent). */
+/** Header plein-cadre : carrousel des réalisations en fondu (Ken Burns lent).
+ *  Seule la 1re photo est chargée d'emblée (préchargée dans index.html) ; chaque
+ *  photo suivante est téléchargée pendant l'affichage de la précédente, et le
+ *  carrousel n'avance que lorsqu'elle est prête — jamais de fondu vers le vide. */
 export default function HeroCarousel({ onContact, onDiscover }) {
   const [index, setIndex] = useState(0)
+  const [loaded, setLoaded] = useState(() => new Set([0]))
+  const loadedRef = useRef(loaded)
+  loadedRef.current = loaded
+
+  const next = (index + 1) % HERO_IMGS.length
+
+  // Précharge la photo suivante pendant que la courante est affichée.
+  useEffect(() => {
+    if (loaded.has(next)) return
+    let cancelled = false
+    const img = new Image()
+    const done = () => {
+      if (!cancelled) setLoaded((s) => new Set(s).add(next))
+    }
+    img.onload = done
+    img.onerror = done
+    img.src = HERO_IMGS[next]
+    return () => {
+      cancelled = true
+    }
+  }, [next, loaded])
 
   useEffect(() => {
     const id = setInterval(() => {
       if (typeof document !== 'undefined' && document.hidden) return
-      setIndex((i) => (i + 1) % HERO_IMGS.length)
+      setIndex((i) => {
+        const n = (i + 1) % HERO_IMGS.length
+        return loadedRef.current.has(n) ? n : i
+      })
     }, 4500)
     return () => clearInterval(id)
   }, [])
@@ -65,7 +92,7 @@ export default function HeroCarousel({ onContact, onDiscover }) {
           style={{
             position: 'absolute',
             inset: 0,
-            backgroundImage: `url('${src}')`,
+            backgroundImage: loaded.has(i) || i === index ? `url('${src}')` : 'none',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             opacity: i === index ? 1 : 0,
