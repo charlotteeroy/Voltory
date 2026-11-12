@@ -51,8 +51,13 @@ export default function ZoneMap({ onContact }) {
     setActive(name)
     activeRef.current = name
     const map = mapRef.current
-    if (map && fly) {
-      map.flyToBounds(L.latLngBounds(POINTS[name]), { padding: [40, 40], maxZoom: 13, duration: 0.8 })
+    const pts = POINTS[name] || []
+    if (map && fly && pts.length) {
+      map.flyToBounds(L.latLngBounds(pts), { padding: [40, 40], maxZoom: 13, duration: 0.8 })
+    } else if (map && fly) {
+      // Ville ajoutée à CITY_DATA sans relancer scripts/points-carte.py : on vise son centre.
+      const c = CITY_DATA.find((x) => x.name === name)
+      if (c) map.flyTo([c.lat, c.lng], 12, { duration: 0.8 })
     }
     syncMarkers(name)
   }
@@ -71,7 +76,7 @@ export default function ZoneMap({ onContact }) {
     mapRef.current = map
     markersRef.current = {}
     CITY_DATA.forEach((c) => {
-      markersRef.current[c.name] = POINTS[c.name].map((ll) => {
+      markersRef.current[c.name] = (POINTS[c.name] || []).map((ll) => {
         const m = L.circleMarker(ll, { radius: 3, fillColor: PETROLE, color: '#ffffff', weight: 1, fillOpacity: 0.85 })
         m.bindTooltip(`Chantier · ${c.name}`, { direction: 'top', offset: [0, -6] })
         m.on('click', () => selectCity(c.name))
