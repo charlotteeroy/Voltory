@@ -424,7 +424,6 @@ export const CITY_DATA = [
     projects: 120,
     lat: 47.058,
     lng: -0.878,
-    hq: true,
     blurb: "Notre agence et notre cœur d’activité — interventions quotidiennes.",
   },
   {
