@@ -6,7 +6,7 @@ import Button from './ds/Button.jsx'
 /** Qualifications : logos officiels dès qu'ils sont fournis, badge texte en attendant. */
 function Certifications() {
   return (
-    <div style={{ marginTop: '36px' }}>
+    <div style={{ marginTop: '28px' }}>
       <div
         style={{
           fontFamily: 'var(--font-display)',
@@ -15,19 +15,19 @@ function Certifications() {
           letterSpacing: '.18em',
           textTransform: 'uppercase',
           color: 'var(--text-on-dark-soft)',
-          marginBottom: '14px',
+          marginBottom: '10px',
         }}
       >
         Qualifiés &amp; assurés
       </div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '18px 32px' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px 22px' }}>
         {CERTIFICATIONS.map((c) => (
           <img
             key={c.label}
             src={c.logo}
             alt={`${c.label} — ${c.detail}`}
             title={`${c.label} — ${c.detail}`}
-            style={{ height: c.label.includes('APRIL') ? '28px' : '34px', display: 'block', opacity: 0.92 }}
+            style={{ height: c.label.includes('APRIL') ? '19px' : '24px', display: 'block', opacity: 0.92 }}
           />
         ))}
       </div>
