@@ -22,16 +22,20 @@ block = src[src.index('export const CITY_DATA'):]
 block = block[:block.index('\n]\n')]
 cities = []
 for obj in re.findall(r'\{(.*?)\n  \}', block, re.S):
-    f = lambda k: re.search(rf"\b{k}: ([^,\n]+)", obj).group(1).strip().strip("'\"")
+    def f(k, default=None):
+        m = re.search(rf"\b{k}:\s*([^,\n]+)", obj)
+        return m.group(1).strip().strip("'\"") if m else default
     cities.append({'name': f('name'), 'lat': float(f('lat')), 'lng': float(f('lng')),
-                   'spread': float(f('spread')), 'projects': int(f('projects'))})
+                   'spread': float(f('spread', 2)), 'projects': int(f('projects'))})
 
 def tile(x, y):
     os.makedirs(CACHE, exist_ok=True)
     p = f'{CACHE}/{Z}-{x}-{y}.png'
     if not os.path.exists(p):
+        tmp = p + '.part'
         subprocess.run(['curl', '-sfL', '-A', 'VoltorySiteBuild/1.0 (generation unique des points de carte)',
-                        '-o', p, f'https://tile.openstreetmap.org/{Z}/{x}/{y}.png'], check=True)
+                        '-o', tmp, f'https://tile.openstreetmap.org/{Z}/{x}/{y}.png'], check=True)
+        os.replace(tmp, p)  # pas de fichier partiel dans le cache si curl échoue
         time.sleep(0.25)
     return Image.open(p).convert('RGB')
 
@@ -63,18 +67,25 @@ for c in cities:
     r = rng(c['name'])
     kmlat = 1 / 111
     kmlng = 1 / (111 * math.cos(math.radians(c['lat'])))
-    pts, rejected = [], 0
+    pts, rejected, crowded, tries = [], 0, 0, 0
+    min_km = 0.06  # 60 m minimum entre deux points : pas de points superposés
     while len(pts) < c['projects']:
+        tries += 1
+        if tries > c['projects'] * 50:
+            raise SystemExit(f"{c['name']} : impossible de placer {c['projects']} points (augmenter spread ?)")
         d = (c.get('spread') or 2) * next(r) ** 0.75
         a = next(r) * 2 * math.pi
         lat = c['lat'] + d * math.sin(a) * kmlat
         lng = c['lng'] + d * math.cos(a) * kmlng
+        if any(math.hypot((lat - p[0]) / kmlat, (lng - p[1]) / kmlng) < min_km for p in pts):
+            crowded += 1
+            continue
         if is_water(lat, lng):
             rejected += 1
             continue
         pts.append([round(lat, 5), round(lng, 5)])
     out[c['name']] = pts
-    print(f"{c['name']}: {len(pts)} points ({rejected} écartés dans l'eau)")
+    print(f"{c['name']}: {len(pts)} points ({rejected} écartés dans l'eau, {crowded} trop proches)")
 
 js = ('/* Généré par scripts/points-carte.py — ne pas modifier à la main.\n'
       '   Un point par chantier, positions fictives (aucune adresse client), hors de l\'eau. */\n'
