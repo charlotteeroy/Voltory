@@ -1,4 +1,4 @@
-import { WRAP, scrollToId } from '../lib/layout.js'
+import { WRAP } from '../lib/layout.js'
 import ServiceHero from '../components/ServiceHero.jsx'
 import SectionHead from '../components/SectionHead.jsx'
 import Simulator from '../components/Simulator.jsx'
@@ -28,8 +28,7 @@ export default function Photovoltaique({ navigate }) {
         title="Produisez votre propre électricité"
         intro="Du solaire dimensionné sur votre consommation réelle, démarches comprises."
         img="/assets/real-solaire-toiture.webp"
-        primary={{ label: 'Estimer mes économies', onClick: () => scrollToId('simulateur') }}
-        secondary={{ label: 'Demander une étude', onClick: () => navigate('contact') }}
+        primary={{ label: 'Demander une étude', onClick: () => navigate('contact') }}
       />
 
       <Simulator id="simulateur" onStudy={() => navigate('contact')} />
