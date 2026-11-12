@@ -577,9 +577,6 @@ export const CLIENTS = [
   },
 ]
 
-/* Types de projet (formulaire contact). */
-export const PROJECT_TYPES = ['Électricité', 'Borne de recharge', 'Photovoltaïque', 'Rénovation']
-
 /* Coordonnées agence. */
 export const CONTACT_ROWS = [
   { icon: Icons.pin, label: 'Agence', value: '41 avenue du Lac, 49300 Cholet' },

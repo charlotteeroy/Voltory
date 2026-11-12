@@ -131,3 +131,19 @@ section[id] {
 @media (max-width: 860px) {
   .v-perks { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* Formulaire de contact : tuiles projet sur 2 colonnes, 4 si la place le permet. */
+.v-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@container (min-width: 460px) {
+  .v-tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* Formulaire de contact : léger zoom de la photo au survol des tuiles projet. */
+@media (hover: hover) {
+  .v-tile:hover .v-tile-img { transform: scale(1.06); }
+}
+.v-tile:focus-visible { outline: 2.5px solid var(--or-500) !important; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .v-tile-img { transition: none !important; }
+  .v-tile:hover .v-tile-img { transform: none; }
+}
