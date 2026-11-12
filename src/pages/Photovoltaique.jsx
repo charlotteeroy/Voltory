@@ -1,9 +1,8 @@
 import { WRAP, scrollToId } from '../lib/layout.js'
-import { Icons } from '../lib/icons.jsx'
 import ServiceHero from '../components/ServiceHero.jsx'
 import SectionHead from '../components/SectionHead.jsx'
 import Simulator from '../components/Simulator.jsx'
-import { Chips, FeatureGrid } from '../components/ServiceBlocks.jsx'
+import { Chips } from '../components/ServiceBlocks.jsx'
 import Timeline from '../components/Timeline.jsx'
 import { PerksBar } from '../components/Method.jsx'
 import { LatestProjects } from '../components/Projects.jsx'
@@ -19,12 +18,6 @@ const PROJECT_STEPS = [
   { title: 'Raccordement', meta: 'Garantie 12 ans', text: 'Micro-onduleurs et protections.' },
   { title: 'Mise en service', meta: 'Suivi en direct', text: 'Production visible en temps réel.' },
   { title: 'Entretien', meta: '1er offert', text: 'Panneaux propres, production maximale.' },
-]
-
-const OPTIONS = [
-  { icon: Icons.zap, title: 'Routeur solaire', text: 'Votre surplus chauffe le ballon d’eau chaude.' },
-  { icon: Icons.battery, title: 'Batterie 5 kWh', text: 'L’énergie du jour, utilisée le soir.' },
-  { icon: Icons.car, title: 'Borne de recharge', text: 'Roulez avec votre propre électricité.' },
 ]
 
 export default function Photovoltaique({ navigate }) {
@@ -91,13 +84,6 @@ export default function Photovoltaique({ navigate }) {
             <div style={{ borderTop: '1px solid var(--border-subtle)', margin: '40px 0 28px' }} />
             <PerksBar />
           </div>
-        </div>
-      </section>
-
-      <section style={{ background: 'var(--surface-card)', padding: '88px 0' }}>
-        <div style={WRAP}>
-          <SectionHead eyebrow="Les options" title="Consommez davantage votre électricité" mb="36px" />
-          <FeatureGrid items={OPTIONS} min="240px" />
         </div>
       </section>
 
