@@ -39,7 +39,7 @@ function Certifications() {
  *  Seule la 1re photo est chargée d'emblée (préchargée dans index.html) ; chaque
  *  photo suivante est téléchargée pendant l'affichage de la précédente, et le
  *  carrousel n'avance que lorsqu'elle est prête — jamais de fondu vers le vide. */
-export default function HeroCarousel({ onContact, onDiscover }) {
+export default function HeroCarousel({ onContact }) {
   const [index, setIndex] = useState(0)
   const [loaded, setLoaded] = useState(() => new Set([0]))
   const loadedRef = useRef(loaded)
@@ -150,9 +150,6 @@ export default function HeroCarousel({ onContact, onDiscover }) {
           <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', marginTop: '28px' }}>
             <Button variant="accent" onClick={onContact}>
               Parler de mon projet
-            </Button>
-            <Button variant="ghostDark" onClick={onDiscover}>
-              Découvrir nos métiers
             </Button>
           </div>
           <Certifications />
