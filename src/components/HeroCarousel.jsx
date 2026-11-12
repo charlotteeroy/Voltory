@@ -49,7 +49,7 @@ export default function HeroCarousel({ onContact, onDiscover }) {
 
   // Précharge la photo suivante pendant que la courante est affichée.
   useEffect(() => {
-    if (loaded.has(next)) return
+    if (loadedRef.current.has(next)) return
     let cancelled = false
     const img = new Image()
     const done = () => {
@@ -61,7 +61,7 @@ export default function HeroCarousel({ onContact, onDiscover }) {
     return () => {
       cancelled = true
     }
-  }, [next, loaded])
+  }, [next])
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -161,7 +161,12 @@ export default function HeroCarousel({ onContact, onDiscover }) {
           {HERO_IMGS.map((src, i) => (
             <button
               key={src}
-              onClick={() => setIndex(i)}
+              onClick={() => {
+                // La photo choisie est chargée par son fond : on la garde en place
+                // ensuite pour que son fondu de sortie ne parte pas dans le vide.
+                setLoaded((s) => (s.has(i) ? s : new Set(s).add(i)))
+                setIndex(i)
+              }}
               aria-label={`Photo ${i + 1}`}
               style={{
                 width: i === index ? '26px' : '10px',
