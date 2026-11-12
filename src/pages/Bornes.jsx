@@ -244,43 +244,9 @@ export default function Bornes({ navigate }) {
         </div>
       </section>
 
-      {/* Tableau ancien → passerelle vers l'électricité générale */}
-      <section style={{ background: 'var(--surface-page)', padding: '72px 0' }}>
-        <div
-          style={{
-            ...WRAP,
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '28px',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <div style={{ flex: '1 1 420px', maxWidth: '62ch' }}>
-            <h3
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontWeight: 600,
-                fontSize: 'clamp(1.4rem,2.4vw,1.8rem)',
-                letterSpacing: '-.02em',
-                margin: 0,
-              }}
-            >
-              Votre tableau électrique est ancien ?
-            </h3>
-            <p style={{ fontSize: '1.05rem', lineHeight: 1.6, color: 'var(--text-body)', margin: '8px 0 0' }}>
-              Coffret dédié ou tableau remis aux normes : on s'adapte.
-            </p>
-          </div>
-          <Button variant="ghost" onClick={() => navigate('electricite')}>
-            Voir l'électricité générale →
-          </Button>
-        </div>
-      </section>
+      <Method background="var(--surface-page)" />
 
-      <Method />
-
-      <LatestProjects metier="bornes" background="var(--surface-page)" />
+      <LatestProjects metier="bornes" background="var(--surface-card)" />
 
       <CtaBand
         onContact={() => navigate('contact')}
