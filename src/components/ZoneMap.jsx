@@ -1,32 +1,49 @@
 import { useEffect, useRef, useState } from 'react'
-import L from 'leaflet'
 import { WRAP } from '../lib/layout.js'
 import { CITY_DATA } from '../lib/data.js'
+import { MAP_POINTS } from '../lib/mapPoints.js'
 
 const OR = '#FDBE03'
 const PETROLE = '#005F6F'
+const PETROLE_DARK = '#073A43'
+
+/* Un point par chantier : positions fictives autour de chaque ville, hors de l'eau
+   (générées par scripts/points-carte.py — aucune adresse client). */
+const POINTS = MAP_POINTS
+
+/** Taille des points selon le zoom : discrets en vue d'ensemble, lisibles de près. */
+const radiusFor = (zoom, isActive) => {
+  const base = zoom >= 13 ? 6 : zoom >= 11 ? 4.5 : 3
+  return isActive ? base + 1 : base
+}
 
 /** Carte interactive de la zone d'intervention (Leaflet / OpenStreetMap). */
 export default function ZoneMap({ onContact }) {
   const [active, setActive] = useState('Cholet')
   const mapNode = useRef(null)
   const mapRef = useRef(null)
-  const markersRef = useRef({})
+  const markersRef = useRef({}) // nom de ville → liste de points
   const activeRef = useRef('Cholet')
+  const leafletRef = useRef(null) // module Leaflet, chargé à l'approche de la carte
+  const pickedRef = useRef(false) // une ville a été choisie (éventuellement avant le chargement de la carte)
 
   const activeCity = CITY_DATA.find((c) => c.name === active) || CITY_DATA[0]
 
   const syncMarkers = (name) => {
-    const markers = markersRef.current
-    Object.keys(markers).forEach((n) => {
-      const { marker, hq } = markers[n]
+    const map = mapRef.current
+    if (!map) return
+    const zoom = map.getZoom()
+    Object.entries(markersRef.current).forEach(([n, dots]) => {
       const isActive = n === name
-      marker.setStyle({
-        radius: hq ? 11 : isActive ? 10 : 7,
-        fillColor: isActive || hq ? OR : PETROLE,
-        color: '#ffffff',
-        weight: 2,
-        fillOpacity: 1,
+      dots.forEach((m) => {
+        m.setStyle({
+          radius: radiusFor(zoom, isActive),
+          fillColor: isActive ? OR : PETROLE,
+          color: isActive ? PETROLE_DARK : '#ffffff',
+          weight: isActive ? 1.5 : 1,
+          fillOpacity: isActive ? 1 : 0.85,
+        })
+        if (isActive) m.bringToFront()
       })
     })
   }
@@ -34,43 +51,96 @@ export default function ZoneMap({ onContact }) {
   const selectCity = (name) => {
     setActive(name)
     activeRef.current = name
-    const c = CITY_DATA.find((x) => x.name === name)
-    if (c && mapRef.current) mapRef.current.flyTo([c.lat, c.lng], 11, { duration: 0.8 })
+    pickedRef.current = true
+    const map = mapRef.current
+    const L = leafletRef.current
+    const pts = POINTS[name] || []
+    if (map && L && pts.length) {
+      map.flyToBounds(L.latLngBounds(pts), { padding: [40, 40], maxZoom: 13, duration: 0.8 })
+    } else if (map) {
+      // Ville ajoutée à CITY_DATA sans relancer scripts/points-carte.py : on vise son centre.
+      const c = CITY_DATA.find((x) => x.name === name)
+      if (c) map.flyTo([c.lat, c.lng], 12, { duration: 0.8 })
+    }
     syncMarkers(name)
   }
 
+  /* Leaflet (~150 Ko) et les tuiles OpenStreetMap ne sont chargés qu'à l'approche
+     de la carte, en bas de page : ils ne ralentissent plus l'ouverture de l'accueil. */
   useEffect(() => {
-    if (!mapNode.current || mapRef.current) return
-    const map = L.map(mapNode.current, { scrollWheelZoom: false, zoomControl: true }).setView(
-      [47.02, -0.85],
-      9
-    )
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap',
-      maxZoom: 18,
-    }).addTo(map)
-    mapRef.current = map
-    markersRef.current = {}
-    CITY_DATA.forEach((c) => {
-      const m = L.circleMarker([c.lat, c.lng], {
-        radius: c.hq ? 11 : 7,
-        fillColor: c.hq ? OR : PETROLE,
-        color: '#ffffff',
-        weight: 2,
-        fillOpacity: 1,
+    const node = mapNode.current
+    if (!node) return
+    let cancelled = false
+    let cleanupMap = null
+
+    const init = (L) => {
+      if (cancelled || mapRef.current) return
+      leafletRef.current = L
+      const map = L.map(node, {
+        scrollWheelZoom: false,
+        // Sur téléphone, un doigt fait défiler la page (pas la carte) ; on zoome
+        // en pinçant, avec les boutons + / −, ou en touchant une ville.
+        dragging: !L.Browser.mobile,
+        zoomControl: true,
+        // ~300 points : rendu canvas (plus léger que 300 éléments SVG), avec une
+        // marge de 6 px autour de chaque point pour le toucher plus facilement au doigt.
+        renderer: L.canvas({ tolerance: 6 }),
+      })
+      // Ville touchée avant l'arrivée de Leaflet (réseau lent) : on ouvre directement sur elle.
+      const picked = pickedRef.current ? POINTS[activeRef.current] || [] : []
+      const pickedCity = pickedRef.current && CITY_DATA.find((x) => x.name === activeRef.current)
+      if (picked.length) map.fitBounds(L.latLngBounds(picked), { padding: [40, 40], maxZoom: 13 })
+      else if (pickedCity) map.setView([pickedCity.lat, pickedCity.lng], 12)
+      else map.fitBounds(L.latLngBounds(Object.values(POINTS).flat()), { padding: [24, 24] })
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap',
+        maxZoom: 18,
       }).addTo(map)
-      m.bindTooltip(`${c.name} — ${c.projects} projets`, { direction: 'top', offset: [0, -8] })
-      m.on('click', () => selectCity(c.name))
-      markersRef.current[c.name] = { marker: m, hq: !!c.hq }
-    })
-    syncMarkers(activeRef.current)
-    const resizeTimer = setTimeout(() => map.invalidateSize(), 300)
+      mapRef.current = map
+      markersRef.current = {}
+      CITY_DATA.forEach((c) => {
+        markersRef.current[c.name] = (POINTS[c.name] || []).map((ll) => {
+          const m = L.circleMarker(ll, { radius: 3, fillColor: PETROLE, color: '#ffffff', weight: 1, fillOpacity: 0.85 })
+          m.bindTooltip(`Chantier · ${c.name}`, { direction: 'top', offset: [0, -6] })
+          m.on('click', () => selectCity(c.name))
+          return m.addTo(map)
+        })
+      })
+      map.on('zoomend', () => syncMarkers(activeRef.current))
+      syncMarkers(activeRef.current)
+      const resizeTimer = setTimeout(() => map.invalidateSize(), 300)
+      cleanupMap = () => {
+        clearTimeout(resizeTimer)
+        map.remove()
+        mapRef.current = null
+        markersRef.current = {}
+      }
+    }
+
+    const load = () =>
+      import('leaflet')
+        .then((mod) => init(mod.default || mod))
+        .catch((err) => console.error('Carte indisponible :', err))
+
+    let io = null
+    if (typeof IntersectionObserver === 'undefined') load()
+    else {
+      io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            io.disconnect()
+            load()
+          }
+        },
+        { rootMargin: '600px 0px' }
+      )
+      io.observe(node)
+    }
 
     return () => {
-      clearTimeout(resizeTimer)
-      map.remove()
-      mapRef.current = null
-      markersRef.current = {}
+      cancelled = true
+      io?.disconnect()
+      cleanupMap?.()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

@@ -7,7 +7,7 @@ import BeforeAfter from './BeforeAfter.jsx'
 export default function BeforeAfterSection({
   keys = ['tableau', 'chateau', 'toiture'],
   eyebrow = 'Avant / après',
-  title = 'Faites glisser pour voir la différence',
+  title = 'Découvrez les avant-après de nos réalisations',
   background = 'var(--surface-card)',
 }) {
   return (

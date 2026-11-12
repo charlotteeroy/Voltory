@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { WRAP } from '../lib/layout.js'
 import { HERO_IMGS, CERTIFICATIONS } from '../lib/data.js'
 import Button from './ds/Button.jsx'
@@ -6,7 +6,7 @@ import Button from './ds/Button.jsx'
 /** Qualifications : logos officiels dès qu'ils sont fournis, badge texte en attendant. */
 function Certifications() {
   return (
-    <div style={{ marginTop: '36px' }}>
+    <div style={{ marginTop: '28px' }}>
       <div
         style={{
           fontFamily: 'var(--font-display)',
@@ -15,19 +15,19 @@ function Certifications() {
           letterSpacing: '.18em',
           textTransform: 'uppercase',
           color: 'var(--text-on-dark-soft)',
-          marginBottom: '14px',
+          marginBottom: '10px',
         }}
       >
         Qualifiés &amp; assurés
       </div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '18px 32px' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px 22px' }}>
         {CERTIFICATIONS.map((c) => (
           <img
             key={c.label}
             src={c.logo}
             alt={`${c.label} — ${c.detail}`}
             title={`${c.label} — ${c.detail}`}
-            style={{ height: c.label.includes('APRIL') ? '28px' : '34px', display: 'block', opacity: 0.92 }}
+            style={{ height: c.label.includes('APRIL') ? '19px' : '24px', display: 'block', opacity: 0.92 }}
           />
         ))}
       </div>
@@ -35,14 +35,41 @@ function Certifications() {
   )
 }
 
-/** Header plein-cadre : carrousel des réalisations en fondu (Ken Burns lent). */
-export default function HeroCarousel({ onContact, onDiscover }) {
+/** Header plein-cadre : carrousel des réalisations en fondu (Ken Burns lent).
+ *  Seule la 1re photo est chargée d'emblée (préchargée dans index.html) ; chaque
+ *  photo suivante est téléchargée pendant l'affichage de la précédente, et le
+ *  carrousel n'avance que lorsqu'elle est prête — jamais de fondu vers le vide. */
+export default function HeroCarousel({ onContact }) {
   const [index, setIndex] = useState(0)
+  const [loaded, setLoaded] = useState(() => new Set([0]))
+  const loadedRef = useRef(loaded)
+  loadedRef.current = loaded
+
+  const next = (index + 1) % HERO_IMGS.length
+
+  // Précharge la photo suivante pendant que la courante est affichée.
+  useEffect(() => {
+    if (loadedRef.current.has(next)) return
+    let cancelled = false
+    const img = new Image()
+    const done = () => {
+      if (!cancelled) setLoaded((s) => new Set(s).add(next))
+    }
+    img.onload = done
+    img.onerror = done
+    img.src = HERO_IMGS[next]
+    return () => {
+      cancelled = true
+    }
+  }, [next])
 
   useEffect(() => {
     const id = setInterval(() => {
       if (typeof document !== 'undefined' && document.hidden) return
-      setIndex((i) => (i + 1) % HERO_IMGS.length)
+      setIndex((i) => {
+        const n = (i + 1) % HERO_IMGS.length
+        return loadedRef.current.has(n) ? n : i
+      })
     }, 4500)
     return () => clearInterval(id)
   }, [])
@@ -65,7 +92,7 @@ export default function HeroCarousel({ onContact, onDiscover }) {
           style={{
             position: 'absolute',
             inset: 0,
-            backgroundImage: `url('${src}')`,
+            backgroundImage: loaded.has(i) || i === index ? `url('${src}')` : 'none',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             opacity: i === index ? 1 : 0,
@@ -100,8 +127,8 @@ export default function HeroCarousel({ onContact, onDiscover }) {
               fontFamily: 'var(--font-display)',
               fontWeight: 600,
               fontSize: 'clamp(2.5rem,4.8vw,3.9rem)',
-              lineHeight: 1.05,
-              letterSpacing: '-.03em',
+              lineHeight: 0.98,
+              letterSpacing: '-.035em',
               margin: 0,
               textShadow: '0 2px 24px rgba(4,30,34,.4)',
             }}
@@ -112,9 +139,9 @@ export default function HeroCarousel({ onContact, onDiscover }) {
           <p
             style={{
               fontSize: 'clamp(.95rem,1.3vw,1.05rem)',
-              lineHeight: 1.6,
+              lineHeight: 1.45,
               color: 'var(--text-on-dark-soft)',
-              margin: '18px 0 0',
+              margin: '16px 0 0',
               maxWidth: '48ch',
             }}
           >
@@ -124,9 +151,6 @@ export default function HeroCarousel({ onContact, onDiscover }) {
             <Button variant="accent" onClick={onContact}>
               Parler de mon projet
             </Button>
-            <Button variant="ghostDark" onClick={onDiscover}>
-              Découvrir nos métiers
-            </Button>
           </div>
           <Certifications />
         </div>
@@ -134,7 +158,12 @@ export default function HeroCarousel({ onContact, onDiscover }) {
           {HERO_IMGS.map((src, i) => (
             <button
               key={src}
-              onClick={() => setIndex(i)}
+              onClick={() => {
+                // La photo choisie est chargée par son fond : on la garde en place
+                // ensuite pour que son fondu de sortie ne parte pas dans le vide.
+                setLoaded((s) => (s.has(i) ? s : new Set(s).add(i)))
+                setIndex(i)
+              }}
               aria-label={`Photo ${i + 1}`}
               style={{
                 width: i === index ? '26px' : '10px',

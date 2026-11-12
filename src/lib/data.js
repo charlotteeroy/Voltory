@@ -6,14 +6,14 @@ import { Icons } from './icons.jsx'
 
 /* Photos du carrousel hero (réalisations qui défilent en fond). */
 export const HERO_IMGS = [
-  '/assets/hero/01-salon.jpg',
-  '/assets/hero/02-sdb-verte.jpg',
-  '/assets/hero/03-chambre-chateau.jpg',
-  '/assets/hero/04-terrasse.jpg',
-  '/assets/hero/05-cuisine.jpg',
-  '/assets/hero/06-sdb-marbre.jpg',
-  '/assets/hero/07-hall.jpg',
-  '/assets/hero/08-corniche.jpg',
+  '/assets/hero/01-salon.webp',
+  '/assets/hero/02-sdb-verte.webp',
+  '/assets/hero/03-chambre-chateau.webp',
+  '/assets/hero/04-terrasse.webp',
+  '/assets/hero/05-cuisine.webp',
+  '/assets/hero/06-sdb-marbre.webp',
+  '/assets/hero/07-hall.webp',
+  '/assets/hero/08-corniche.webp',
 ]
 
 /* Les trois métiers, mis en avant sur l'accueil (blocs larges + photos qui défilent).
@@ -27,10 +27,10 @@ export const METIERS = [
     title: 'Rénovation & mise aux normes',
     points: ['Tableau électrique', 'Rénovation', 'Éclairage', 'Audit avant achat', 'Domotique'],
     imgs: [
-      '/assets/hero/01-salon.jpg',
+      '/assets/hero/01-salon.webp',
       '/assets/real-hotel-hall.jpg',
       '/assets/real-lustre-ferronnerie.jpg',
-      '/assets/hero/04-terrasse.jpg',
+      '/assets/hero/04-terrasse.webp',
     ],
   },
   {
@@ -411,19 +411,24 @@ export const STATS = [
   { prefix: '', num: '60', suffix: ' %', label: "jusqu'à, d'électricité autoconsommée" },
 ]
 
-/* Villes de la zone d'intervention (carte Leaflet). */
+/* Villes de la zone d'intervention (carte Leaflet).
+   `projects` = nombre de points affichés autour de la ville, répartis dans un rayon
+   de `spread` km. Positions fictives (aucune adresse client), générées hors de l'eau
+   dans src/lib/mapPoints.js : relancer `python3 scripts/points-carte.py` si l'une de
+   ces valeurs change. */
 export const CITY_DATA = [
   {
     name: 'Cholet',
+    spread: 3.2, // rayon (km) où sont répartis les points de chantier
     dept: 'Maine-et-Loire',
     projects: 120,
     lat: 47.058,
     lng: -0.878,
-    hq: true,
     blurb: "Notre agence et notre cœur d’activité — interventions quotidiennes.",
   },
   {
     name: 'Angers',
+    spread: 3.6, // rayon (km) où sont répartis les points de chantier
     dept: 'Maine-et-Loire',
     projects: 48,
     lat: 47.478,
@@ -432,6 +437,7 @@ export const CITY_DATA = [
   },
   {
     name: 'Saumur',
+    spread: 2.2, // rayon (km) où sont répartis les points de chantier
     dept: 'Maine-et-Loire',
     projects: 22,
     lat: 47.26,
@@ -440,6 +446,7 @@ export const CITY_DATA = [
   },
   {
     name: 'Nantes',
+    spread: 4.2, // rayon (km) où sont répartis les points de chantier
     dept: 'Loire-Atlantique',
     projects: 18,
     lat: 47.218,
@@ -448,6 +455,7 @@ export const CITY_DATA = [
   },
   {
     name: 'Beaupréau',
+    spread: 1.6, // rayon (km) où sont répartis les points de chantier
     dept: 'Maine-et-Loire',
     projects: 16,
     lat: 47.204,
@@ -456,6 +464,7 @@ export const CITY_DATA = [
   },
   {
     name: 'Mortagne-sur-Sèvre',
+    spread: 1.5, // rayon (km) où sont répartis les points de chantier
     dept: 'Vendée',
     projects: 14,
     lat: 46.992,
@@ -464,6 +473,7 @@ export const CITY_DATA = [
   },
   {
     name: 'Les Herbiers',
+    spread: 2, // rayon (km) où sont répartis les points de chantier
     dept: 'Vendée',
     projects: 34,
     lat: 46.871,
@@ -472,6 +482,7 @@ export const CITY_DATA = [
   },
   {
     name: 'La Roche-sur-Yon',
+    spread: 2.8, // rayon (km) où sont répartis les points de chantier
     dept: 'Vendée',
     projects: 26,
     lat: 46.67,
