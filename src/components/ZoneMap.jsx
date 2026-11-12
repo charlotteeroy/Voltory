@@ -25,6 +25,7 @@ export default function ZoneMap({ onContact }) {
   const markersRef = useRef({}) // nom de ville → liste de points
   const activeRef = useRef('Cholet')
   const leafletRef = useRef(null) // module Leaflet, chargé à l'approche de la carte
+  const pickedRef = useRef(false) // une ville a été choisie (éventuellement avant le chargement de la carte)
 
   const activeCity = CITY_DATA.find((c) => c.name === active) || CITY_DATA[0]
 
@@ -50,6 +51,7 @@ export default function ZoneMap({ onContact }) {
   const selectCity = (name) => {
     setActive(name)
     activeRef.current = name
+    pickedRef.current = true
     const map = mapRef.current
     const L = leafletRef.current
     const pts = POINTS[name] || []
@@ -83,7 +85,13 @@ export default function ZoneMap({ onContact }) {
         // ~300 points : rendu canvas (plus léger que 300 éléments SVG), avec une
         // marge de 6 px autour de chaque point pour le toucher plus facilement au doigt.
         renderer: L.canvas({ tolerance: 6 }),
-      }).fitBounds(L.latLngBounds(Object.values(POINTS).flat()), { padding: [24, 24] })
+      })
+      // Ville touchée avant l'arrivée de Leaflet (réseau lent) : on ouvre directement sur elle.
+      const picked = pickedRef.current ? POINTS[activeRef.current] || [] : []
+      const pickedCity = pickedRef.current && CITY_DATA.find((x) => x.name === activeRef.current)
+      if (picked.length) map.fitBounds(L.latLngBounds(picked), { padding: [40, 40], maxZoom: 13 })
+      else if (pickedCity) map.setView([pickedCity.lat, pickedCity.lng], 12)
+      else map.fitBounds(L.latLngBounds(Object.values(POINTS).flat()), { padding: [24, 24] })
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap',
         maxZoom: 18,
