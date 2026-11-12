@@ -86,6 +86,8 @@ export function PerksBar() {
 
 /** Méthode + engagements, en une section compacte reprise sur chaque page métier. */
 export default function Method({ background = 'var(--surface-card)' }) {
+  // Les cartes d'étapes prennent la teinte opposée à la section pour rester lisibles.
+  const cardBg = background === 'var(--surface-page)' ? 'var(--surface-card)' : 'var(--surface-page)'
   return (
     <section style={{ background, padding: '80px 0' }}>
       <div style={WRAP}>
@@ -110,7 +112,7 @@ export default function Method({ background = 'var(--surface-card)' }) {
                 alignItems: 'flex-start',
                 padding: '18px',
                 borderRadius: 'var(--r-md)',
-                background: 'var(--surface-page)',
+                background: cardBg,
                 border: '1px solid var(--border-subtle)',
               }}
             >
