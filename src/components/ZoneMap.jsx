@@ -2,49 +2,68 @@ import { useEffect, useRef, useState } from 'react'
 import L from 'leaflet'
 import { WRAP } from '../lib/layout.js'
 import { CITY_DATA } from '../lib/data.js'
+import { MAP_POINTS } from '../lib/mapPoints.js'
 
 const OR = '#FDBE03'
 const PETROLE = '#005F6F'
+const PETROLE_DARK = '#073A43'
+
+/* Un point par chantier : positions fictives autour de chaque ville, hors de l'eau
+   (générées par scripts/points-carte.py — aucune adresse client). */
+const POINTS = MAP_POINTS
+
+/** Taille des points selon le zoom : discrets en vue d'ensemble, lisibles de près. */
+const radiusFor = (zoom, isActive) => {
+  const base = zoom >= 13 ? 6 : zoom >= 11 ? 4.5 : 3
+  return isActive ? base + 1 : base
+}
 
 /** Carte interactive de la zone d'intervention (Leaflet / OpenStreetMap). */
 export default function ZoneMap({ onContact }) {
   const [active, setActive] = useState('Cholet')
   const mapNode = useRef(null)
   const mapRef = useRef(null)
-  const markersRef = useRef({})
+  const markersRef = useRef({}) // nom de ville → liste de points
   const activeRef = useRef('Cholet')
 
   const activeCity = CITY_DATA.find((c) => c.name === active) || CITY_DATA[0]
 
   const syncMarkers = (name) => {
-    const markers = markersRef.current
-    Object.keys(markers).forEach((n) => {
-      const { marker, hq } = markers[n]
+    const map = mapRef.current
+    if (!map) return
+    const zoom = map.getZoom()
+    Object.entries(markersRef.current).forEach(([n, dots]) => {
       const isActive = n === name
-      marker.setStyle({
-        radius: hq ? 11 : isActive ? 10 : 7,
-        fillColor: isActive || hq ? OR : PETROLE,
-        color: '#ffffff',
-        weight: 2,
-        fillOpacity: 1,
+      dots.forEach((m) => {
+        m.setStyle({
+          radius: radiusFor(zoom, isActive),
+          fillColor: isActive ? OR : PETROLE,
+          color: isActive ? PETROLE_DARK : '#ffffff',
+          weight: isActive ? 1.5 : 1,
+          fillOpacity: isActive ? 1 : 0.85,
+        })
+        if (isActive) m.bringToFront()
       })
     })
   }
 
-  const selectCity = (name) => {
+  const selectCity = (name, { fly = true } = {}) => {
     setActive(name)
     activeRef.current = name
-    const c = CITY_DATA.find((x) => x.name === name)
-    if (c && mapRef.current) mapRef.current.flyTo([c.lat, c.lng], 11, { duration: 0.8 })
+    const map = mapRef.current
+    if (map && fly) {
+      map.flyToBounds(L.latLngBounds(POINTS[name]), { padding: [40, 40], maxZoom: 13, duration: 0.8 })
+    }
     syncMarkers(name)
   }
 
   useEffect(() => {
     if (!mapNode.current || mapRef.current) return
-    const map = L.map(mapNode.current, { scrollWheelZoom: false, zoomControl: true }).setView(
-      [47.02, -0.85],
-      9
-    )
+    const map = L.map(mapNode.current, {
+      scrollWheelZoom: false,
+      zoomControl: true,
+      preferCanvas: true, // ~300 points : rendu canvas, plus léger que 300 éléments SVG
+    }).fitBounds(L.latLngBounds(Object.values(POINTS).flat()), { padding: [24, 24] })
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap',
       maxZoom: 18,
@@ -52,17 +71,14 @@ export default function ZoneMap({ onContact }) {
     mapRef.current = map
     markersRef.current = {}
     CITY_DATA.forEach((c) => {
-      const m = L.circleMarker([c.lat, c.lng], {
-        radius: c.hq ? 11 : 7,
-        fillColor: c.hq ? OR : PETROLE,
-        color: '#ffffff',
-        weight: 2,
-        fillOpacity: 1,
-      }).addTo(map)
-      m.bindTooltip(`${c.name} — ${c.projects} projets`, { direction: 'top', offset: [0, -8] })
-      m.on('click', () => selectCity(c.name))
-      markersRef.current[c.name] = { marker: m, hq: !!c.hq }
+      markersRef.current[c.name] = POINTS[c.name].map((ll) => {
+        const m = L.circleMarker(ll, { radius: 3, fillColor: PETROLE, color: '#ffffff', weight: 1, fillOpacity: 0.85 })
+        m.bindTooltip(`Chantier · ${c.name}`, { direction: 'top', offset: [0, -6] })
+        m.on('click', () => selectCity(c.name))
+        return m.addTo(map)
+      })
     })
+    map.on('zoomend', () => syncMarkers(activeRef.current))
     syncMarkers(activeRef.current)
     const resizeTimer = setTimeout(() => map.invalidateSize(), 300)
 

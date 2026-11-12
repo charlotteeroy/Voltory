@@ -411,10 +411,15 @@ export const STATS = [
   { prefix: '', num: '60', suffix: ' %', label: "jusqu'à, d'électricité autoconsommée" },
 ]
 
-/* Villes de la zone d'intervention (carte Leaflet). */
+/* Villes de la zone d'intervention (carte Leaflet).
+   `projects` = nombre de points affichés autour de la ville, répartis dans un rayon
+   de `spread` km. Positions fictives (aucune adresse client), générées hors de l'eau
+   dans src/lib/mapPoints.js : relancer `python3 scripts/points-carte.py` si l'une de
+   ces valeurs change. */
 export const CITY_DATA = [
   {
     name: 'Cholet',
+    spread: 3.2, // rayon (km) où sont répartis les points de chantier
     dept: 'Maine-et-Loire',
     projects: 120,
     lat: 47.058,
@@ -424,6 +429,7 @@ export const CITY_DATA = [
   },
   {
     name: 'Angers',
+    spread: 3.6, // rayon (km) où sont répartis les points de chantier
     dept: 'Maine-et-Loire',
     projects: 48,
     lat: 47.478,
@@ -432,6 +438,7 @@ export const CITY_DATA = [
   },
   {
     name: 'Saumur',
+    spread: 2.2, // rayon (km) où sont répartis les points de chantier
     dept: 'Maine-et-Loire',
     projects: 22,
     lat: 47.26,
@@ -440,6 +447,7 @@ export const CITY_DATA = [
   },
   {
     name: 'Nantes',
+    spread: 4.2, // rayon (km) où sont répartis les points de chantier
     dept: 'Loire-Atlantique',
     projects: 18,
     lat: 47.218,
@@ -448,6 +456,7 @@ export const CITY_DATA = [
   },
   {
     name: 'Beaupréau',
+    spread: 1.6, // rayon (km) où sont répartis les points de chantier
     dept: 'Maine-et-Loire',
     projects: 16,
     lat: 47.204,
@@ -456,6 +465,7 @@ export const CITY_DATA = [
   },
   {
     name: 'Mortagne-sur-Sèvre',
+    spread: 1.5, // rayon (km) où sont répartis les points de chantier
     dept: 'Vendée',
     projects: 14,
     lat: 46.992,
@@ -464,6 +474,7 @@ export const CITY_DATA = [
   },
   {
     name: 'Les Herbiers',
+    spread: 2, // rayon (km) où sont répartis les points de chantier
     dept: 'Vendée',
     projects: 34,
     lat: 46.871,
@@ -472,6 +483,7 @@ export const CITY_DATA = [
   },
   {
     name: 'La Roche-sur-Yon',
+    spread: 2.8, // rayon (km) où sont répartis les points de chantier
     dept: 'Vendée',
     projects: 26,
     lat: 46.67,
