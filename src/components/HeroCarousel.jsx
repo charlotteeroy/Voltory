@@ -127,8 +127,8 @@ export default function HeroCarousel({ onContact }) {
               fontFamily: 'var(--font-display)',
               fontWeight: 600,
               fontSize: 'clamp(2.5rem,4.8vw,3.9rem)',
-              lineHeight: 1.05,
-              letterSpacing: '-.03em',
+              lineHeight: 0.98,
+              letterSpacing: '-.035em',
               margin: 0,
               textShadow: '0 2px 24px rgba(4,30,34,.4)',
             }}
@@ -139,9 +139,9 @@ export default function HeroCarousel({ onContact }) {
           <p
             style={{
               fontSize: 'clamp(.95rem,1.3vw,1.05rem)',
-              lineHeight: 1.6,
+              lineHeight: 1.45,
               color: 'var(--text-on-dark-soft)',
-              margin: '18px 0 0',
+              margin: '16px 0 0',
               maxWidth: '48ch',
             }}
           >
