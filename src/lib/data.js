@@ -491,6 +491,14 @@ export const CITY_DATA = [
   },
 ]
 
+/* Fiche Google de l'entreprise : note et nombre d'avis affichés dans le badge.
+   À mettre à jour à la main quand le nombre d'avis évolue (relevé le 13/11/2026). */
+export const GOOGLE_PROFILE = {
+  url: 'https://maps.google.com/?cid=15607900492068378825',
+  rating: '5,0',
+  count: 28,
+}
+
 /* Avis Google (textes repris des avis publiés ; prénoms indicatifs). */
 export const REVIEWS = [
   {
