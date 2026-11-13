@@ -102,8 +102,8 @@ export function ProjectModal({ project, onClose }) {
             aria-label="Fermer"
             style={{
               flexShrink: 0,
-              width: '40px',
-              height: '40px',
+              width: '44px',
+              height: '44px',
               borderRadius: '50%',
               border: '1.5px solid var(--border-strong)',
               background: 'var(--surface-card)',

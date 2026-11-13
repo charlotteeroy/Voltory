@@ -111,7 +111,7 @@ export default function Electricite({ navigate }) {
           >
             Déjà client ? <span style={{ color: 'var(--or-700)' }}>200 € offerts</span> sur votre centrale solaire
           </h3>
-          <Button variant="ghost" onClick={() => navigate('photovoltaique')}>
+          <Button variant="ghost" onClick={() => navigate('photovoltaique', 'simulateur')}>
             Estimer mes économies →
           </Button>
         </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Button from './ds/Button.jsx'
 import { useMediaQuery } from '../lib/useMediaQuery.js'
 import { ROUTES } from '../lib/routes.js'
@@ -79,6 +79,25 @@ export default function Nav({ page, navigate }) {
     if (!isMobile) setOpen(false)
   }, [isMobile])
 
+  /* Menu mobile ouvert : Échap, un toucher hors de la barre ou un défilement le referment. */
+  const navRef = useRef(null)
+  useEffect(() => {
+    if (!open) return
+    const close = () => setOpen(false)
+    const onKey = (e) => e.key === 'Escape' && close()
+    const onPointer = (e) => !navRef.current?.contains(e.target) && close()
+    const startY = window.scrollY
+    const onScroll = () => Math.abs(window.scrollY - startY) > 40 && close()
+    document.addEventListener('keydown', onKey)
+    document.addEventListener('pointerdown', onPointer)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.removeEventListener('pointerdown', onPointer)
+      window.removeEventListener('scroll', onScroll)
+    }
+  }, [open])
+
   const go = (key) => {
     setOpen(false)
     navigate(key)
@@ -86,6 +105,7 @@ export default function Nav({ page, navigate }) {
 
   return (
     <nav
+      ref={navRef}
       style={{
         position: 'sticky',
         top: 0,

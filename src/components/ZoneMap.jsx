@@ -193,9 +193,7 @@ export default function ZoneMap({ onContact }) {
               margin: 0,
             }}
           >
-            De Cholet au cœur
-            <br />
-            du Maine-et-Loire &amp; de la Vendée
+            De Cholet au cœur du <span style={{ whiteSpace: 'nowrap' }}>Maine-et-Loire</span> &amp; de&nbsp;la&nbsp;Vendée
           </h2>
           <p style={{ fontSize: '1.05rem', lineHeight: 1.6, color: 'var(--text-body)', margin: '14px 0 0' }}>
             Cliquez sur une ville pour voir notre activité sur place.
@@ -331,7 +329,7 @@ export default function ZoneMap({ onContact }) {
                 onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--petrole-700)')}
                 onMouseLeave={(e) => (e.currentTarget.style.background = 'var(--petrole-600)')}
               >
-                Vérifier mon secteur →
+                Vérifier mon&nbsp;secteur&nbsp;→
               </button>
             </div>
           </div>

@@ -115,7 +115,7 @@ export default function HeroCarousel({ onContact }) {
       <div
         style={{
           ...WRAP,
-          padding: '0 clamp(24px,5vw,72px) 72px',
+          padding: '0 clamp(24px,5vw,72px) 55px',
           position: 'relative',
           zIndex: 2,
           width: '100%',
@@ -155,7 +155,7 @@ export default function HeroCarousel({ onContact }) {
           </div>
           <Certifications />
         </div>
-        <div style={{ display: 'flex', gap: '8px', marginTop: '44px' }}>
+        <div style={{ display: 'flex', marginTop: '30px', marginLeft: '-7px' }}>
           {HERO_IMGS.map((src, i) => (
             <button
               key={src}
@@ -166,17 +166,29 @@ export default function HeroCarousel({ onContact }) {
                 setIndex(i)
               }}
               aria-label={`Photo ${i + 1}`}
+              aria-current={i === index ? 'true' : undefined}
               style={{
-                width: i === index ? '26px' : '10px',
-                height: '10px',
-                padding: 0,
-                borderRadius: 'var(--r-pill)',
+                // Zone de toucher de 44 px de haut ; la pastille visible reste fine.
+                height: '44px',
+                padding: '0 7px',
                 border: 'none',
+                background: 'none',
                 cursor: 'pointer',
-                transition: 'all var(--dur-base) var(--ease-out)',
-                background: i === index ? 'var(--or-500)' : 'rgba(255,255,255,.45)',
+                display: 'flex',
+                alignItems: 'center',
               }}
-            />
+            >
+              <span
+                style={{
+                  display: 'block',
+                  width: i === index ? '26px' : '10px',
+                  height: '10px',
+                  borderRadius: 'var(--r-pill)',
+                  transition: 'all var(--dur-base) var(--ease-out)',
+                  background: i === index ? 'var(--or-500)' : 'rgba(255,255,255,.45)',
+                }}
+              />
+            </button>
           ))}
         </div>
       </div>

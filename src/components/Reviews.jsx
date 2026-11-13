@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { WRAP } from '../lib/layout.js'
+import { useMediaQuery } from '../lib/useMediaQuery.js'
 import { REVIEWS, GOOGLE_PROFILE } from '../lib/data.js'
 
 /** Logo « G » officiel de Google (quatre couleurs). */
@@ -17,7 +18,10 @@ function GoogleLogo({ size = 24 }) {
 /** Avis Google — badge note (lien vers la fiche) + carrousel horizontal en boucle (pause au survol). */
 export default function Reviews() {
   const [badgeHover, setBadgeHover] = useState(false)
-  const loop = [...REVIEWS, ...REVIEWS] // duplication pour un défilement continu
+  /* Sur mobile (ou animations réduites), pas de défilement automatique : une rangée que
+     l'on fait glisser au doigt, carte par carte, chaque avis lisible en entier. */
+  const swipe = useMediaQuery('(max-width: 767px), (prefers-reduced-motion: reduce)')
+  const loop = swipe ? REVIEWS : [...REVIEWS, ...REVIEWS] // duplication pour un défilement continu
 
   return (
     <section style={{ background: 'var(--surface-page)', padding: '96px 0', overflow: 'hidden' }}>
@@ -108,27 +112,37 @@ export default function Reviews() {
               </div>
               <div style={{ fontSize: '12.5px', color: 'var(--text-muted)' }}>
                 {GOOGLE_PROFILE.count} avis Google ·{' '}
-                <span style={{ color: 'var(--text-accent)', fontWeight: 600 }}>Voir la fiche →</span>
+                <span style={{ color: 'var(--text-accent)', fontWeight: 600 }}>Voir la fiche&nbsp;→</span>
               </div>
             </div>
           </a>
         </div>
       </div>
       <div
-        style={{
-          overflow: 'hidden',
-          WebkitMaskImage:
-            'linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)',
-          maskImage: 'linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)',
-        }}
+        className={swipe ? 'v-swipe' : undefined}
+        style={
+          swipe
+            ? {
+                overflowX: 'auto',
+                scrollSnapType: 'x mandatory',
+                scrollPaddingInline: 'clamp(24px,5vw,72px)',
+                WebkitOverflowScrolling: 'touch',
+                scrollbarWidth: 'none',
+              }
+            : {
+                overflow: 'hidden',
+                WebkitMaskImage: 'linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)',
+                maskImage: 'linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)',
+              }
+        }
       >
         <div
-          className="v-marquee"
+          className={swipe ? undefined : 'v-marquee'}
           style={{
             display: 'flex',
-            gap: '24px',
+            gap: swipe ? '14px' : '24px',
             width: 'max-content',
-            animation: 'hScroll 45s linear infinite',
+            animation: swipe ? 'none' : 'hScroll 45s linear infinite',
             padding: '4px clamp(24px,5vw,72px)',
           }}
         >
@@ -136,12 +150,14 @@ export default function Reviews() {
             <div
               key={i}
               style={{
-                width: '360px',
+                // Mobile : la carte laisse voir le début de la suivante (invite à glisser).
+                width: swipe ? 'min(320px, calc(100vw - 72px))' : '360px',
+                scrollSnapAlign: 'start',
                 flexShrink: 0,
                 background: 'var(--surface-card)',
                 border: '1px solid var(--border-subtle)',
                 borderRadius: 'var(--r-md)',
-                padding: '26px',
+                padding: 'clamp(20px,5vw,26px)',
                 boxShadow: 'var(--e1)',
                 display: 'flex',
                 flexDirection: 'column',

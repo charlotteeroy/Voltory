@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Nav from './components/Nav.jsx'
 import Footer from './components/Footer.jsx'
 import Home from './pages/Home.jsx'
@@ -59,12 +59,22 @@ export default function App() {
     }
   }, [page])
 
-  const navigate = (key) => {
+  /* Ancre à atteindre une fois la nouvelle page affichée (ex. le simulateur). */
+  const pendingAnchor = useRef(null)
+  useEffect(() => {
+    const id = pendingAnchor.current
+    if (!id) return
+    pendingAnchor.current = null
+    requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ block: 'start' }))
+  }, [page])
+
+  const navigate = (key, anchor) => {
     const path = ROUTES[key].path
     if (window.location.pathname !== path) window.history.pushState({}, '', path)
     setFrom(page)
     setPage(key)
     scrollTop()
+    if (anchor) pendingAnchor.current = anchor
   }
 
   const Page = PAGES[page]

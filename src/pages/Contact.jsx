@@ -561,7 +561,7 @@ export default function Contact({ navigate, from }) {
                     </div>
                   </Step>
 
-                  <Step n="3" title="Quels sont vos besoins ?" optional>
+                  <Step n="3" title={'Quels sont vos besoins\u00a0?'} optional>
                     <textarea
                       name="message"
                       aria-label="Quels sont vos besoins ?"

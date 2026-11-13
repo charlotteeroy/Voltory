@@ -91,7 +91,7 @@ export default function Method({ background = 'var(--surface-card)' }) {
   return (
     <section style={{ background, padding: '80px 0' }}>
       <div style={WRAP}>
-        <SectionHead eyebrow="Notre méthode" title="Un interlocuteur unique, à chaque étape" mb="36px" />
+        <SectionHead eyebrow="Notre méthode" title={'Un interlocuteur unique, à\u00a0chaque étape'} mb="36px" />
         <ol
           style={{
             listStyle: 'none',
