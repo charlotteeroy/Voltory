@@ -4,11 +4,13 @@ import Button from '../components/ds/Button.jsx'
 import Card from '../components/ds/Card.jsx'
 import StatCard from '../components/ds/StatCard.jsx'
 
-/* TODO Charlotte / Félicien : prénoms et rôles des deux autres membres de l'équipe. */
+/* Équipe (noms et rôles transmis par Félicien, 13/11/2026). Portraits carrés 480 px
+   sur fond de mur clair ; celui d'Olivier reprend l'ancien détourage sur un fond assorti. */
 const TEAM = [
-  { img: '/assets/equipe/felicien.png', name: 'Félicien Gury', role: 'Gérant' },
-  { img: '/assets/equipe/membre-2.png', name: null, role: null },
-  { img: '/assets/equipe/membre-3.png', name: null, role: null },
+  { img: '/assets/equipe/felicien.jpg', name: 'Félicien Gury', role: "Cogérant, responsable d'activité & référent technique" },
+  { img: '/assets/equipe/olivier.jpg', name: 'Olivier Gury', role: "Cogérant, maître d'œuvre" },
+  { img: '/assets/equipe/patrice.jpg', name: 'Patrice', role: "Technicien d'intervention en électricité" },
+  { img: '/assets/equipe/gery.jpg', name: 'Gery', role: "Technicien d'intervention en électricité" },
 ]
 
 const ON_SITE = [
@@ -226,7 +228,7 @@ export default function Entreprise({ navigate }) {
             aria-label="Félicien Gury devant l'agence Voltory de Cholet"
           />
           <div style={{ flex: '1 1 380px' }}>
-            {eyebrow("L'équipe")}
+            {eyebrow('Électriciens à Cholet')}
             <hr style={rule} />
             <h2
               style={{
@@ -238,11 +240,19 @@ export default function Entreprise({ navigate }) {
                 margin: 0,
               }}
             >
-              Des visages, pas un standard
+              Notre équipe
             </h2>
-            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', margin: '28px 0 32px' }}>
+            {/* 4 portraits sur une ligne quand la place le permet, 2 × 2 sur mobile. */}
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit,minmax(118px,1fr))',
+                gap: '24px 16px',
+                margin: '28px 0 32px',
+              }}
+            >
               {TEAM.map((m) => (
-                <div key={m.img} style={{ textAlign: 'center', width: '120px' }}>
+                <div key={m.img} style={{ textAlign: 'center', minWidth: 0 }}>
                   <div
                     style={{
                       width: '112px',
@@ -256,18 +266,17 @@ export default function Entreprise({ navigate }) {
                   >
                     <img
                       src={m.img}
-                      alt={m.name || "Membre de l'équipe Voltory"}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
+                      alt={`${m.name}, ${m.role}`}
+                      loading="lazy"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                   </div>
-                  {m.name && (
-                    <>
-                      <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '14.5px', marginTop: '10px' }}>
-                        {m.name}
-                      </div>
-                      <div style={{ fontSize: '12.5px', color: 'var(--text-muted)' }}>{m.role}</div>
-                    </>
-                  )}
+                  <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '14.5px', marginTop: '10px' }}>
+                    {m.name}
+                  </div>
+                  <div style={{ fontSize: '12.5px', lineHeight: 1.4, color: 'var(--text-muted)', marginTop: '2px', textWrap: 'balance' }}>
+                    {m.role}
+                  </div>
                 </div>
               ))}
             </div>
