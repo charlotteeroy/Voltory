@@ -154,7 +154,7 @@ export default function Reviews() {
                 </span>
                 <GoogleLogo size={18} />
               </div>
-              <p style={{ fontSize: '14.5px', lineHeight: 1.6, color: 'var(--text-body)', margin: 0, flex: 1 }}>
+              <p style={{ fontSize: '14.5px', lineHeight: 1.6, color: 'var(--text-body)', margin: 0, flex: 1, whiteSpace: 'pre-line' }}>
                 « {r.text} »
               </p>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
