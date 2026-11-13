@@ -37,7 +37,7 @@ export default function Photovoltaique({ navigate }) {
       <section style={{ background: 'var(--surface-card)', padding: '88px 0' }}>
         <div style={WRAP}>
           <SectionHead eyebrow="Nos poses" title="Sur votre toit… ou au sol" mb="36px" />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,1fr))', gap: '20px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(320px,100%),1fr))', gap: '20px' }}>
             <BeforeAfter
               before={BEFORE_AFTER.toiture.before}
               after={BEFORE_AFTER.toiture.after}

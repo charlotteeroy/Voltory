@@ -50,7 +50,8 @@ function EngColumn({ items, animation, dark }) {
     <div
       className="v-marquee"
       style={{
-        flex: 1,
+        flex: '1 1 0',
+        minWidth: 0,
         display: 'flex',
         flexDirection: 'column',
         gap: '20px',
@@ -64,7 +65,7 @@ function EngColumn({ items, animation, dark }) {
             background: dark ? 'var(--petrole-600)' : 'var(--surface-page)',
             border: dark ? 'none' : '1px solid var(--border-subtle)',
             borderRadius: 'var(--r-md)',
-            padding: '22px',
+            padding: 'clamp(16px,4.5vw,22px)',
             boxShadow: 'var(--e1)',
             flexShrink: 0,
           }}
@@ -89,10 +90,12 @@ function EngColumn({ items, animation, dark }) {
             style={{
               fontFamily: 'var(--font-display)',
               fontWeight: 600,
-              fontSize: '15.5px',
+              fontSize: 'clamp(14px,4vw,15.5px)',
               lineHeight: 1.4,
               color: dark ? 'var(--blanc)' : 'var(--text-strong)',
               marginTop: '14px',
+              overflowWrap: 'break-word',
+              hyphens: 'auto',
             }}
           >
             {e}
@@ -188,11 +191,20 @@ export default function Entreprise({ navigate }) {
 
       {/* Stats */}
       <section style={{ background: 'var(--surface-page)', padding: '72px 0' }}>
-        <div style={{ ...WRAP, display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center' }}>
-          <StatCard value="2007" label="année de création" style={{ width: '200px' }} />
-          <StatCard value="3" label="métiers complémentaires" style={{ width: '200px' }} />
-          <StatCard value="1" label="interlocuteur, du début à la fin" style={{ width: '200px' }} />
-          <StatCard value="≈50" unit="km" label="d'intervention autour de Cholet" style={{ width: '200px' }} />
+        {/* 4 colonnes sur ordinateur et tablette, 2 × 2 sur mobile : jamais de carte seule sur sa ligne. */}
+        <div
+          style={{
+            ...WRAP,
+            maxWidth: '920px',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit,minmax(min(140px,100%),1fr))',
+            gap: 'clamp(12px,2.5vw,20px)',
+          }}
+        >
+          <StatCard value="2007" label="année de création" />
+          <StatCard value="3" label="métiers complémentaires" />
+          <StatCard value="1" label="interlocuteur, du début à la fin" />
+          <StatCard value="≈50" unit="km" label="d'intervention autour de Cholet" />
         </div>
       </section>
 
@@ -279,7 +291,16 @@ export default function Entreprise({ navigate }) {
 
       {/* Bandeau agence */}
       <section style={{ padding: 0 }}>
-        <div style={{ position: 'relative', height: 'clamp(260px,42vw,460px)', overflow: 'hidden' }}>
+        {/* Hauteur minimale (et non fixe) : le texte agrandit le bandeau au lieu d'en déborder. */}
+        <div
+          style={{
+            position: 'relative',
+            minHeight: 'clamp(260px,42vw,460px)',
+            overflow: 'hidden',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
           <img
             src="/assets/agence-aerien.jpg"
             alt="L'agence Voltory à Cholet, toiture photovoltaïque"
@@ -290,10 +311,10 @@ export default function Entreprise({ navigate }) {
               position: 'absolute',
               inset: 0,
               background:
-                'linear-gradient(90deg, rgba(0,95,111,.82), rgba(0,95,111,.25) 60%, transparent)',
+                'linear-gradient(90deg, rgba(0,95,111,.86), rgba(0,95,111,.55) 60%, rgba(0,95,111,.15))',
             }}
           />
-          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center' }}>
+          <div style={{ position: 'relative', width: '100%', padding: '40px 0' }}>
             <div style={{ ...WRAP, width: '100%' }}>
               <div style={{ maxWidth: '34ch', color: 'var(--text-on-dark)' }}>
                 {eyebrow('Notre agence · Cholet', true)}
@@ -387,8 +408,9 @@ export default function Entreprise({ navigate }) {
           <div
             style={{
               flex: '1 1 460px',
+              minWidth: 0,
               display: 'flex',
-              gap: '20px',
+              gap: 'clamp(12px,3vw,20px)',
               height: '480px',
               overflow: 'hidden',
               WebkitMaskImage:

@@ -125,11 +125,14 @@ section[id] {
 /* Barre d'engagements : 4 colonnes, 2 sur mobile. */
 .v-perks {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 20px;
 }
 @media (max-width: 860px) {
-  .v-perks { grid-template-columns: repeat(2, 1fr); }
+  .v-perks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 380px) {
+  .v-perks { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* Formulaire de contact : tuiles projet sur 2 colonnes, 4 si la place le permet. */

@@ -17,12 +17,12 @@ export default function Simulator({ onStudy, id }) {
     background: 'var(--surface-page)',
     border: '1px solid var(--border-subtle)',
     borderRadius: 'var(--r-md)',
-    padding: '18px',
+    padding: 'clamp(12px,3.5vw,18px)',
   }
   const resultNum = {
     fontFamily: 'var(--font-display)',
     fontWeight: 600,
-    fontSize: 'clamp(22px,5.5vw,30px)',
+    fontSize: 'clamp(20px,5.5vw,30px)',
     color: 'var(--petrole-700)',
     lineHeight: 1,
     letterSpacing: '-.02em',
@@ -65,7 +65,7 @@ export default function Simulator({ onStudy, id }) {
           alignItems: 'center',
         }}
       >
-        <div style={{ flex: '1 1 360px' }}>
+        <div style={{ flex: '1 1 360px', minWidth: 0 }}>
           <span
             style={{
               fontFamily: 'var(--font-display)',
@@ -118,10 +118,11 @@ export default function Simulator({ onStudy, id }) {
         <div
           style={{
             flex: '1 1 360px',
+            minWidth: 0,
             background: 'var(--surface-card)',
             color: 'var(--text-strong)',
             borderRadius: 'var(--r-lg)',
-            padding: '32px',
+            padding: 'clamp(20px,5vw,32px)',
             boxShadow: 'var(--e3)',
           }}
         >
@@ -140,6 +141,7 @@ export default function Simulator({ onStudy, id }) {
               display: 'flex',
               alignItems: 'baseline',
               justifyContent: 'space-between',
+              gap: '12px',
               margin: '24px 0 8px',
             }}
           >
@@ -159,6 +161,7 @@ export default function Simulator({ onStudy, id }) {
                 fontWeight: 600,
                 fontSize: '22px',
                 color: 'var(--petrole-700)',
+                whiteSpace: 'nowrap',
               }}
             >
               {bill} €{' '}
@@ -192,17 +195,17 @@ export default function Simulator({ onStudy, id }) {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '14px',
+              gridTemplateColumns: 'repeat(2,minmax(0,1fr))',
+              gap: 'clamp(10px,3vw,14px)',
               marginTop: '26px',
             }}
           >
-            <div style={{ background: 'var(--petrole-600)', borderRadius: 'var(--r-md)', padding: '18px' }}>
+            <div style={{ background: 'var(--petrole-600)', borderRadius: 'var(--r-md)', padding: 'clamp(12px,3.5vw,18px)' }}>
               <div
                 style={{
                   fontFamily: 'var(--font-display)',
                   fontWeight: 600,
-                  fontSize: 'clamp(22px,5.5vw,30px)',
+                  fontSize: 'clamp(20px,5.5vw,30px)',
                   color: 'var(--or-500)',
                   lineHeight: 1,
                   letterSpacing: '-.02em',
