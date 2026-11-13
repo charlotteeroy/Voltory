@@ -50,7 +50,7 @@ export function CheckList({ items, onDark = false, gap = '12px' }) {
 /** Grille de cartes à pictogramme (prestations, avantages, options). */
 export function FeatureGrid({ items, min = '280px' }) {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit,minmax(${min},1fr))`, gap: '24px' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit,minmax(min(${min},100%),1fr))`, gap: '24px' }}>
       {items.map((it) => (
         <Card key={it.title} icon={it.icon} title={it.title}>
           {it.text}
@@ -63,7 +63,7 @@ export function FeatureGrid({ items, min = '280px' }) {
 /** Mosaïque de photos légendées (une prestation = une photo + un titre court). */
 export function PhotoTiles({ items, min = '260px', height = '240px' }) {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit,minmax(${min},1fr))`, gap: '16px' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit,minmax(min(${min},100%),1fr))`, gap: '16px' }}>
       {items.map((it) => (
         <figure
           key={it.title}

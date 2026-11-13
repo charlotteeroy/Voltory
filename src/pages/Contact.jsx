@@ -424,7 +424,17 @@ function Aside() {
                 >
                   {r.label}
                 </span>
-                <span style={{ display: 'block', fontSize: '15px', marginTop: '2px', overflowWrap: 'anywhere' }}>{r.value}</span>
+                <span style={{ display: 'block', fontSize: '15px', marginTop: '2px', overflowWrap: 'anywhere' }}>
+                  {/* Une adresse e-mail trop longue se coupe avant « @ », jamais au milieu d'un mot. */}
+                  {r.value.includes('@') ? (
+                    <>
+                      {r.value.split('@')[0]}
+                      <wbr />@{r.value.split('@')[1]}
+                    </>
+                  ) : (
+                    r.value
+                  )}
+                </span>
               </span>
             </Tag>
           )
