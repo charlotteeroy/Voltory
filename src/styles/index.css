@@ -36,9 +36,10 @@ body {
   color: var(--petrole-900);
 }
 
+/* Hauteur de la zone de toucher (la piste native reste fine). */
 input[type='range'] {
   accent-color: var(--petrole-600);
-  height: 4px;
+  height: 28px;
 }
 
 ::placeholder {
@@ -82,6 +83,9 @@ button {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
+
+/* Rangée d'avis à faire glisser (mobile) : sans barre de défilement visible. */
+.v-swipe::-webkit-scrollbar { display: none; }
 
 /* Pause des marquees au survol (équivalent style-hover de la maquette) */
 .v-marquee:hover {
@@ -147,6 +151,8 @@ section[id] {
 }
 .v-tile:focus-visible { outline: 2.5px solid var(--or-500) !important; outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) {
+  /* Bandeaux défilants figés (avis, engagements) si l'utilisateur réduit les animations. */
+  .v-marquee { animation: none !important; }
   .v-tile-img { transition: none !important; }
   .v-tile:hover .v-tile-img { transform: none; }
 }
