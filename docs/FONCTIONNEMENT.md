@@ -22,13 +22,16 @@ Notes pratiques pour reprendre le projet. Vue d'ensemble et structure : [README]
 - Web3Forms refuse les envois depuis un serveur (offre gratuite) et depuis un navigateur
   headless : tester l'envoi depuis un vrai navigateur.
 - Anti-spam : champ caché `botcheck`.
-- Une page métier peut pré-sélectionner le type de projet en ouvrant le formulaire.
+- Le type de projet est présélectionné selon la page métier d'où vient le visiteur
+  (`FROM_PAGE` dans `Contact.jsx`).
 
 ## Carte de la zone d'intervention
 
 - Composant : `src/components/ZoneMap.jsx` (Leaflet 1.9, rendu canvas).
 - Leaflet est **chargé à la demande** (`import('leaflet')`) quand la section approche de
   l'écran : aucune tuile OpenStreetMap n'est téléchargée avant.
+- Sur mobile, un doigt fait défiler la page ; on zoome en pinçant, avec les boutons + / −
+  ou en touchant une ville.
 - Villes, centre, rayon (`spread`, en km) et nombre de chantiers : `CITY_DATA` dans
   `src/lib/data.js`.
 - Les points sont **fictifs** (aucune adresse client) et pré-calculés dans
@@ -58,4 +61,4 @@ Notes pratiques pour reprendre le projet. Vue d'ensemble et structure : [README]
 3. Relecture par un agent indépendant, qui peut pousser des corrections sur la branche.
 4. Fusion quand la relecture est validée et le build Cloudflare vert.
 
-Aperçu local combiné : `npm run dev` (ou `npx vite preview` après un build).
+Aperçu local : `npm run dev`, ou `npm run preview` après un build.

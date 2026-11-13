@@ -73,6 +73,7 @@ src/
     icons.jsx              Pictogrammes au trait
     layout.js              Conteneur unifié et helpers de mise en page
     sendContact.js         Envoi du formulaire à Web3Forms
+    useMediaQuery.js       Hook de requête média (mise en page responsive)
     mapPoints.js           Points de la carte (généré par scripts/points-carte.py)
 
 scripts/points-carte.py    Génère les points fictifs de la carte, hors de l'eau
@@ -91,15 +92,15 @@ project/                   Bundle de handoff original (maquette + design system)
 - **Réalisations** : chaque chantier de `PROJECTS` est rattaché à une page métier
   (`CAT_TO_METIER`) ; les plus récents s'affichent en premier.
 - **Carte** : les tuiles OpenStreetMap nécessitent un accès réseau sortant. Les points
-  par ville sont fictifs (aucune adresse client) ; voir `docs/FONCTIONNEMENT.md`.
+  par ville sont fictifs (aucune adresse client) ; voir [docs/FONCTIONNEMENT.md](docs/FONCTIONNEMENT.md).
 - **Contenus issus des devis** : détail du tableau électrique et de la centrale solaire,
   options des bornes, entretien VOLTORY+, déplacement offert sous 15 km, paiement
   échelonné (`Method.jsx`). Les prix des devis ne sont volontairement pas affichés.
 - **Photos** : issues du dossier « Photos Site web » de Félicien, compressées (≤ 1600 px)
   dans `public/assets/chantiers/<chantier>/`, `equipe/`, `logos/`, `materiel/`. Les
   avant / après (`BEFORE_AFTER` dans `data.js`) utilisent des paires cadrées à l'identique.
-- **Placeholders** (liste à jour dans `docs/A-FAIRE.md`) : prénoms et rôles des deux autres membres de l'équipe
-  (`TEAM` dans `Entreprise.jsx`) ; localisation « Meurthe-et-Moselle » de la centrale au
+- **Placeholders** (liste à jour dans [docs/A-FAIRE.md](docs/A-FAIRE.md)) : prénoms et rôles
+  des deux autres membres de l'équipe (`TEAM` dans `Entreprise.jsx`) ; localisation « Meurthe-et-Moselle » de la centrale au
   sol (dossier 54-GUR) à confirmer ; la distance incluse pour la pose d'une borne (3 m)
   est à confirmer. Les dates et localisations des
   réalisations (`src/lib/data.js`) sont déduites des dossiers photos — à faire valider.

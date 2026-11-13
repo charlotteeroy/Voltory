@@ -4,8 +4,9 @@ Ce document retrace le chemin parcouru sur le site Voltory : les grandes étapes
 décisions prises et pourquoi. Pour ce qu'il reste à faire, voir [A-FAIRE.md](A-FAIRE.md) ;
 pour le fonctionnement technique, voir [FONCTIONNEMENT.md](FONCTIONNEMENT.md).
 
-Chaque évolution passe par une pull request (PR) sur GitHub, relue par un agent de revue
-indépendant, puis fusionnée quand le build Cloudflare « Workers Builds: voltory » est vert.
+Depuis novembre 2026, chaque évolution passe par une pull request (PR) sur GitHub, relue
+par un agent de revue indépendant, puis fusionnée quand le build Cloudflare « Workers
+Builds: voltory » est vert.
 
 ---
 
@@ -17,6 +18,11 @@ indépendant, puis fusionnée quand le build Cloudflare « Workers Builds: volto
   (fichiers statiques de `dist/`).
 - Page « Prestations » avec chantiers réels et pop-up photos, vraies coordonnées,
   menu hamburger mobile, simulateur solaire.
+
+## Août 2026 — Piste non retenue
+
+- **PR #1** (accueil retravaillé d'après le brief du gérant) : fermée sans fusion. Elle
+  contient une ébauche de page « Mentions légales » à reprendre (voir [A-FAIRE.md](A-FAIRE.md)).
 
 ## Novembre 2026 — Restructuration d'après les retours de Félicien
 
@@ -31,6 +37,10 @@ Lors d'un appel début novembre, Félicien (gérant) a fixé les priorités :
 - un **formulaire de contact qui envoie vraiment** les demandes à Félicien.
 
 ### PR #4 à #8 — Pages métiers (6–9 novembre)
+
+Préparées à partir du 6 novembre (d'abord en une seule PR, #2, fermée), puis découpées en
+cinq PR empilées, fusionnées le 9 novembre.
+
 
 | PR | Contenu |
 |---|---|
@@ -72,8 +82,8 @@ Lors d'un appel début novembre, Félicien (gérant) a fixé les priorités :
   seul point au centre. Les positions sont **fictives** (aucune adresse client) et générées
   hors de l'eau (Loire, étangs) par `scripts/points-carte.py`.
 - **#15** : la carte (Leaflet) n'est téléchargée qu'à l'approche de la section ; sur
-  mobile un doigt fait défiler la page (deux doigts pour la carte) ; points espacés d'au
-  moins 60 m.
+  mobile, un doigt fait défiler la page (on zoome en pinçant ou avec les boutons + / −) ;
+  points espacés d'au moins 60 m.
 
 ### PR #16 à #21 — Épuration des pages (12 novembre)
 
@@ -86,4 +96,9 @@ Lors d'un appel début novembre, Félicien (gérant) a fixé les priorités :
 | #20 | Photovoltaïque : bouton « Estimer mes économies » retiré du header (le simulateur est juste dessous) ; « Demander une étude » devient le bouton principal |
 | #21 | Bornes : bandeau « Votre tableau électrique est ancien ? » retiré ; fonds des sections réajustés, cartes de la méthode contrastées sur fond gris |
 
-**État au 13 novembre 2026** : aucune PR ouverte, tout est fusionné et déployé.
+### PR #22 — Documentation (13 novembre)
+
+Ce dossier `docs/` : historique, reste à faire, fonctionnement technique.
+
+**État au 13 novembre 2026** : tout est fusionné et déployé, hormis cette PR de
+documentation.
