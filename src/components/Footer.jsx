@@ -1,6 +1,13 @@
 import { WRAP } from '../lib/layout.js'
 import { NAV_DEFS, navLinkProps } from './Nav.jsx'
 
+/** Lien téléphone / e-mail du pied de page : même apparence que le texte, survol doré. */
+const footerContactLink = {
+  style: { color: 'inherit', textDecoration: 'none', padding: '7px 0', alignSelf: 'flex-start' },
+  onMouseEnter: (e) => (e.currentTarget.style.color = 'var(--or-300)'),
+  onMouseLeave: (e) => (e.currentTarget.style.color = 'inherit'),
+}
+
 export default function Footer({ navigate }) {
   return (
     <footer
@@ -52,7 +59,7 @@ export default function Footer({ navigate }) {
             >
               Navigation
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
               {NAV_DEFS.map((n) => (
                 <a
                   key={n.key}
@@ -66,7 +73,8 @@ export default function Footer({ navigate }) {
                     fontSize: '14px',
                     cursor: 'pointer',
                     textAlign: 'left',
-                    padding: 0,
+                    // Zone de toucher confortable sur mobile, même rendu visuel.
+                    padding: '7px 0',
                   }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--or-300)')}
                   onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-on-dark-soft)')}
@@ -94,14 +102,19 @@ export default function Footer({ navigate }) {
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '10px',
+                gap: '2px',
                 fontSize: '14px',
                 color: 'var(--text-on-dark-soft)',
               }}
             >
-              <span>41 avenue du Lac, 49300 Cholet</span>
-              <span>06 19 19 73 52</span>
-              <span>felicien.gury@voltory.fr</span>
+              <span style={{ padding: '7px 0' }}>41 avenue du Lac, 49300 Cholet</span>
+              {/* Appel et e-mail en un toucher sur mobile. */}
+              <a href="tel:+33619197352" {...footerContactLink}>
+                06 19 19 73 52
+              </a>
+              <a href="mailto:felicien.gury@voltory.fr" {...footerContactLink}>
+                felicien.gury@voltory.fr
+              </a>
             </div>
           </div>
         </div>

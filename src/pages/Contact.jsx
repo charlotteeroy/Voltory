@@ -80,7 +80,8 @@ function Step({ n, title, optional, children }) {
 
 const fieldBase = {
   fontFamily: 'var(--font-body)',
-  fontSize: '15px',
+  // 16 px minimum : en dessous, Safari iOS zoome la page dès qu'on touche un champ.
+  fontSize: '16px',
   color: 'var(--text-strong)',
   borderRadius: 'var(--r-md)',
   border: '1.5px solid transparent',
@@ -534,7 +535,17 @@ export default function Contact({ navigate, from }) {
                   <Step n="2" title="Vos coordonnées">
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(210px,1fr))', gap: '14px' }}>
                       <Field label="Nom" name="name" icon={Icons.user} autoComplete="name" placeholder="Jean Dupont" required />
-                      <Field label="Téléphone" name="phone" type="tel" icon={Icons.phone} autoComplete="tel" placeholder="06 12 34 56 78" required />
+                      <Field
+                        label="Téléphone"
+                        name="phone"
+                        type="tel"
+                        icon={Icons.phone}
+                        autoComplete="tel"
+                        placeholder="06 12 34 56 78"
+                        pattern="[0-9 +.\-]{10,20}"
+                        title="Un numéro de téléphone, par exemple 06 12 34 56 78"
+                        required
+                      />
                       <Field label="Email" name="email" type="email" icon={Icons.mail} autoComplete="email" placeholder="jean@exemple.fr" required />
                       <Field label="Commune" name="city" icon={Icons.pin} autoComplete="address-level2" placeholder="Cholet" />
                     </div>
