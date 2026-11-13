@@ -135,7 +135,31 @@ export default function StatsBand() {
                 minHeight: '1em',
               }}
             >
-              <RollNumber prefix={s.prefix} num={s.num} suffix={s.suffix} roll={roll} />
+              {/* « jusqu'à » posé au-dessus du chiffre, hors flux : le chiffre reste centré
+                 et aligné avec les autres colonnes. */}
+              <span style={{ position: 'relative', display: 'inline-block' }}>
+                {s.lead && (
+                  <span
+                    style={{
+                      position: 'absolute',
+                      bottom: '100%',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      marginBottom: '.18em',
+                      fontFamily: 'var(--font-display)',
+                      fontSize: 'max(.8125rem,.22em)',
+                      fontWeight: 500,
+                      lineHeight: 1.2,
+                      letterSpacing: '.02em',
+                      color: 'var(--text-on-dark-soft)',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {s.lead}
+                  </span>
+                )}
+                <RollNumber prefix={s.prefix} num={s.num} suffix={s.suffix} roll={roll} />
+              </span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', margin: '22px 0 18px' }}>
               <span
