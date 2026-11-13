@@ -100,5 +100,4 @@ cinq PR empilées, fusionnées le 9 novembre.
 
 Ce dossier `docs/` : historique, reste à faire, fonctionnement technique.
 
-**État au 13 novembre 2026** : tout est fusionné et déployé, hormis cette PR de
-documentation.
+**État au 13 novembre 2026** : aucune PR ouverte, tout est fusionné et déployé.
