@@ -22,8 +22,9 @@ janvier 2027.
 
 - [ ] **Nombre de chantiers par ville** (`CITY_DATA[].projects` dans `src/lib/data.js`).
   Si les chiffres changent, relancer `python3 scripts/points-carte.py`.
-- [ ] **Équipe** : prénoms et rôles des deux autres membres (`TEAM` dans
-  `src/pages/Entreprise.jsx`) et portraits en haute définition (actuels ≈ 160 px).
+- [x] **Équipe** : 4 membres avec noms, rôles et portraits HD (13/11/2026).
+- [ ] **Portrait d'Olivier** : l'ancien détourage est conservé (la nouvelle photo a un
+  regard qui part de côté) ; en refaire un, sur le même mur clair que les autres.
 - [ ] **Réalisations** : dates et lieux des chantiers (déduits des dossiers photos), et
   localisation de la centrale au sol (dossier « 54-GUR »).
 - [ ] **Bornes** : distance incluse dans la pose standard (3 m affichés, 5 m évoqués).
