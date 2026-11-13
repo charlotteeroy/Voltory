@@ -14,7 +14,7 @@ export default function BeforeAfterSection({
     <section style={{ background, padding: '88px 0' }}>
       <div style={WRAP}>
         <SectionHead eyebrow={eyebrow} title={title} mb="36px" />
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(300px,100%),1fr))', gap: '20px' }}>
           {keys.map((k) => {
             const b = BEFORE_AFTER[k]
             return <BeforeAfter key={k} before={b.before} after={b.after} alt={b.title} caption={b.title} height="360px" />

@@ -25,7 +25,6 @@ export const METIERS = [
     cta: "Découvrir l'électricité générale",
     eyebrow: 'Électricité générale',
     title: 'Rénovation & mise aux normes',
-    points: ['Tableau électrique', 'Rénovation', 'Éclairage', 'Audit avant achat', 'Domotique'],
     imgs: [
       '/assets/hero/01-salon.webp',
       '/assets/real-hotel-hall.jpg',
@@ -38,7 +37,6 @@ export const METIERS = [
     cta: 'Découvrir nos bornes de recharge',
     eyebrow: 'Bornes de recharge',
     title: 'Rechargez à la maison',
-    points: ['Prise renforcée dès 349 €', 'Borne 7 à 11 kW', 'Posée en une journée', 'Prix standard'],
     imgs: [
       '/assets/chantiers/fav-borne/01.jpg',
       '/assets/real-borne-felicien.jpg',
@@ -50,7 +48,6 @@ export const METIERS = [
     cta: 'Découvrir le photovoltaïque',
     eyebrow: 'Photovoltaïque',
     title: 'Produisez votre électricité',
-    points: ['Étude de rentabilité', 'Démarches gérées', 'Évolutive', '1er entretien offert'],
     imgs: ['/assets/real-solaire-toiture.webp', '/assets/agence-aerien.jpg'],
   },
 ]
