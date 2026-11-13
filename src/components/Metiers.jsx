@@ -4,7 +4,7 @@ import { METIERS } from '../lib/data.js'
 import { navLinkProps } from './Nav.jsx'
 import SectionHead from './SectionHead.jsx'
 
-/** Une carte métier : photos qui défilent, nom, étiquettes, lien vers la page. */
+/** Une carte métier : photos qui défilent, nom, lien vers la page. */
 function MetierCard({ m, index, tick, near, onOpen }) {
   const [hover, setHover] = useState(false)
   const idx = (tick + index) % m.imgs.length
@@ -97,31 +97,11 @@ function MetierCard({ m, index, tick, near, onOpen }) {
             fontSize: 'clamp(1.6rem,2.4vw,2rem)',
             letterSpacing: '-.02em',
             lineHeight: 1.1,
-            margin: '8px 0 18px',
+            margin: '8px 0 0',
           }}
         >
           {m.eyebrow}
         </h3>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-          {m.points.map((pt) => (
-            <span
-              key={pt}
-              style={{
-                fontSize: '13px',
-                fontWeight: 500,
-                padding: '7px 13px',
-                borderRadius: 'var(--r-pill)',
-                background: 'rgba(255,255,255,.12)',
-                border: '1px solid rgba(255,255,255,.22)',
-                backdropFilter: 'blur(8px)',
-                WebkitBackdropFilter: 'blur(8px)',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {pt}
-            </span>
-          ))}
-        </div>
       </div>
     </a>
   )
@@ -178,7 +158,7 @@ export default function Metiers({ onOpen }) {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))',
+            gridTemplateColumns: 'repeat(auto-fit,minmax(min(300px,100%),1fr))',
             gap: '20px',
           }}
         >

@@ -121,7 +121,7 @@ export default function HeroCarousel({ onContact }) {
           width: '100%',
         }}
       >
-        <div style={{ maxWidth: '44rem' }}>
+        <div style={{ maxWidth: '50rem' }}>
           <h1
             style={{
               fontFamily: 'var(--font-display)',
@@ -133,7 +133,8 @@ export default function HeroCarousel({ onContact }) {
               textShadow: '0 2px 24px rgba(4,30,34,.4)',
             }}
           >
-            L'énergie de <span style={{ color: 'var(--or-500)' }}>votre maison</span>,<br />
+            {/* « votre maison » ne se coupe jamais : le mot doré reste d'un seul tenant. */}
+            L'énergie de <span style={{ color: 'var(--or-500)', whiteSpace: 'nowrap' }}>votre maison</span>,<br />
             maîtrisée
           </h1>
           <p
