@@ -401,11 +401,12 @@ export const BEFORE_AFTER = {
 }
 
 /* Chiffres clés animés (odomètre au scroll). */
+/* `lead` : petit mot devant le chiffre (« jusqu'à 60 % »), hors de l'animation. */
 export const STATS = [
   { prefix: '', num: '19', suffix: ' ans', label: "d'expérience, depuis 2007" },
   { prefix: '+', num: '250', suffix: '', label: 'chantiers réalisés' },
   { prefix: '≈ ', num: '3 200', suffix: '', label: 'kWh produits / an par installation' },
-  { prefix: '', num: '60', suffix: ' %', label: "jusqu'à, d'électricité autoconsommée" },
+  { lead: "jusqu'à", prefix: '', num: '60', suffix: ' %', label: "d'électricité autoconsommée" },
 ]
 
 /* Villes de la zone d'intervention (carte Leaflet).
