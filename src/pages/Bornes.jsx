@@ -55,6 +55,9 @@ const OPTIONS = [
   },
 ]
 
+/* Taille de la photo produit des cartes prise / borne. */
+const PRODUCT_IMG = 'clamp(84px,9vw,120px)'
+
 function SolutionCard({ s }) {
   const fg = s.dark ? 'var(--text-on-dark)' : 'var(--text-strong)'
   const soft = s.dark ? 'var(--text-on-dark-soft)' : 'var(--text-muted)'
@@ -72,6 +75,7 @@ function SolutionCard({ s }) {
         position: 'relative',
       }}
     >
+      {/* Photo produit en haut à droite : le titre lui réserve sa largeur (PRODUCT_IMG). */}
       {s.img && (
         <img
           src={s.img}
@@ -81,8 +85,8 @@ function SolutionCard({ s }) {
             position: 'absolute',
             top: 'clamp(20px,2.4vw,30px)',
             right: 'clamp(20px,2.4vw,30px)',
-            width: 'clamp(84px,9vw,120px)',
-            height: 'clamp(84px,9vw,120px)',
+            width: PRODUCT_IMG,
+            height: PRODUCT_IMG,
             objectFit: 'contain',
             filter: 'drop-shadow(0 10px 18px rgba(4,30,34,.25))',
           }}
@@ -110,6 +114,8 @@ function SolutionCard({ s }) {
           letterSpacing: '-.02em',
           color: fg,
           margin: '18px 0 0',
+          paddingRight: s.img ? `calc(${PRODUCT_IMG} - clamp(6px,1vw,12px))` : 0,
+          textWrap: 'balance',
         }}
       >
         {s.name}
