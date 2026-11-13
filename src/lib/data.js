@@ -488,43 +488,80 @@ export const CITY_DATA = [
   },
 ]
 
-/* Avis Google (textes repris des avis publiés ; prénoms indicatifs). */
+/* Fiche Google de l'entreprise : note et nombre d'avis affichés dans le badge.
+   À mettre à jour à la main quand le nombre d'avis évolue (relevé le 13/11/2026). */
+export const GOOGLE_PROFILE = {
+  url: 'https://maps.google.com/?cid=15607900492068378825',
+  rating: '5,0',
+  count: 28,
+}
+
+/* Avis Google : textes repris mot pour mot de la fiche Google de l'entreprise
+   (GOOGLE_PROFILE.url), relevés le 13/11/2026. Tous notés 5/5. Les « … » marquent
+   un passage coupé ; les retours à la ligne sont ceux des auteurs. Nom affiché :
+   prénom + initiale du nom ; `meta` = prestation citée dans l'avis ou dans ses
+   champs « Services ». À ne jamais reformuler : si un avis change ou disparaît
+   de la fiche, le modifier ou le retirer ici. */
 export const REVIEWS = [
   {
-    initial: 'M',
-    name: 'Marie L.',
-    meta: 'Rénovation électrique · Cholet',
-    text: "Réhabilitation complète du réseau électrique suite à l'achat de notre maison. Félicien a été de très bon conseil, le travail est impeccable.",
-  },
-  {
-    initial: 'J',
-    name: 'Jérôme B.',
-    meta: 'Photovoltaïque · Les Herbiers',
-    text: 'Installation de panneaux solaires sur mon toit. Travail très bien fait, entreprise très professionnelle et de bons conseils.',
+    initial: 'B',
+    name: 'Bruno B.',
+    meta: 'Tableau électrique · Borne de recharge',
+    text: 'Installation d’un nouveau tableau électrique et mise en place d’une borne de recharge.\nSérieux, net et rapidement. …\nJe referai appel à VOLTORY.',
   },
   {
     initial: 'S',
-    name: 'Sophie R.',
-    meta: 'Électricité générale · Cholet',
-    text: 'Électricien très professionnel, réactif et sympathique. Le travail est soigné et réalisé dans les délais. Je recommande vivement.',
+    name: 'Solène B.',
+    meta: 'Rénovation électrique · Cholet',
+    text: 'Suite à l’achat de ma maison à Cholet, j’ai fait appel à Voltory pour la réhabilitation complète du réseau électrique. Félicien a été de très bon conseil et le travail réalisé est impeccable. Je suis ravie du résultat et je referai appel à Voltory sans hésiter. Encore merci !',
   },
   {
-    initial: 'A',
-    name: 'André P.',
-    meta: 'Photovoltaïque · Vendée',
-    text: "Sur conseils de ma fille, j'ai fait appel à eux pour les panneaux solaires. L'équipe est très professionnelle, je suis très contente du résultat.",
+    initial: 'S',
+    name: 'Sabrina',
+    meta: 'Rénovation électrique · Borne de recharge',
+    text: "Travaux de rénovation (électricité refaite dans plusieurs pièces, pose d'une borne à recharge électrique pour notre véhicule).\nTravaux réalisés avec professionnalisme en prenant compte de nos souhaits, de nos habitudes de vie et notre budget. …\nNous recommandons cet artisan électricien à 100%.",
   },
   {
     initial: 'C',
-    name: 'Claire D.',
-    meta: 'Rénovation · Maine-et-Loire',
-    text: 'Merci pour la qualité du travail effectué, le professionnalisme et la bonne humeur de chacun sur mon chantier. Je recommande.',
+    name: 'Celine D.',
+    meta: 'Modification d’installation électrique',
+    text: 'Excellent travail, il trouve toujours une idée pour réaliser les travaux malgré des problématiques. Personne qui a toujours le sourire. Je recommande.',
   },
   {
-    initial: 'T',
-    name: 'Thomas G.',
-    meta: 'Électricité · Cholet',
-    text: 'Excellents conseils et travail très professionnel. Je recommande cette entreprise les yeux fermés !',
+    initial: 'I',
+    name: 'Irène B.',
+    meta: 'Travaux d’électricité',
+    text: '… Très ponctuel, sérieux et particulièrement professionnel du début à la fin. Le travail est soigné, propre, et tout m’a été clairement expliqué avant l’intervention. J’ai également apprécié les conseils donnés ainsi que la qualité du contact humain.',
+  },
+  {
+    initial: 'A',
+    name: 'Ambre de R.',
+    meta: 'Architecte',
+    text: 'Les meilleurs électriciens: Professionnels, honnêtes, fiables, très réactifs et en prime - super sympas!\nJe suis architecte et ne travaille qu’avec eux depuis plus de 15ans: vive la GURY team!',
+  },
+  {
+    initial: 'Y',
+    name: 'Yohan B.',
+    meta: 'Borne de recharge',
+    text: "Très satisfait de l'intervention de Voltory pour l'installation de ma borne de recharge. Un travail d'une grande qualité, réalisé dans les règles de l'art avec de vrais conseils techniques sur la mise en service et la sécurité. …",
+  },
+  {
+    initial: 'H',
+    name: 'Hervé B.',
+    meta: 'Borne de recharge',
+    text: 'Achetant une voiture électrique, ma décision a été d’installer une borne électrique à mon domicile. … Disponible et réactif sont des mots que Voltory s’applique. Délais de 15 jours tenu, merci.',
+  },
+  {
+    initial: 'C',
+    name: 'C. B.',
+    meta: 'Borne de recharge',
+    text: 'Entreprise très sérieuse, très professionnel, de bons conseils et à l’écoute des clients.\nInstallation de notre box de recharge posée dans les règles de l’art\nContact super sympathique\nJe recommande vivement cette entreprise',
+  },
+  {
+    initial: 'C',
+    name: 'Clem T.',
+    meta: 'Photovoltaïque',
+    text: "… l'installation de panneaux solaires sur mon toit. Le travail est très bien fait, entreprise très professionnelle et de bons conseils.",
   },
 ]
 
