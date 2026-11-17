@@ -26,11 +26,20 @@ janvier 2027.
 - [x] **Bornes** : distance incluse dans la pose standard : 5 m (#37).
 - [ ] **Bornes** : « dès 419 € TTC » ou prix ferme « 419 € TTC » ?
 - [ ] **Électricité** : classement des réalisations dans les étiquettes Audit / Tableau /
-  Cuisine / Salle de bain / Extension / Création (détail dans la PR #36).
+  Cuisine / Salle de bain / Extension / Création (détail dans la PR #36). Aucune
+  réalisation n'est en « Audit » ; les rénovations complètes sont en « Création » et les
+  éclairages extérieurs en « Extension ».
+- [ ] **Bornes** : vitesses « 4× en 7,4 kW » et « 8× à partir de 11 kW » : plus rapide
+  que quoi (prise classique ?) ; 11 kW ne fait que 1,5× 7,4 kW ; « à partir de » alors que
+  la gamme s'arrête à 11 kW.
+- [ ] **Bornes** : « Pilotage intelligent » est une pastille de la borne, et « Borne
+  intelligente » une option payante : est-ce la même chose ?
+- [ ] **Bornes** : la réalisation « Borne de recharge — véhicule électrique » utilise la
+  photo de Félicien devant l'agence, pas une installation.
 - [x] **Photovoltaïque** : capture de la vraie application de suivi (envoyée par Félicien,
   en place dans la section « Pilotez votre énergie »).
-- [ ] **Photovoltaïque** : « Toiture tuiles — full black » et « Autoconsommation — toiture
-  tuiles » montrent peut-être la même toiture.
+- [ ] **Photovoltaïque** : la réalisation en double (même photo que « Toiture tuiles — full
+  black ») est retirée ; confirmer le lieu et l'année de « Toiture tuiles — full black ».
 - [ ] **Photos** : plus de photos de chantier en bonne définition (bornes, solaire et
   Félicien au travail sont en 573 px), pour le header et les cartes.
 - [ ] **Électricité** : durée « ≈ 2 jours » pour un tableau.

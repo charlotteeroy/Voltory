@@ -110,7 +110,7 @@ Web3Forms.
 | PR | Changement |
 |---|---|
 | #34 | Formulaire : clé Web3Forms de Félicien, les demandes de devis arrivent chez lui |
-| #35 | Accueil : photos de chantiers dans le header et les cartes métiers, slogan « L'énergie au quotidien », logo APRIL retiré du header |
+| #35 | Accueil : 4 photos de chantiers dans le header (tableau, solaire, borne, chantier) et dans les cartes métiers, slogan « L'énergie au quotidien », logo APRIL retiré du header |
 | #36 | Électricité : 4 interventions par besoin, tableau sans effet zoom, dalles « Ce que nous installons », étiquettes Audit / Tableau / Cuisine / Salle de bain / Extension / Création |
 | #37 | Bornes : prise dès 419 €, borne 4× (7,4 kW) / 8× (11 kW) plus rapide, pose jusqu'à 5 m, option « Borne intelligente » |
-| #38 | Photovoltaïque : section « Pilotez votre énergie » avec une capture de la vraie application de suivi ; toiture du local retirée des réalisations (pas une réalisation Voltory) |
+| #38 | Photovoltaïque : section « Pilotez votre énergie » avec une capture de la vraie application de suivi ; toiture du local retirée des réalisations (pas une réalisation Voltory), réalisation en double retirée |
