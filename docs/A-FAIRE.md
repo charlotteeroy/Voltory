@@ -27,8 +27,9 @@ janvier 2027.
 - [ ] **Bornes** : « dès 419 € TTC » ou prix ferme « 419 € TTC » ?
 - [ ] **Électricité** : classement des réalisations dans les étiquettes Audit / Tableau /
   Cuisine / Salle de bain / Extension / Création (détail dans la PR #36).
-- [ ] **Photovoltaïque** : capture de la vraie application de suivi (pour remplacer
-  l'écran stylisé) ; « Toiture tuiles — full black » et « Autoconsommation — toiture
+- [x] **Photovoltaïque** : capture de la vraie application de suivi (envoyée par Félicien,
+  en place dans la section « Pilotez votre énergie »).
+- [ ] **Photovoltaïque** : « Toiture tuiles — full black » et « Autoconsommation — toiture
   tuiles » montrent peut-être la même toiture.
 - [ ] **Photos** : plus de photos de chantier en bonne définition (bornes, solaire et
   Félicien au travail sont en 573 px), pour le header et les cartes.
