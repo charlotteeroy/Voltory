@@ -14,25 +14,29 @@ const SOLUTIONS = [
     tag: 'La plus accessible',
     name: 'Prise renforcée',
     img: '/assets/materiel/prise-renforcee.png',
-    price: 'dès 349 € TTC',
-    spec: "≈ 10 km d'autonomie par heure de charge",
-    points: ['Trajets du quotidien', 'Recharge la nuit', 'Budget léger'],
+    price: 'dès 419 € TTC',
+    specs: ["≈ 10 km d'autonomie par heure de charge"],
+    points: ['Véhicule hybride', 'Petite citadine', 'Recharge sécurisée'],
     dark: false,
   },
   {
     tag: 'La plus rapide',
     name: 'Borne de recharge',
     img: '/assets/materiel/borne-schneider.png',
-    price: 'de 7 à 11 kW',
-    spec: '≈ 4× plus rapide qu’une prise renforcée',
-    points: ['Gros rouleurs', 'Deux véhicules', 'Pilotage intelligent', 'Couplage solaire'],
+    price: 'de 7,4 à 11 kW',
+    specs: [
+      '4× plus rapide en 7,4 kW (monophasé)',
+      '8× plus rapide à partir de 11 kW*',
+    ],
+    note: '* Installation triphasée requise, compatibilité du véhicule vérifiée avant la pose.',
+    points: ['Véhicule 100 % électrique', 'Pilotage intelligent', 'Plus confortable'],
     dark: true,
   },
 ]
 
-/* TODO Félicien : distance incluse à confirmer (3 m sur le flyer, 5 m évoqués à l'oral). */
+/* Distance incluse confirmée par Félicien le 17/11/2026 : 5 m. */
 const INCLUDED = [
-  'Pose à moins de 3 m du tableau électrique*',
+  'Pose à moins de 5 m du tableau électrique*',
   'Protection électrique dédiée',
   'Câblage protégé sous tube',
 ]
@@ -45,8 +49,8 @@ const OPTIONS = [
   },
   {
     icon: Icons.zap,
-    title: 'Étude de puissance',
-    text: 'Rechargez sans faire disjoncter la maison.',
+    title: 'Borne intelligente',
+    text: 'Elle adapte automatiquement sa puissance à la puissance électrique disponible dans votre maison.',
   },
   {
     icon: Icons.sun,
@@ -134,13 +138,17 @@ function SolutionCard({ s }) {
       <div
         style={{
           fontSize: '15px',
+          lineHeight: 1.5,
           color: soft,
           margin: '14px 0 22px',
           paddingBottom: '22px',
           borderBottom: `1px solid ${s.dark ? 'var(--border-on-dark)' : 'var(--border-subtle)'}`,
         }}
       >
-        {s.spec}
+        {s.specs.map((line) => (
+          <div key={line}>{line}</div>
+        ))}
+        {s.note && <div style={{ fontSize: '12.5px', marginTop: '8px', opacity: 0.85 }}>{s.note}</div>}
       </div>
       <Chips items={s.points} onDark={s.dark} />
     </div>
