@@ -16,7 +16,7 @@ const C = '/assets/chantiers'
 const INTERVENTIONS = [
   {
     title: 'Audit avant achat',
-    text: "Comprendre et évaluer le coût d'une remise aux normes électrique.",
+    text: "Comprendre et évaluer le coût d'une remise aux normes électrique simple.",
     img: `${C}/madeleine/03.jpg`,
   },
   {
