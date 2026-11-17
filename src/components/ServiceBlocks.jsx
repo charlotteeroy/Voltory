@@ -60,8 +60,10 @@ export function FeatureGrid({ items, min = '280px' }) {
   )
 }
 
-/** Mosaïque de photos légendées (une prestation = une photo + un titre court). */
-export function PhotoTiles({ items, min = '260px', height = '240px' }) {
+/** Mosaïque de photos légendées (une prestation = une photo + un titre court).
+ *  `ratio` (ex. '4 / 3') remplace la hauteur fixe : la tuile suit les proportions des
+ *  photos, qui ne sont plus agrandies pour remplir un cadre trop large. */
+export function PhotoTiles({ items, min = '260px', height = '240px', ratio }) {
   return (
     <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit,minmax(min(${min},100%),1fr))`, gap: '16px' }}>
       {items.map((it) => (
@@ -70,7 +72,7 @@ export function PhotoTiles({ items, min = '260px', height = '240px' }) {
           style={{
             position: 'relative',
             margin: 0,
-            height,
+            ...(ratio ? { aspectRatio: ratio } : { height }),
             borderRadius: 'var(--r-md)',
             overflow: 'hidden',
             background: 'var(--petrole-800)',
@@ -81,7 +83,7 @@ export function PhotoTiles({ items, min = '260px', height = '240px' }) {
             src={it.img}
             alt=""
             loading="lazy"
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: it.pos ?? 'center', display: 'block' }}
           />
           <figcaption
             style={{
@@ -100,6 +102,83 @@ export function PhotoTiles({ items, min = '260px', height = '240px' }) {
         </figure>
       ))}
     </div>
+  )
+}
+
+/** Petites dalles à pictogramme : un équipement = une icône + un libellé court. */
+export function IconTiles({ items, min = '220px' }) {
+  return (
+    <ul
+      style={{
+        listStyle: 'none',
+        margin: 0,
+        padding: 0,
+        display: 'grid',
+        // Jamais moins de 2 colonnes : sur mobile, les dalles restent petites.
+        gridTemplateColumns: `repeat(auto-fill,minmax(min(${min},calc(50% - 7px)),1fr))`,
+        gap: '14px',
+      }}
+    >
+      {items.map((it) => (
+        <li
+          key={it.title}
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap', // dalle étroite : le libellé passe sous le pictogramme
+            alignItems: 'center',
+            alignContent: 'flex-start',
+            gap: '12px 14px',
+            background: 'var(--surface-card)',
+            border: '1px solid var(--border-subtle)',
+            borderRadius: 'var(--r-md)',
+            boxShadow: 'var(--e1)',
+            padding: '16px 18px',
+          }}
+        >
+          <span
+            style={{
+              flexShrink: 0,
+              width: '44px',
+              height: '44px',
+              borderRadius: '12px',
+              background: 'var(--or-100)',
+              color: 'var(--petrole-900)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            {it.icon}
+          </span>
+          <span
+            style={{
+              flex: '1 1 100px',
+              fontFamily: 'var(--font-display)',
+              fontWeight: 600,
+              fontSize: '15px',
+              lineHeight: 1.3,
+              color: 'var(--text-strong)',
+            }}
+          >
+            {it.title}
+            {it.text && (
+              <span
+                style={{
+                  display: 'block',
+                  fontFamily: 'var(--font-body)',
+                  fontWeight: 400,
+                  fontSize: '13.5px',
+                  color: 'var(--text-muted)',
+                  marginTop: '2px',
+                }}
+              >
+                {it.text}
+              </span>
+            )}
+          </span>
+        </li>
+      ))}
+    </ul>
   )
 }
 

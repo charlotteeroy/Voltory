@@ -2,7 +2,7 @@ import { WRAP } from '../lib/layout.js'
 import ServiceHero from '../components/ServiceHero.jsx'
 import SectionHead from '../components/SectionHead.jsx'
 import Simulator from '../components/Simulator.jsx'
-import { Chips } from '../components/ServiceBlocks.jsx'
+import { CheckList, Chips } from '../components/ServiceBlocks.jsx'
 import Timeline from '../components/Timeline.jsx'
 import { PerksBar } from '../components/Method.jsx'
 import { LatestProjects } from '../components/Projects.jsx'
@@ -19,6 +19,39 @@ const PROJECT_STEPS = [
   { title: 'Mise en service', meta: 'Suivi en direct', text: 'Production visible en temps réel.' },
   { title: 'Entretien', meta: '1er offert', text: 'Panneaux propres, production maximale.' },
 ]
+
+/* Ce que montre l'application de suivi (section « Pilotez votre énergie »). */
+const SUIVI = [
+  'Votre production solaire',
+  'La consommation de votre maison',
+  "L'électricité revendue au réseau",
+  'Votre production du jour et depuis la mise en service',
+]
+
+/* Capture réelle de l'application de suivi installée chez les clients (fournie par Félicien). */
+function PhoneMockup() {
+  return (
+    <div
+      style={{
+        width: 'min(300px,100%)',
+        margin: '0 auto',
+        background: 'var(--petrole-900)',
+        borderRadius: '40px',
+        padding: '10px',
+        boxShadow: 'var(--e3)',
+      }}
+    >
+      <img
+        src="/assets/app-suivi-solaire.webp"
+        alt="Écran d'accueil de l'application de suivi : production solaire, consommation de la maison et électricité revendue au réseau, en temps réel"
+        width="600"
+        height="1198"
+        loading="lazy"
+        style={{ display: 'block', width: '100%', height: 'auto', borderRadius: '30px' }}
+      />
+    </div>
+  )
+}
 
 export default function Photovoltaique({ navigate }) {
   return (
@@ -82,6 +115,29 @@ export default function Photovoltaique({ navigate }) {
             <Timeline steps={PROJECT_STEPS} />
             <div style={{ borderTop: '1px solid var(--border-subtle)', margin: '40px 0 28px' }} />
             <PerksBar />
+          </div>
+        </div>
+      </section>
+
+      {/* Suivi de production : l'application */}
+      <section style={{ background: 'var(--surface-card)', padding: '88px 0' }}>
+        <div style={{ ...WRAP, display: 'flex', flexWrap: 'wrap', gap: '56px', alignItems: 'center' }}>
+          <div style={{ flex: '1 1 400px' }}>
+            <SectionHead
+              eyebrow="Suivi de production"
+              title="Pilotez votre énergie en toute transparence"
+              intro={"Sur l'application, vous suivez en temps réel\u00a0:"}
+              mb="24px"
+            />
+            <CheckList items={SUIVI} />
+            <p style={{ fontSize: '15.5px', lineHeight: 1.6, color: 'var(--text-muted)', margin: '24px 0 0', maxWidth: '52ch' }}>
+              Vous repérez les meilleurs moments pour consommer et vous profitez de chaque kWh produit.
+              Objectif : consommer le plus possible de votre propre électricité et alléger vos
+              factures.
+            </p>
+          </div>
+          <div style={{ flex: '1 1 280px' }}>
+            <PhoneMockup />
           </div>
         </div>
       </section>

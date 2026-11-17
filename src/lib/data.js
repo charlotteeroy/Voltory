@@ -4,19 +4,24 @@
  */
 import { Icons } from './icons.jsx'
 
-/* Photos du carrousel hero (réalisations qui défilent en fond). */
+/* Photos du carrousel hero : uniquement des installations Voltory (tableau, solaire,
+   borne, chantier), demande de Félicien du 17/11/2026. Recadrées en 16:10 depuis ses
+   dossiers « Photos Site web ». La 1re est préchargée dans index.html. */
 export const HERO_IMGS = [
-  '/assets/hero/01-salon.webp',
-  '/assets/hero/02-sdb-verte.webp',
-  '/assets/hero/03-chambre-chateau.webp',
-  '/assets/hero/04-terrasse.webp',
-  '/assets/hero/05-cuisine.webp',
-  '/assets/hero/06-sdb-marbre.webp',
-  '/assets/hero/07-hall.webp',
-  '/assets/hero/08-corniche.webp',
+  '/assets/hero/tableau.webp',
+  '/assets/hero/toiture-tuiles.webp',
+  '/assets/hero/borne.webp',
+  '/assets/hero/chantier.webp',
 ]
 
+/* Point de cadrage par photo du carrousel (sur mobile l'image est très recadrée en
+   largeur) : le tableau est sur la droite de la photo. Par défaut : centre. */
+export const HERO_FOCUS = {
+  '/assets/hero/tableau.webp': '72% center',
+}
+
 /* Les trois métiers, mis en avant sur l'accueil (blocs larges + photos qui défilent).
+   Photos : uniquement des installations / réalisations (demande de Félicien).
    Ordre = priorité d'activité : l'électricité est le cœur de métier, les bornes
    la demande en forte croissance, le solaire vient ensuite. */
 export const METIERS = [
@@ -26,10 +31,10 @@ export const METIERS = [
     eyebrow: 'Électricité générale',
     title: 'Rénovation & mise aux normes',
     imgs: [
-      '/assets/hero/01-salon.webp',
-      '/assets/real-hotel-hall.jpg',
-      '/assets/real-lustre-ferronnerie.jpg',
-      '/assets/hero/04-terrasse.webp',
+      '/assets/chantiers/big-tableau/01.jpg',
+      '/assets/chantiers/bou-renovation/05.jpg',
+      '/assets/chantiers/dro-chambre/01.jpg',
+      '/assets/chantiers/ric-facade/02.jpg',
     ],
   },
   {
@@ -39,8 +44,8 @@ export const METIERS = [
     title: 'Rechargez à la maison',
     imgs: [
       '/assets/chantiers/fav-borne/01.jpg',
-      '/assets/real-borne-felicien.jpg',
       '/assets/chantiers/hbon-borne/01.jpg',
+      '/assets/chantiers/bon-borne/02.jpg',
     ],
   },
   {
@@ -48,16 +53,15 @@ export const METIERS = [
     cta: 'Découvrir le photovoltaïque',
     eyebrow: 'Photovoltaïque',
     title: 'Produisez votre électricité',
-    imgs: ['/assets/real-solaire-toiture.webp', '/assets/agence-aerien.jpg'],
+    imgs: ['/assets/real-solaire-toiture.webp', '/assets/chantiers/gur-sol/03.jpg', '/assets/chantiers/boo-toiture/02.jpg'],
   },
 ]
 
-/* Qualifications affichées dans le header de l'accueil.
-   `logo` : chemin du logo officiel une fois fourni par Félicien (sinon badge texte). */
+/* Qualifications affichées dans le header de l'accueil. Uniquement les qualifications :
+   l'assureur (APRIL, décennale) n'apparaît pas ici, à la demande de Félicien. */
 export const CERTIFICATIONS = [
   { label: 'RGE QualiPV', detail: 'Photovoltaïque', logo: '/assets/logos/qualipv-white.png' },
   { label: 'Recharge+ élec', detail: 'Bornes de recharge', logo: '/assets/logos/recharge-plus-elec-white.png' },
-  { label: 'Garantie décennale APRIL', detail: 'Tous nos travaux', logo: '/assets/logos/april-white.png' },
 ]
 
 /* Réalisations filtrables par métier.
@@ -67,7 +71,9 @@ export const CERTIFICATIONS = [
 const chantier = (slug, count) =>
   Array.from({ length: count }, (_, i) => `/assets/chantiers/${slug}/${String(i + 1).padStart(2, '0')}.jpg`)
 
-/* Catégorie de chantier → page métier où il apparaît. */
+/* Catégorie de chantier → page métier où il apparaît.
+   `catLabel` = étiquette affichée sur la carte. Électricité : Audit, Tableau électrique,
+   Cuisine, Salle de bain, Extension ou Création (vocabulaire de Félicien, 17/11/2026). */
 const CAT_TO_METIER = {
   patrimoine: 'electricite',
   renovation: 'electricite',
@@ -98,7 +104,7 @@ export const PROJECTS = [
   },
   {
     cat: 'renovation',
-    catLabel: 'Rénovation',
+    catLabel: 'Création',
     title: 'Chambre — appliques & papier peint',
     place: 'Maine-et-Loire',
     date: '2026',
@@ -107,7 +113,7 @@ export const PROJECTS = [
   },
   {
     cat: 'renovation',
-    catLabel: 'Rénovation',
+    catLabel: 'Création',
     title: 'Rénovation complète — maison',
     place: 'Vendée',
     date: '2026',
@@ -116,7 +122,7 @@ export const PROJECTS = [
   },
   {
     cat: 'patrimoine',
-    catLabel: 'Haut de gamme',
+    catLabel: 'Salle de bain',
     title: 'Appartement contemporain — salle de bain & salon',
     place: 'Paris',
     date: '2026',
@@ -125,7 +131,7 @@ export const PROJECTS = [
   },
   {
     cat: 'patrimoine',
-    catLabel: 'Haut de gamme',
+    catLabel: 'Cuisine',
     title: 'Cuisine — plaque de cuisson invisible',
     place: 'Paris',
     date: '2026',
@@ -134,7 +140,7 @@ export const PROJECTS = [
   },
   {
     cat: 'eclairage',
-    catLabel: 'Éclairage',
+    catLabel: 'Extension',
     title: 'Éclairage de façade',
     place: 'Paris',
     date: '2026',
@@ -144,7 +150,7 @@ export const PROJECTS = [
   },
   {
     cat: 'eclairage',
-    catLabel: 'Éclairage',
+    catLabel: 'Extension',
     title: 'Hôtel particulier — jardin & salons',
     place: 'Paris',
     date: '2025',
@@ -213,10 +219,11 @@ export const PROJECTS = [
     date: '2026',
     blurb: 'Panneaux posés sur une toiture en bac acier.',
     photos: chantier('boo-toiture', 2),
+    cover: 2, // la 1re photo montre le toit avant la pose
   },
   {
     cat: 'patrimoine',
-    catLabel: 'Patrimoine',
+    catLabel: 'Création',
     title: 'Château — grande chambre',
     place: 'Orne',
     date: '2025',
@@ -231,7 +238,7 @@ export const PROJECTS = [
   },
   {
     cat: 'patrimoine',
-    catLabel: 'Patrimoine',
+    catLabel: 'Création',
     title: 'Château — petite chambre',
     place: 'Orne',
     date: '2025',
@@ -241,7 +248,7 @@ export const PROJECTS = [
   },
   {
     cat: 'patrimoine',
-    catLabel: 'Patrimoine',
+    catLabel: 'Salle de bain',
     title: 'Château — salle de bain',
     place: 'Orne',
     date: '2025',
@@ -252,7 +259,7 @@ export const PROJECTS = [
   },
   {
     cat: 'patrimoine',
-    catLabel: 'Patrimoine',
+    catLabel: 'Création',
     title: "Appartement haussmannien — rue Jouffroy-d'Abbans",
     place: 'Paris 17e',
     date: '2024',
@@ -262,7 +269,7 @@ export const PROJECTS = [
   },
   {
     cat: 'patrimoine',
-    catLabel: 'Patrimoine',
+    catLabel: 'Salle de bain',
     title: 'Salle de bain en marbre — rue Vanneau',
     place: 'Paris 7e',
     date: '2023',
@@ -272,7 +279,7 @@ export const PROJECTS = [
   },
   {
     cat: 'patrimoine',
-    catLabel: 'Patrimoine',
+    catLabel: 'Création',
     title: 'Appartement de maître — 38 rue de Varenne',
     place: 'Paris 7e',
     date: '2023',
@@ -282,7 +289,7 @@ export const PROJECTS = [
   },
   {
     cat: 'renovation',
-    catLabel: 'Rénovation',
+    catLabel: 'Création',
     title: 'Demeure de village — la Madeleine',
     place: 'Normandie',
     date: '2025',
@@ -293,7 +300,7 @@ export const PROJECTS = [
   },
   {
     cat: 'renovation',
-    catLabel: 'Rénovation',
+    catLabel: 'Création',
     title: 'Parties communes — rue du Dragon',
     place: 'Paris 6e',
     date: '2024',
@@ -303,7 +310,7 @@ export const PROJECTS = [
   },
   {
     cat: 'renovation',
-    catLabel: 'Rénovation',
+    catLabel: 'Cuisine',
     title: 'Cuisine contemporaine — rue Guénégaud',
     place: 'Paris 6e',
     date: '2024',
@@ -313,7 +320,7 @@ export const PROJECTS = [
   },
   {
     cat: 'eclairage',
-    catLabel: 'Éclairage',
+    catLabel: 'Création',
     title: 'Corniches lumineuses — rue Lota',
     place: 'Paris 16e',
     date: '2023',
@@ -324,7 +331,7 @@ export const PROJECTS = [
   },
   {
     cat: 'renovation',
-    catLabel: 'Rénovation',
+    catLabel: 'Création',
     title: 'Rénovation complète — pièce de vie',
     place: 'Vendée',
     date: '2025',
@@ -334,32 +341,13 @@ export const PROJECTS = [
   },
   {
     cat: 'eclairage',
-    catLabel: 'Éclairage',
+    catLabel: 'Extension',
     title: 'Éclairage extérieur — terrasse & jardin',
     place: 'Vendée',
     date: '2025',
     blurb:
       "Scénographie lumineuse d'une terrasse : balisage, éclairage de massif et façade en blanc chaud.",
     photos: ['/assets/real-eclairage-terrasse.jpg'],
-  },
-  {
-    cat: 'solaire',
-    catLabel: 'Solaire',
-    title: 'Autoconsommation — toiture tuiles',
-    place: 'Maine-et-Loire',
-    date: '2025',
-    blurb: "Panneaux full black plein sud, micro-onduleurs et pilotage fin de l'autoconsommation.",
-    photos: ['/assets/real-solaire-toiture.webp'],
-  },
-  {
-    cat: 'solaire',
-    catLabel: 'Solaire',
-    title: 'Toiture tertiaire — bâtiment professionnel',
-    place: 'Maine-et-Loire',
-    date: '2024',
-    blurb:
-      "Centrale en toiture de bâtiment d'activité, dimensionnée sur la consommation de l'entreprise.",
-    photos: ['/assets/agence-aerien.jpg'],
   },
   {
     cat: 'borne',

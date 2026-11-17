@@ -34,7 +34,9 @@ if (typeof window !== 'undefined') {
 }
 
 /** Comparateur avant / après : on touche ou fait glisser n'importe où pour révéler l'après. */
-export default function BeforeAfter({ before, after, alt = '', caption, height = '380px', start = 50 }) {
+/* `ratio` (ex. '3 / 4') : le cadre prend les proportions des photos au lieu d'une hauteur
+   fixe, pour qu'elles ne soient pas recadrées (effet « zoom »). */
+export default function BeforeAfter({ before, after, alt = '', caption, height = '380px', ratio, start = 50 }) {
   const [pos, setPos] = useState(start)
   const [focused, setFocused] = useState(false)
   const frame = useRef(null)
@@ -109,7 +111,7 @@ export default function BeforeAfter({ before, after, alt = '', caption, height =
         onPointerCancel={onPointerCancel}
         style={{
           position: 'relative',
-          height,
+          ...(ratio ? { aspectRatio: ratio } : { height }),
           borderRadius: 'var(--r-lg)',
           overflow: 'hidden',
           background: 'var(--petrole-800)',
