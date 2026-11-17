@@ -4,19 +4,20 @@
  */
 import { Icons } from './icons.jsx'
 
-/* Photos du carrousel hero (réalisations qui défilent en fond). */
+/* Photos du carrousel hero : uniquement des installations Voltory (tableau, solaire,
+   borne, chantier), demande de Félicien du 17/11/2026. Recadrées en 16:10 depuis ses
+   dossiers « Photos Site web ». La 1re est préchargée dans index.html. */
 export const HERO_IMGS = [
-  '/assets/hero/01-salon.webp',
-  '/assets/hero/02-sdb-verte.webp',
-  '/assets/hero/03-chambre-chateau.webp',
-  '/assets/hero/04-terrasse.webp',
-  '/assets/hero/05-cuisine.webp',
-  '/assets/hero/06-sdb-marbre.webp',
-  '/assets/hero/07-hall.webp',
-  '/assets/hero/08-corniche.webp',
+  '/assets/hero/tableau.webp',
+  '/assets/hero/toiture-tuiles.webp',
+  '/assets/hero/borne.webp',
+  '/assets/hero/renovation.webp',
+  '/assets/hero/toiture-bac-acier.webp',
+  '/assets/hero/chantier.webp',
 ]
 
 /* Les trois métiers, mis en avant sur l'accueil (blocs larges + photos qui défilent).
+   Photos : uniquement des installations / réalisations (demande de Félicien).
    Ordre = priorité d'activité : l'électricité est le cœur de métier, les bornes
    la demande en forte croissance, le solaire vient ensuite. */
 export const METIERS = [
@@ -26,10 +27,10 @@ export const METIERS = [
     eyebrow: 'Électricité générale',
     title: 'Rénovation & mise aux normes',
     imgs: [
-      '/assets/hero/01-salon.webp',
-      '/assets/real-hotel-hall.jpg',
-      '/assets/real-lustre-ferronnerie.jpg',
-      '/assets/hero/04-terrasse.webp',
+      '/assets/chantiers/big-tableau/01.jpg',
+      '/assets/chantiers/bou-renovation/05.jpg',
+      '/assets/chantiers/dro-chambre/01.jpg',
+      '/assets/chantiers/ric-facade/02.jpg',
     ],
   },
   {
@@ -39,8 +40,8 @@ export const METIERS = [
     title: 'Rechargez à la maison',
     imgs: [
       '/assets/chantiers/fav-borne/01.jpg',
-      '/assets/real-borne-felicien.jpg',
       '/assets/chantiers/hbon-borne/01.jpg',
+      '/assets/chantiers/bon-borne/02.jpg',
     ],
   },
   {
@@ -48,16 +49,15 @@ export const METIERS = [
     cta: 'Découvrir le photovoltaïque',
     eyebrow: 'Photovoltaïque',
     title: 'Produisez votre électricité',
-    imgs: ['/assets/real-solaire-toiture.webp', '/assets/agence-aerien.jpg'],
+    imgs: ['/assets/real-solaire-toiture.webp', '/assets/chantiers/gur-sol/03.jpg', '/assets/chantiers/boo-toiture/01.jpg'],
   },
 ]
 
-/* Qualifications affichées dans le header de l'accueil.
-   `logo` : chemin du logo officiel une fois fourni par Félicien (sinon badge texte). */
+/* Qualifications affichées dans le header de l'accueil. Uniquement les qualifications :
+   l'assureur (APRIL, décennale) n'apparaît pas ici, à la demande de Félicien. */
 export const CERTIFICATIONS = [
   { label: 'RGE QualiPV', detail: 'Photovoltaïque', logo: '/assets/logos/qualipv-white.png' },
   { label: 'Recharge+ élec', detail: 'Bornes de recharge', logo: '/assets/logos/recharge-plus-elec-white.png' },
-  { label: 'Garantie décennale APRIL', detail: 'Tous nos travaux', logo: '/assets/logos/april-white.png' },
 ]
 
 /* Réalisations filtrables par métier.
