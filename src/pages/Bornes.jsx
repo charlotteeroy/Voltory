@@ -14,7 +14,7 @@ const SOLUTIONS = [
     tag: 'La plus accessible',
     name: 'Prise renforcée',
     img: '/assets/materiel/prise-renforcee.png',
-    price: 'dès 419 € TTC',
+    price: 'dès 419\u00a0€\u00a0TTC',
     specs: ["≈ 10 km d'autonomie par heure de charge"],
     points: ['Véhicule hybride', 'Petite citadine', 'Recharge sécurisée'],
     dark: false,
@@ -23,20 +23,20 @@ const SOLUTIONS = [
     tag: 'La plus rapide',
     name: 'Borne de recharge',
     img: '/assets/materiel/borne-schneider.png',
-    price: 'de 7,4 à 11 kW',
+    price: 'de 7,4 à 11\u00a0kW',
     specs: [
-      '4× plus rapide en 7,4 kW (monophasé)',
-      '8× plus rapide à partir de 11 kW*',
+      '4× plus rapide en 7,4\u00a0kW\u00a0(monophasé)',
+      '8× plus rapide à partir de 11\u00a0kW*',
     ],
     note: '* Installation triphasée requise, compatibilité du véhicule vérifiée avant la pose.',
-    points: ['Véhicule 100 % électrique', 'Pilotage intelligent', 'Plus confortable'],
+    points: ['Véhicule 100\u00a0% électrique', 'Pilotage intelligent', 'Plus confortable'],
     dark: true,
   },
 ]
 
 /* Distance incluse confirmée par Félicien le 17/11/2026 : 5 m. */
 const INCLUDED = [
-  'Pose à moins de 5 m du tableau électrique*',
+  'Pose à moins de 5\u00a0m du tableau électrique*',
   'Protection électrique dédiée',
   'Câblage protégé sous tube',
 ]
