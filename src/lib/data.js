@@ -284,7 +284,7 @@ export const PROJECTS = [
   },
   {
     cat: 'renovation',
-    catLabel: 'Audit',
+    catLabel: 'Création',
     title: 'Demeure de village — la Madeleine',
     place: 'Normandie',
     date: '2025',

@@ -83,7 +83,7 @@ export function PhotoTiles({ items, min = '260px', height = '240px', ratio }) {
             src={it.img}
             alt=""
             loading="lazy"
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: it.pos ?? 'center', display: 'block' }}
           />
           <figcaption
             style={{
@@ -126,6 +126,7 @@ export function IconTiles({ items, min = '220px' }) {
             display: 'flex',
             flexWrap: 'wrap', // dalle étroite : le libellé passe sous le pictogramme
             alignItems: 'center',
+            alignContent: 'flex-start',
             gap: '12px 14px',
             background: 'var(--surface-card)',
             border: '1px solid var(--border-subtle)',

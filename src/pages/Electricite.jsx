@@ -21,8 +21,9 @@ const INTERVENTIONS = [
   },
   {
     title: 'Tableau électrique',
-    text: 'Remplacement complet : protégez votre installation électrique.',
+    text: 'Remplacement complet\u00a0: protégez votre installation électrique.',
     img: `${C}/pas-tableau/01.jpg`,
+    pos: 'center 25%',
   },
   {
     title: 'Cuisine & salle de bain',
@@ -42,7 +43,7 @@ const EQUIPEMENTS = [
   { icon: Icons.bulb, title: 'Éclairage', text: 'Intérieur et extérieur' },
   { icon: Icons.network, title: 'Réseau RJ45', text: 'Câble Ethernet' },
   { icon: Icons.shutter, title: 'Pilotage des volets roulants' },
-  { icon: Icons.waterHeater, title: 'Ballon d’eau chaude électrique' },
+  { icon: Icons.waterHeater, title: "Ballon d'eau chaude électrique" },
   { icon: Icons.radiator, title: 'Radiateurs électriques' },
   { icon: Icons.fan, title: 'Ventilation VMC' },
   { icon: Icons.hob, title: 'Plaque à induction invisible' },
