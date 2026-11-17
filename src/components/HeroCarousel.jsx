@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { WRAP } from '../lib/layout.js'
-import { HERO_IMGS, CERTIFICATIONS } from '../lib/data.js'
+import { HERO_IMGS, HERO_FOCUS, CERTIFICATIONS } from '../lib/data.js'
 import Button from './ds/Button.jsx'
 
-/** Qualifications : logos officiels dès qu'ils sont fournis, badge texte en attendant. */
+/** Qualifications : logos officiels (QualiPV, Recharge+ élec). */
 function Certifications() {
   return (
     <div style={{ marginTop: '28px' }}>
@@ -18,7 +18,7 @@ function Certifications() {
           marginBottom: '10px',
         }}
       >
-        Qualifiés &amp; assurés
+        Qualifiés
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px 22px' }}>
         {CERTIFICATIONS.map((c) => (
@@ -27,7 +27,7 @@ function Certifications() {
             src={c.logo}
             alt={`${c.label} — ${c.detail}`}
             title={`${c.label} — ${c.detail}`}
-            style={{ height: c.label.includes('APRIL') ? '19px' : '24px', display: 'block', opacity: 0.92 }}
+            style={{ height: '24px', display: 'block', opacity: 0.92 }}
           />
         ))}
       </div>
@@ -94,7 +94,7 @@ export default function HeroCarousel({ onContact }) {
             inset: 0,
             backgroundImage: loaded.has(i) || i === index ? `url('${src}')` : 'none',
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundPosition: HERO_FOCUS[src] ?? 'center',
             opacity: i === index ? 1 : 0,
             transform: i === index ? 'scale(1.06)' : 'scale(1)',
             transition: 'opacity 1.4s var(--ease-out), transform 6s linear',
@@ -133,9 +133,8 @@ export default function HeroCarousel({ onContact }) {
               textShadow: '0 2px 24px rgba(4,30,34,.4)',
             }}
           >
-            {/* « votre maison » ne se coupe jamais : le mot doré reste d'un seul tenant. */}
-            L'énergie de <span style={{ color: 'var(--or-500)', whiteSpace: 'nowrap' }}>votre maison</span>,<br />
-            maîtrisée
+            {/* Slogan de Voltory. « au quotidien » ne se coupe jamais. */}
+            L'énergie <span style={{ color: 'var(--or-500)', whiteSpace: 'nowrap' }}>au quotidien</span>
           </h1>
           <p
             style={{

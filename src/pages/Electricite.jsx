@@ -1,24 +1,52 @@
 import { WRAP, scrollToId } from '../lib/layout.js'
 import ServiceHero from '../components/ServiceHero.jsx'
 import SectionHead from '../components/SectionHead.jsx'
-import { CheckList, Chips, PhotoTiles } from '../components/ServiceBlocks.jsx'
+import { CheckList, Chips, IconTiles, PhotoTiles } from '../components/ServiceBlocks.jsx'
 import Method from '../components/Method.jsx'
 import { LatestProjects } from '../components/Projects.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 import Button from '../components/ds/Button.jsx'
 import BeforeAfter from '../components/BeforeAfter.jsx'
-import BeforeAfterSection from '../components/BeforeAfterSection.jsx'
 import { BEFORE_AFTER } from '../lib/data.js'
+import { Icons } from '../lib/icons.jsx'
 
 const C = '/assets/chantiers'
 
+/* Une intervention = un besoin du client (textes de Félicien, 17/11/2026). */
 const INTERVENTIONS = [
-  { title: 'Tableau électrique', text: 'Remplacement & mise aux normes', img: `${C}/big-tableau/01.jpg` },
-  { title: 'Rénovation complète', text: 'Maison ou appartement', img: `${C}/bou-renovation/01.jpg` },
-  { title: 'Cuisine & salle de bain', text: 'Extension, pergola, dépendances', img: `${C}/ric-appartement/07.jpg` },
-  { title: 'Éclairage', text: 'Intérieur & extérieur', img: `${C}/isr-hotel/01.jpg` },
-  { title: 'Audit avant achat', text: "L'état réel de l'installation", img: `${C}/madeleine/03.jpg` },
-  { title: 'Domotique & réseaux', text: 'Pilotage, interphonie, RJ45', img: `${C}/dragon/02.jpg` },
+  {
+    title: 'Audit avant achat',
+    text: "Comprendre et évaluer le coût d'une remise aux normes électrique.",
+    img: `${C}/madeleine/03.jpg`,
+  },
+  {
+    title: 'Tableau électrique',
+    text: 'Remplacement complet\u00a0: protégez votre installation électrique.',
+    img: `${C}/pas-tableau/01.jpg`,
+    pos: 'center 25%',
+  },
+  {
+    title: 'Cuisine & salle de bain',
+    text: 'Rendre vos projets compatibles avec votre installation électrique.',
+    img: `${C}/ric-appartement/07.jpg`,
+  },
+  {
+    title: 'Extension & création',
+    text: "Création et distribution d'un réseau électrique neuf.",
+    img: `${C}/bou-renovation/05.jpg`,
+  },
+]
+
+/* Équipements que nous installons (liste de Félicien). */
+const EQUIPEMENTS = [
+  { icon: Icons.outlet, title: 'Prises de courant' },
+  { icon: Icons.bulb, title: 'Éclairage', text: 'Intérieur et extérieur' },
+  { icon: Icons.network, title: 'Réseau RJ45', text: 'Câble Ethernet' },
+  { icon: Icons.shutter, title: 'Pilotage des volets roulants' },
+  { icon: Icons.waterHeater, title: "Ballon d'eau chaude électrique" },
+  { icon: Icons.radiator, title: 'Radiateurs électriques' },
+  { icon: Icons.fan, title: 'Ventilation VMC' },
+  { icon: Icons.hob, title: 'Plaque à induction invisible' },
 ]
 
 /* Remplacement du tableau — repris du devis type de Félicien. */
@@ -49,19 +77,20 @@ export default function Electricite({ navigate }) {
       <section style={{ background: 'var(--surface-card)', padding: '88px 0' }}>
         <div style={WRAP}>
           <SectionHead eyebrow="Nos interventions" title="Du diagnostic à la rénovation complète" mb="36px" />
-          <PhotoTiles items={INTERVENTIONS} min="300px" height="250px" />
+          <PhotoTiles items={INTERVENTIONS} min="250px" ratio="4 / 3" />
         </div>
       </section>
 
       {/* Zoom : remplacement du tableau électrique */}
       <section style={{ background: 'var(--surface-brand)', color: 'var(--text-on-dark)', padding: '88px 0' }}>
         <div style={{ ...WRAP, display: 'flex', flexWrap: 'wrap', gap: '48px', alignItems: 'center' }}>
-          <div style={{ flex: '1 1 380px' }}>
+          {/* Photos du tableau en portrait (3:4) : le cadre garde leurs proportions, sans recadrage. */}
+          <div style={{ flex: '1 1 340px', maxWidth: '440px', margin: '0 auto' }}>
             <BeforeAfter
               before={BEFORE_AFTER.tableau.before}
               after={BEFORE_AFTER.tableau.after}
               alt="Tableau électrique"
-              height="480px"
+              ratio="3 / 4"
             />
           </div>
           <div style={{ flex: '1 1 380px' }}>
@@ -82,7 +111,13 @@ export default function Electricite({ navigate }) {
         </div>
       </section>
 
-      <BeforeAfterSection keys={['chambre', 'chateau']} background="var(--surface-page)" />
+      {/* Équipements installés (les avant / après restent dans « Nos réalisations »). */}
+      <section style={{ background: 'var(--surface-page)', padding: '88px 0' }}>
+        <div style={WRAP}>
+          <SectionHead eyebrow="Équipements" title="Ce que nous installons" mb="36px" />
+          <IconTiles items={EQUIPEMENTS} min="260px" />
+        </div>
+      </section>
 
       <Method />
 
