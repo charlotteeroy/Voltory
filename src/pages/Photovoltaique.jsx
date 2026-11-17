@@ -35,7 +35,7 @@ function PhoneMockup() {
       style={{
         width: 'min(300px,100%)',
         margin: '0 auto',
-        background: '#10282c',
+        background: 'var(--petrole-900)',
         borderRadius: '40px',
         padding: '10px',
         boxShadow: 'var(--e3)',
