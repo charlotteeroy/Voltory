@@ -71,7 +71,9 @@ export const CERTIFICATIONS = [
 const chantier = (slug, count) =>
   Array.from({ length: count }, (_, i) => `/assets/chantiers/${slug}/${String(i + 1).padStart(2, '0')}.jpg`)
 
-/* Catégorie de chantier → page métier où il apparaît. */
+/* Catégorie de chantier → page métier où il apparaît.
+   `catLabel` = étiquette affichée sur la carte. Électricité : Audit, Tableau électrique,
+   Cuisine, Salle de bain, Extension ou Création (vocabulaire de Félicien, 17/11/2026). */
 const CAT_TO_METIER = {
   patrimoine: 'electricite',
   renovation: 'electricite',
@@ -102,7 +104,7 @@ export const PROJECTS = [
   },
   {
     cat: 'renovation',
-    catLabel: 'Rénovation',
+    catLabel: 'Création',
     title: 'Chambre — appliques & papier peint',
     place: 'Maine-et-Loire',
     date: '2026',
@@ -111,7 +113,7 @@ export const PROJECTS = [
   },
   {
     cat: 'renovation',
-    catLabel: 'Rénovation',
+    catLabel: 'Création',
     title: 'Rénovation complète — maison',
     place: 'Vendée',
     date: '2026',
@@ -120,7 +122,7 @@ export const PROJECTS = [
   },
   {
     cat: 'patrimoine',
-    catLabel: 'Haut de gamme',
+    catLabel: 'Salle de bain',
     title: 'Appartement contemporain — salle de bain & salon',
     place: 'Paris',
     date: '2026',
@@ -129,7 +131,7 @@ export const PROJECTS = [
   },
   {
     cat: 'patrimoine',
-    catLabel: 'Haut de gamme',
+    catLabel: 'Cuisine',
     title: 'Cuisine — plaque de cuisson invisible',
     place: 'Paris',
     date: '2026',
@@ -138,7 +140,7 @@ export const PROJECTS = [
   },
   {
     cat: 'eclairage',
-    catLabel: 'Éclairage',
+    catLabel: 'Extension',
     title: 'Éclairage de façade',
     place: 'Paris',
     date: '2026',
@@ -148,7 +150,7 @@ export const PROJECTS = [
   },
   {
     cat: 'eclairage',
-    catLabel: 'Éclairage',
+    catLabel: 'Extension',
     title: 'Hôtel particulier — jardin & salons',
     place: 'Paris',
     date: '2025',
@@ -221,7 +223,7 @@ export const PROJECTS = [
   },
   {
     cat: 'patrimoine',
-    catLabel: 'Patrimoine',
+    catLabel: 'Création',
     title: 'Château — grande chambre',
     place: 'Orne',
     date: '2025',
@@ -236,7 +238,7 @@ export const PROJECTS = [
   },
   {
     cat: 'patrimoine',
-    catLabel: 'Patrimoine',
+    catLabel: 'Création',
     title: 'Château — petite chambre',
     place: 'Orne',
     date: '2025',
@@ -246,7 +248,7 @@ export const PROJECTS = [
   },
   {
     cat: 'patrimoine',
-    catLabel: 'Patrimoine',
+    catLabel: 'Salle de bain',
     title: 'Château — salle de bain',
     place: 'Orne',
     date: '2025',
@@ -257,7 +259,7 @@ export const PROJECTS = [
   },
   {
     cat: 'patrimoine',
-    catLabel: 'Patrimoine',
+    catLabel: 'Création',
     title: "Appartement haussmannien — rue Jouffroy-d'Abbans",
     place: 'Paris 17e',
     date: '2024',
@@ -267,7 +269,7 @@ export const PROJECTS = [
   },
   {
     cat: 'patrimoine',
-    catLabel: 'Patrimoine',
+    catLabel: 'Salle de bain',
     title: 'Salle de bain en marbre — rue Vanneau',
     place: 'Paris 7e',
     date: '2023',
@@ -277,7 +279,7 @@ export const PROJECTS = [
   },
   {
     cat: 'patrimoine',
-    catLabel: 'Patrimoine',
+    catLabel: 'Création',
     title: 'Appartement de maître — 38 rue de Varenne',
     place: 'Paris 7e',
     date: '2023',
@@ -287,7 +289,7 @@ export const PROJECTS = [
   },
   {
     cat: 'renovation',
-    catLabel: 'Rénovation',
+    catLabel: 'Création',
     title: 'Demeure de village — la Madeleine',
     place: 'Normandie',
     date: '2025',
@@ -298,7 +300,7 @@ export const PROJECTS = [
   },
   {
     cat: 'renovation',
-    catLabel: 'Rénovation',
+    catLabel: 'Création',
     title: 'Parties communes — rue du Dragon',
     place: 'Paris 6e',
     date: '2024',
@@ -308,7 +310,7 @@ export const PROJECTS = [
   },
   {
     cat: 'renovation',
-    catLabel: 'Rénovation',
+    catLabel: 'Cuisine',
     title: 'Cuisine contemporaine — rue Guénégaud',
     place: 'Paris 6e',
     date: '2024',
@@ -318,7 +320,7 @@ export const PROJECTS = [
   },
   {
     cat: 'eclairage',
-    catLabel: 'Éclairage',
+    catLabel: 'Création',
     title: 'Corniches lumineuses — rue Lota',
     place: 'Paris 16e',
     date: '2023',
@@ -329,7 +331,7 @@ export const PROJECTS = [
   },
   {
     cat: 'renovation',
-    catLabel: 'Rénovation',
+    catLabel: 'Création',
     title: 'Rénovation complète — pièce de vie',
     place: 'Vendée',
     date: '2025',
@@ -339,7 +341,7 @@ export const PROJECTS = [
   },
   {
     cat: 'eclairage',
-    catLabel: 'Éclairage',
+    catLabel: 'Extension',
     title: 'Éclairage extérieur — terrasse & jardin',
     place: 'Vendée',
     date: '2025',
