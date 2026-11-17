@@ -114,7 +114,8 @@ export function IconTiles({ items, min = '220px' }) {
         margin: 0,
         padding: 0,
         display: 'grid',
-        gridTemplateColumns: `repeat(auto-fill,minmax(min(${min},100%),1fr))`,
+        // Jamais moins de 2 colonnes : sur mobile, les dalles restent petites.
+        gridTemplateColumns: `repeat(auto-fill,minmax(min(${min},calc(50% - 7px)),1fr))`,
         gap: '14px',
       }}
     >
@@ -123,8 +124,9 @@ export function IconTiles({ items, min = '220px' }) {
           key={it.title}
           style={{
             display: 'flex',
+            flexWrap: 'wrap', // dalle étroite : le libellé passe sous le pictogramme
             alignItems: 'center',
-            gap: '14px',
+            gap: '12px 14px',
             background: 'var(--surface-card)',
             border: '1px solid var(--border-subtle)',
             borderRadius: 'var(--r-md)',
@@ -149,6 +151,7 @@ export function IconTiles({ items, min = '220px' }) {
           </span>
           <span
             style={{
+              flex: '1 1 100px',
               fontFamily: 'var(--font-display)',
               fontWeight: 600,
               fontSize: '15px',
