@@ -92,6 +92,47 @@ export const Icons = {
       <path d="M18 8v5a6 6 0 0 1-12 0V8Z" />
     </Svg>
   ),
+  /* Équipements (page Électricité). */
+  outlet: (
+    <Svg>
+      <rect x={3} y={3} width={18} height={18} rx={4} />
+      <circle cx={12} cy={12} r={5} />
+      <path d="M10 12h.01M14 12h.01" />
+    </Svg>
+  ),
+  shutter: (
+    <Svg>
+      <rect x={3} y={3} width={18} height={18} rx={1.5} />
+      <path d="M3 7.5h18M3 11.5h18M3 15.5h18" />
+    </Svg>
+  ),
+  waterHeater: (
+    <Svg>
+      <rect x={6} y={2} width={12} height={20} rx={6} />
+      <path d="M12 8.5c-1.5 2-2.2 3.2-2.2 4.2a2.2 2.2 0 0 0 4.4 0c0-1-.7-2.2-2.2-4.2Z" />
+    </Svg>
+  ),
+  radiator: (
+    <Svg>
+      <rect x={3} y={5} width={18} height={13} rx={2} />
+      <path d="M7.5 5v13M12 5v13M16.5 5v13M5 18v2M19 18v2" />
+    </Svg>
+  ),
+  fan: (
+    <Svg>
+      <circle cx={12} cy={12} r={10} />
+      <circle cx={12} cy={12} r={1.5} />
+      <path d="M12 10.5c0-3 1-5 3-5s2 2.5-1.5 5.2M13.5 12c3 0 5 1 5 3s-2.5 2-5.2-1.5M12 13.5c0 3-1 5-3 5s-2-2.5 1.5-5.2M10.5 12c-3 0-5-1-5-3s2.5-2 5.2 1.5" />
+    </Svg>
+  ),
+  hob: (
+    <Svg>
+      <rect x={2} y={4} width={20} height={16} rx={2} />
+      <circle cx={8} cy={10} r={2.5} />
+      <circle cx={16} cy={10} r={2.5} />
+      <circle cx={12} cy={15.5} r={1.8} />
+    </Svg>
+  ),
   key: (
     <Svg>
       <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4" />
