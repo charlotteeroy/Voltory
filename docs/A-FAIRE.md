@@ -1,17 +1,13 @@
 # Ce qu'il reste à faire
 
-État au 13 novembre 2026. Objectif : site prêt fin 2026, utilisé par Félicien dès
+État au 17 novembre 2026. Objectif : site prêt fin 2026, utilisé par Félicien dès
 janvier 2027.
 
 ## 🔴 Bloquant avant la mise en service
 
-- [ ] **Clé Web3Forms de production.** Félicien crée sa clé sur web3forms.com avec son
-  adresse professionnelle, puis :
-  1. la renseigner dans `.env` (`VITE_WEB3FORMS_KEY=…`) ou en variable de build Cloudflare ;
-  2. **rebuilder et redéployer** — la clé est intégrée au moment du build ;
-  3. envoyer une demande de test depuis le site en ligne.
-
-  Tant que la clé est vide, le formulaire affiche une erreur avec le téléphone et l'e-mail.
+- [x] **Clé Web3Forms de production** : clé de Félicien dans `.env` (#34).
+  - [ ] Après le déploiement, envoyer une demande de test depuis le site en ligne (vrai
+    navigateur) et vérifier que Félicien la reçoit.
 - [ ] **Page « Mentions légales »** (obligatoire). Une ébauche existe sur l'ancienne
   branche `ui/homepage-brief-gerant` (`MentionsLegales.jsx`), à reprendre.
 - [ ] **Adresse de production** : récupérer l'URL `workers.dev` dans le tableau de bord
@@ -27,16 +23,23 @@ janvier 2027.
   regard qui part de côté) ; en refaire un, sur le même mur clair que les autres.
 - [ ] **Réalisations** : dates et lieux des chantiers (déduits des dossiers photos), et
   localisation de la centrale au sol (dossier « 54-GUR »).
-- [ ] **Bornes** : distance incluse dans la pose standard (3 m affichés, 5 m évoqués).
+- [x] **Bornes** : distance incluse dans la pose standard : 5 m (#37).
+- [ ] **Bornes** : « dès 419 € TTC » ou prix ferme « 419 € TTC » ?
+- [ ] **Électricité** : classement des réalisations dans les étiquettes Audit / Tableau /
+  Cuisine / Salle de bain / Extension / Création (détail dans la PR #36).
+- [ ] **Photovoltaïque** : capture de la vraie application de suivi (pour remplacer
+  l'écran stylisé) ; « Toiture tuiles — full black » et « Autoconsommation — toiture
+  tuiles » montrent peut-être la même toiture.
+- [ ] **Photos** : plus de photos de chantier en bonne définition (bornes, solaire et
+  Félicien au travail sont en 573 px), pour le header et les cartes.
 - [ ] **Électricité** : durée « ≈ 2 jours » pour un tableau.
 - [ ] **Téléphone** à afficher (mobile 06 19 19 73 52 ou fixe de l'agence).
-- [ ] **Prix** : les afficher ou non (pour l'instant, aucun prix publié).
+- [ ] **Prix** : seule la prise renforcée affiche un prix (419 €) ; en afficher d'autres ?
 - [ ] **Avis Google** : les prénoms affichés sont indicatifs, à remplacer par les vrais avis.
 - [ ] **Mentions du pied de page** : vérifier SIRET / RCS / assurance.
 
 ## 🟡 Améliorations proposées (non lancées)
 
-- [ ] Accueil : garder « votre maison » sur une seule ligne dans le titre (desktop).
 - [ ] Électricité : le bouton « Estimer mes économies → » du bandeau « Déjà client ? »
   devrait descendre directement jusqu'au simulateur (`#simulateur`).
 - [ ] Bornes : remettre un lien discret vers la page Électricité (le bandeau retiré en #21
@@ -46,6 +49,8 @@ janvier 2027.
 - [ ] Carte : points encore serrés au zoom maximal (espacement ≈ 180 m nécessaire) ;
   recalcul de la taille de la carte quand sa hauteur change ; quelques points d'Angers sur
   l'île Saint-Aubin (zone inondable).
+- [ ] Électricité : photo du header (`01-salon.webp`, un salon) à remplacer par une photo
+  de chantier, comme sur l'accueil.
 - [ ] Accueil : plus d'indication visuelle « faites glisser » sur le curseur avant / après ;
   le surtitre « Avant / après » répète le titre.
 - [ ] Images : `histoire-pere-fils.png` encore en PNG (à convertir en WebP) ;
