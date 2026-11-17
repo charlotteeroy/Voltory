@@ -9,7 +9,6 @@ import { LatestProjects } from '../components/Projects.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 import BeforeAfter from '../components/BeforeAfter.jsx'
 import { BEFORE_AFTER } from '../lib/data.js'
-import { Icons } from '../lib/icons.jsx'
 
 /* Déroulé d'un projet solaire — repris du devis type (centrale 3 kWc). */
 const PROJECT_STEPS = [
@@ -22,79 +21,34 @@ const PROJECT_STEPS = [
 ]
 
 /* Ce que montre l'application de suivi (section « Pilotez votre énergie »). */
-const SUIVI = ['Votre production', 'Votre consommation', "Votre niveau d'autonomie", 'Vos économies réalisées']
+const SUIVI = [
+  'Votre production solaire',
+  'La consommation de votre maison',
+  "L'électricité revendue au réseau",
+  'Votre production du jour et depuis la mise en service',
+]
 
-/* Écran de téléphone stylisé : illustration de l'application de suivi (valeurs d'exemple).
-   À remplacer par une vraie capture de l'application si Félicien en fournit une. */
+/* Capture réelle de l'application de suivi installée chez les clients (fournie par Félicien). */
 function PhoneMockup() {
-  const tile = {
-    background: 'rgba(255,255,255,.07)',
-    border: '1px solid rgba(255,255,255,.1)',
-    borderRadius: '14px',
-    padding: '12px 14px',
-  }
-  const label = { fontSize: '11.5px', color: 'var(--text-on-dark-soft)' }
-  const value = { fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '22px', marginTop: '2px' }
   return (
     <div
-      aria-hidden="true"
       style={{
         width: 'min(300px,100%)',
         margin: '0 auto',
-        background: 'var(--petrole-900)',
+        background: '#10282c',
         borderRadius: '40px',
-        padding: '14px',
+        padding: '10px',
         boxShadow: 'var(--e3)',
-        border: '6px solid #10282c',
       }}
     >
-      <div
-        style={{
-          height: '100%',
-          borderRadius: '28px',
-          background: 'linear-gradient(180deg,var(--petrole-700),var(--petrole-900))',
-          color: 'var(--text-on-dark)',
-          padding: '22px 16px 30px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
-        }}
-      >
-        <div style={{ ...label, display: 'flex', justifyContent: 'space-between' }}>
-          <span>Aujourd'hui</span>
-          <span style={{ color: 'var(--or-400)' }}>● En direct</span>
-        </div>
-        <div style={{ ...tile, textAlign: 'center', padding: '18px 14px' }}>
-          <div style={{ color: 'var(--or-400)', display: 'flex', justifyContent: 'center' }}>{Icons.sun}</div>
-          <div style={{ ...value, fontSize: '30px' }}>3,4 kW</div>
-          <div style={label}>Production solaire</div>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-          <div style={tile}>
-            <div style={label}>Produit</div>
-            <div style={value}>14,2</div>
-            <div style={label}>kWh</div>
-          </div>
-          <div style={tile}>
-            <div style={label}>Consommé</div>
-            <div style={value}>11,8</div>
-            <div style={label}>kWh</div>
-          </div>
-        </div>
-        <div style={tile}>
-          <div style={{ ...label, display: 'flex', justifyContent: 'space-between' }}>
-            <span>Autonomie</span>
-            <span style={{ color: 'var(--text-on-dark)', fontWeight: 600 }}>78 %</span>
-          </div>
-          <div style={{ height: '8px', borderRadius: '99px', background: 'rgba(255,255,255,.12)', marginTop: '10px' }}>
-            <div style={{ width: '78%', height: '100%', borderRadius: '99px', background: 'var(--or-500)' }} />
-          </div>
-        </div>
-        <div style={tile}>
-          <div style={label}>Économies ce mois-ci</div>
-          <div style={value}>42 €</div>
-        </div>
-      </div>
+      <img
+        src="/assets/app-suivi-solaire.webp"
+        alt="Écran d'accueil de l'application de suivi : production solaire, consommation de la maison et électricité revendue au réseau, en temps réel"
+        width="600"
+        height="1198"
+        loading="lazy"
+        style={{ display: 'block', width: '100%', height: 'auto', borderRadius: '30px' }}
+      />
     </div>
   )
 }
