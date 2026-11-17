@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { WRAP } from '../lib/layout.js'
-import { HERO_IMGS, CERTIFICATIONS } from '../lib/data.js'
+import { HERO_IMGS, HERO_FOCUS, CERTIFICATIONS } from '../lib/data.js'
 import Button from './ds/Button.jsx'
 
 /** Qualifications : logos officiels (QualiPV, Recharge+ élec). */
@@ -94,7 +94,7 @@ export default function HeroCarousel({ onContact }) {
             inset: 0,
             backgroundImage: loaded.has(i) || i === index ? `url('${src}')` : 'none',
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundPosition: HERO_FOCUS[src] ?? 'center',
             opacity: i === index ? 1 : 0,
             transform: i === index ? 'scale(1.06)' : 'scale(1)',
             transition: 'opacity 1.4s var(--ease-out), transform 6s linear',

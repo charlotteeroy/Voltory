@@ -11,10 +11,14 @@ export const HERO_IMGS = [
   '/assets/hero/tableau.webp',
   '/assets/hero/toiture-tuiles.webp',
   '/assets/hero/borne.webp',
-  '/assets/hero/renovation.webp',
-  '/assets/hero/toiture-bac-acier.webp',
   '/assets/hero/chantier.webp',
 ]
+
+/* Point de cadrage par photo du carrousel (sur mobile l'image est très recadrée en
+   largeur) : le tableau est sur la droite de la photo. Par défaut : centre. */
+export const HERO_FOCUS = {
+  '/assets/hero/tableau.webp': '72% center',
+}
 
 /* Les trois métiers, mis en avant sur l'accueil (blocs larges + photos qui défilent).
    Photos : uniquement des installations / réalisations (demande de Félicien).
@@ -49,7 +53,7 @@ export const METIERS = [
     cta: 'Découvrir le photovoltaïque',
     eyebrow: 'Photovoltaïque',
     title: 'Produisez votre électricité',
-    imgs: ['/assets/real-solaire-toiture.webp', '/assets/chantiers/gur-sol/03.jpg', '/assets/chantiers/boo-toiture/01.jpg'],
+    imgs: ['/assets/real-solaire-toiture.webp', '/assets/chantiers/gur-sol/03.jpg', '/assets/chantiers/boo-toiture/02.jpg'],
   },
 ]
 
@@ -213,6 +217,7 @@ export const PROJECTS = [
     date: '2026',
     blurb: 'Panneaux posés sur une toiture en bac acier.',
     photos: chantier('boo-toiture', 2),
+    cover: 2, // la 1re photo montre le toit avant la pose
   },
   {
     cat: 'patrimoine',
