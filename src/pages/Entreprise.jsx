@@ -341,8 +341,8 @@ export default function Entreprise({ navigate }) {
                   Un bâtiment qui produit sa propre énergie
                 </h2>
                 <p style={{ fontSize: '1rem', lineHeight: 1.6, color: 'var(--text-on-dark-soft)', margin: '14px 0 0' }}>
-                  Nos locaux sont eux-mêmes équipés en photovoltaïque — nous appliquons d'abord chez
-                  nous ce que nous installons chez vous.
+                  Nos locaux de Cholet sont équipés de panneaux photovoltaïques : nous travaillons
+                  chaque jour dans un bâtiment qui produit sa propre électricité.
                 </p>
               </div>
             </div>

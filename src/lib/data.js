@@ -350,25 +350,6 @@ export const PROJECTS = [
     photos: ['/assets/real-eclairage-terrasse.jpg'],
   },
   {
-    cat: 'solaire',
-    catLabel: 'Solaire',
-    title: 'Autoconsommation — toiture tuiles',
-    place: 'Maine-et-Loire',
-    date: '2025',
-    blurb: "Panneaux full black plein sud, micro-onduleurs et pilotage fin de l'autoconsommation.",
-    photos: ['/assets/real-solaire-toiture.webp'],
-  },
-  {
-    cat: 'solaire',
-    catLabel: 'Solaire',
-    title: 'Toiture tertiaire — bâtiment professionnel',
-    place: 'Maine-et-Loire',
-    date: '2024',
-    blurb:
-      "Centrale en toiture de bâtiment d'activité, dimensionnée sur la consommation de l'entreprise.",
-    photos: ['/assets/agence-aerien.jpg'],
-  },
-  {
     cat: 'borne',
     catLabel: 'Borne de recharge',
     title: 'Borne de recharge — véhicule électrique',
