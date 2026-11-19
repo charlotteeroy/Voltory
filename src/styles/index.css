@@ -148,6 +148,9 @@ section[id] {
 /* Formulaire de contact : léger zoom de la photo au survol des tuiles projet. */
 @media (hover: hover) {
   .v-tile:hover .v-tile-img { transform: scale(1.06); }
+  /* La carte se soulève et sa pastille se dore : on comprend qu'elle se clique. */
+  .v-tile:hover { transform: translateY(-3px); box-shadow: var(--e2) !important; }
+  .v-tile:hover .v-tile-ring { border-color: var(--or-400) !important; background: rgba(253,190,3,.3) !important; }
 }
 .v-tile:focus-visible { outline: 2.5px solid var(--or-500) !important; outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) {
@@ -155,4 +158,5 @@ section[id] {
   .v-marquee { animation: none !important; }
   .v-tile-img { transition: none !important; }
   .v-tile:hover .v-tile-img { transform: none; }
+  .v-tile:hover { transform: none; }
 }
