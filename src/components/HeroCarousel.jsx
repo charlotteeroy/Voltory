@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { WRAP } from '../lib/layout.js'
+import { NAV_GUTTER } from '../lib/layout.js'
 import { HERO_IMGS, HERO_FOCUS, CERTIFICATIONS } from '../lib/data.js'
 import Button from './ds/Button.jsx'
 
@@ -114,19 +114,19 @@ export default function HeroCarousel({ onContact }) {
       />
       <div
         style={{
-          ...WRAP,
-          padding: '0 clamp(24px,5vw,72px) 55px',
+          // Aligné sur le logo de la barre de navigation (même marge gauche).
+          padding: `0 ${NAV_GUTTER} 55px`,
           position: 'relative',
           zIndex: 2,
           width: '100%',
         }}
       >
-        <div style={{ maxWidth: '50rem' }}>
+        <div style={{ maxWidth: '56rem' }}>
           <h1
             style={{
               fontFamily: 'var(--font-display)',
               fontWeight: 600,
-              fontSize: 'clamp(2.5rem,4.8vw,3.9rem)',
+              fontSize: 'clamp(2.75rem,6vw,5.25rem)',
               lineHeight: 0.98,
               letterSpacing: '-.035em',
               margin: 0,
@@ -138,10 +138,10 @@ export default function HeroCarousel({ onContact }) {
           </h1>
           <p
             style={{
-              fontSize: 'clamp(.95rem,1.3vw,1.05rem)',
+              fontSize: 'clamp(1.05rem,1.6vw,1.35rem)',
               lineHeight: 1.45,
               color: 'var(--text-on-dark-soft)',
-              margin: '16px 0 0',
+              margin: '20px 0 0',
               maxWidth: '48ch',
             }}
           >
