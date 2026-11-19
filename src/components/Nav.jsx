@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import Button from './ds/Button.jsx'
 import { useMediaQuery } from '../lib/useMediaQuery.js'
 import { ROUTES } from '../lib/routes.js'
+import { NAV_GUTTER } from '../lib/layout.js'
 
 /* Ordre = priorité d'activité : électricité, puis bornes, puis solaire. */
 const NAV_DEFS = [
@@ -117,7 +118,7 @@ export default function Nav({ page, navigate }) {
       <div
         style={{
           width: '100%',
-          padding: '0 clamp(20px,3vw,56px)',
+          padding: `0 ${NAV_GUTTER}`,
           height: '74px',
           boxSizing: 'border-box',
           display: 'flex',

@@ -4,20 +4,21 @@
  */
 import { Icons } from './icons.jsx'
 
-/* Photos du carrousel hero : uniquement des installations Voltory (tableau, solaire,
-   borne, chantier), demande de Félicien du 17/11/2026. Recadrées en 16:10 depuis ses
-   dossiers « Photos Site web ». La 1re est préchargée dans index.html. */
+/* Photos du carrousel hero : réalisations Voltory finies et soignées, dans l'ordre des
+   priorités d'activité (électricité ×2, borne, solaire). La 1re est préchargée
+   (index.html). */
 export const HERO_IMGS = [
-  '/assets/hero/tableau.webp',
+  '/assets/hero/salon-eclairage.webp',
+  '/assets/hero/hall-hotel.webp',
+  '/assets/hero/borne-mur.webp',
   '/assets/hero/toiture-tuiles.webp',
-  '/assets/hero/borne.webp',
-  '/assets/hero/chantier.webp',
 ]
 
 /* Point de cadrage par photo du carrousel (sur mobile l'image est très recadrée en
-   largeur) : le tableau est sur la droite de la photo. Par défaut : centre. */
+   largeur). Par défaut : centre. */
 export const HERO_FOCUS = {
-  '/assets/hero/tableau.webp': '72% center',
+  '/assets/hero/salon-eclairage.webp': '62% center',
+  '/assets/hero/borne-mur.webp': '58% center',
 }
 
 /* Les trois métiers, mis en avant sur l'accueil (blocs larges + photos qui défilent).
