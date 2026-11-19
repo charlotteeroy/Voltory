@@ -42,6 +42,11 @@ janvier 2027.
   black ») est retirée ; confirmer le lieu et l'année de « Toiture tuiles — full black ».
 - [ ] **Photos** : plus de photos de chantier en bonne définition (bornes, solaire et
   Félicien au travail sont en 573 px), pour le header et les cartes.
+- [ ] **Header de l'accueil** : les photos d'installations brutes (tableau, chantier) sont
+  remplacées par des réalisations finies (salon et hall éclairés à Paris, borne, toiture
+  solaire). Félicien avait demandé des installations (#35) : lui faire valider.
+- [ ] **Photo de borne** : aucune belle photo de borne en haute définition (mur parpaing,
+  porte de garage, ou 573 px). Idéal : une borne posée avec une voiture branchée, en HD.
 - [ ] **Électricité** : durée « ≈ 2 jours » pour un tableau.
 - [ ] **Téléphone** à afficher (mobile 06 19 19 73 52 ou fixe de l'agence).
 - [ ] **Prix** : seule la prise renforcée affiche un prix (419 €) ; en afficher d'autres ?

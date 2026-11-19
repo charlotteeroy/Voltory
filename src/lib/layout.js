@@ -5,6 +5,10 @@ export const WRAP = {
   padding: '0 clamp(24px,5vw,72px)',
 }
 
+/** Marge latérale de la barre de navigation : le texte du header s'aligne dessus
+ *  (même bord gauche que le logo Voltory). */
+export const NAV_GUTTER = 'clamp(20px,3vw,56px)'
+
 /** Surtitre (eyebrow) : petit label majuscule espacé. */
 export const eyebrowStyle = (onDark = false) => ({
   fontFamily: 'var(--font-display)',
