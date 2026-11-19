@@ -47,7 +47,7 @@ const MAIL = CONTACT_ROWS.find((r) => r.label === 'Email')?.value || 'felicien.g
 const display = { fontFamily: 'var(--font-display)' }
 
 /** Étape numérotée du formulaire. */
-function Step({ n, title, optional, children }) {
+function Step({ n, title, optional, hint, children }) {
   return (
     <fieldset style={{ border: 'none', margin: 0, padding: 0, minWidth: 0 }}>
       <legend style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: 0, marginBottom: '14px' }}>
@@ -73,6 +73,9 @@ function Step({ n, title, optional, children }) {
         <span style={{ ...display, fontSize: '16px', fontWeight: 600, color: 'var(--text-strong)' }}>{title}</span>
         {optional && <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>facultatif</span>}
       </legend>
+      {hint && (
+        <p style={{ margin: '-6px 0 14px', fontSize: '14px', color: 'var(--text-muted)' }}>{hint}</p>
+      )}
       {children}
     </fieldset>
   )
@@ -168,7 +171,7 @@ function ProjectTiles({ value, onChange }) {
                 cursor: 'pointer',
                 textAlign: 'left',
                 color: 'var(--blanc)',
-                transition: 'outline-color var(--dur-fast), box-shadow var(--dur-fast)',
+                transition: 'outline-color var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-fast) var(--ease-out)',
               }}
             >
               <img
@@ -194,6 +197,25 @@ function ProjectTiles({ value, onChange }) {
                   background: 'linear-gradient(0deg, var(--petrole-600) 0%, rgba(0,95,111,.85) 22%, rgba(0,95,111,0) 62%)',
                 }}
               />
+              {/* Pastille de sélection : cercle vide (à choisir) → coche dorée (choisi). */}
+              {!on && (
+                <span
+                  aria-hidden="true"
+                  className="v-tile-ring"
+                  style={{
+                    position: 'absolute',
+                    top: '10px',
+                    right: '10px',
+                    width: '26px',
+                    height: '26px',
+                    boxSizing: 'border-box',
+                    borderRadius: 'var(--r-pill)',
+                    border: '2px solid rgba(255,255,255,.9)',
+                    background: 'rgba(5,69,80,.35)',
+                    transition: 'border-color var(--dur-fast), background var(--dur-fast)',
+                  }}
+                />
+              )}
               {on && (
                 <span
                   aria-hidden="true"
@@ -538,7 +560,7 @@ export default function Contact({ navigate, from }) {
                     style={{ display: 'none' }}
                   />
 
-                  <Step n="1" title="Votre projet">
+                  <Step n="1" title="Votre projet" hint="Cliquez sur la carte qui correspond à votre projet.">
                     <ProjectTiles value={projType} onChange={setProjType} />
                   </Step>
 
