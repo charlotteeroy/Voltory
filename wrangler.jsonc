@@ -2,8 +2,16 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "voltory",
   "compatibility_date": "2026-07-22",
+  // Petit Worker exécuté avant les fichiers statiques : redirige www.voltory.fr et
+  // http://voltory.fr vers https://voltory.fr (301) et ajoute l'en-tête HSTS.
+  // Les domaines voltory.fr et www.voltory.fr sont rattachés dans Cloudflare
+  // (Custom Domains), pas ici : ne pas ajouter de « routes ».
+  "main": "worker/index.js",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
+    // Toutes les requêtes passent d'abord par le Worker, qui doit voir l'hôte et le protocole.
+    "run_worker_first": true,
     // Chaque page connue a son fichier HTML (généré au build, cf. vite.config.js) ;
     // toute autre adresse reçoit 404.html avec un vrai statut 404.
     "html_handling": "auto-trailing-slash",

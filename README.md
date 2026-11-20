@@ -29,6 +29,7 @@ npm install
 npm run dev      # serveur de dev (http://localhost:5173)
 npm run build    # build de production → dist/
 npm run preview  # prévisualise le build
+npm test         # tests du Worker (redirections, HSTS)
 ```
 
 ## Structure
@@ -76,6 +77,7 @@ src/
     useMediaQuery.js       Hook de requête média (mise en page responsive)
     mapPoints.js           Points de la carte (généré par scripts/points-carte.py)
 
+worker/                    Worker Cloudflare : redirections www / http → https, HSTS
 scripts/points-carte.py    Génère les points fictifs de la carte, hors de l'eau
 docs/                      Historique, reste à faire, fonctionnement
 
