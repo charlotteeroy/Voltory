@@ -9,6 +9,17 @@ Notes pratiques pour reprendre le projet. Vue d'ensemble et structure : [README]
   publie `dist/`.
 - `vite.config.js` (plugin `pagesPerRoute`) génère **une page HTML par adresse** avec son
   titre, plus `404.html`. Les adresses inconnues renvoient un vrai statut 404.
+- Un petit Worker (`worker/index.js`, règles dans `worker/redirections.js`) passe avant les
+  fichiers statiques :
+  - `www.voltory.fr` et `http://voltory.fr` → `https://voltory.fr` (301, chemin et
+    paramètres conservés) ;
+  - en-tête `Strict-Transport-Security: max-age=31536000` sur `https://voltory.fr`, sans
+    `includeSubDomains` (sous-domaines e-mail Microsoft 365) ;
+  - les autres adresses (`*.workers.dev`, `localhost`) sont servies telles quelles.
+  - Tests : `npm test`. Chaque visite compte dans le quota du Worker (100 000 requêtes
+    par jour en offre gratuite).
+- Les domaines `voltory.fr` et `www.voltory.fr` sont rattachés au Worker dans Cloudflare
+  (Custom Domains) : pas de `routes` dans `wrangler.jsonc`.
 - Le préchargement de la 1re photo du header (`index.html`, entre les commentaires
   `accueil:preload`) n'est conservé que sur l'accueil.
 
