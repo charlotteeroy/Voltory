@@ -4,7 +4,6 @@ import SectionHead from '../components/SectionHead.jsx'
 import Simulator from '../components/Simulator.jsx'
 import { CheckList, Chips } from '../components/ServiceBlocks.jsx'
 import Timeline from '../components/Timeline.jsx'
-import { PerksBar } from '../components/Method.jsx'
 import { LatestProjects } from '../components/Projects.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 import BeforeAfter from '../components/BeforeAfter.jsx'
@@ -113,8 +112,6 @@ export default function Photovoltaique({ navigate }) {
             }}
           >
             <Timeline steps={PROJECT_STEPS} />
-            <div style={{ borderTop: '1px solid var(--border-subtle)', margin: '40px 0 28px' }} />
-            <PerksBar />
           </div>
         </div>
       </section>
